@@ -178,7 +178,7 @@ def merge_datasets(data_files, output_file, remove_duplicates=True, validate=Tru
             # Merge labels using OR logic
             print("\nMerging conflicting labels...")
             
-            # Group by text and merge
+            # Group by text and merge using OR logic
             def merge_labels(group):
                 result = group.iloc[0].copy()
                 for emotion in emotion_cols:
@@ -186,7 +186,11 @@ def merge_datasets(data_files, output_file, remove_duplicates=True, validate=Tru
                     result[emotion] = int(group[emotion].max())
                 return result
             
-            master_df = master_df.groupby('text', as_index=False).apply(merge_labels)
+            # Apply merge function to each group
+            master_df = master_df.groupby('text', as_index=False, group_keys=False).apply(
+                lambda group: merge_labels(group) if len(group) > 1 else group
+            )
+            master_df = master_df.drop_duplicates(subset=['text'], keep='first')
             master_df = master_df.reset_index(drop=True)
             
         elif conflict_strategy == 'skip' and conflicts_found > 0:
@@ -195,8 +199,12 @@ def merge_datasets(data_files, output_file, remove_duplicates=True, validate=Tru
             conflict_texts = [c['text'] for c in conflicts]
             master_df = master_df[~master_df['text'].isin(conflict_texts)]
             
+        elif conflict_strategy == 'last':
+            # Keep last occurrence
+            master_df = master_df.drop_duplicates(subset=['text'], keep='last')
+            
         else:
-            # Default: keep first occurrence
+            # Default: keep first occurrence (for 'report' and 'first')
             master_df = master_df.drop_duplicates(subset=['text'], keep='first')
         
         duplicates_removed = original_len - len(master_df)
