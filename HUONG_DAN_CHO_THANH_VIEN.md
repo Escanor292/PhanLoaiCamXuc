@@ -112,7 +112,20 @@ python -c "import torch; import transformers; print('OK')"
 
 ---
 
-## 📊 PHẦN 2: GÓP DATA (MỖI TUẦN/THÁNG)
+## 📊 PHẦN 2: GÓP DATA TIẾNG VIỆT (MỖI TUẦN)
+
+> **⚠️ QUAN TRỌNG:** Model hiện tại được train trên tiếng Anh, nên độ chính xác với tiếng Việt rất thấp (40-50%). Để cải thiện, team cần đóng góp dữ liệu tiếng Việt!
+
+### Tại sao cần data tiếng Việt?
+
+| Tình huống | Độ chính xác | Lý do |
+|------------|--------------|-------|
+| Train trên tiếng Anh, test tiếng Việt | 40-50% | Model không hiểu tiếng Việt |
+| Train trên tiếng Việt, test tiếng Việt | 75-85% | Model học được tiếng Việt |
+
+**Mục tiêu:** Mỗi thành viên đóng góp 50-100 câu tiếng Việt
+
+---
 
 ### Bước 2.1: Pull Code Mới Nhất
 
@@ -128,7 +141,7 @@ git pull
 ```
 Updating abc1234..def5678
 Fast-forward
- data/master_dataset.csv | 100 ++++++++++++++++++
+ data/master_dataset_vi.csv | 100 ++++++++++++++++++
  1 file changed, 100 insertions(+)
 ```
 
@@ -138,41 +151,94 @@ Fast-forward
 
 ---
 
-### Bước 2.2: Tạo Data Của Bạn
+### Bước 2.2: Tạo Data Tiếng Việt Của Bạn
 
-**Làm gì:** Tạo file CSV chứa data bạn đã label
+**Làm gì:** Tạo file CSV chứa bình luận tiếng Việt với nhãn cảm xúc
 
 **Làm như nào:**
 
-**Option 1: Dùng Excel**
-1. Mở Excel
-2. Tạo file mới với format:
-
-| text | joy | trust | fear | surprise | sadness | disgust | anger | anticipation | love | worried | disappointed | proud | embarrassed | jealous | calm | excited |
-|------|-----|-------|------|----------|---------|---------|-------|--------------|------|---------|--------------|-------|-------------|---------|------|---------|
-| I love this! | 1 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
-| This is terrible | 0 | 0 | 0 | 0 | 1 | 1 | 1 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
-
-3. Save as CSV: `data/member_TenBan_data.csv`
-   - Ví dụ: `data/member_john_data.csv`
-
-**Option 2: Copy từ template**
+**Option 1: Copy từ template (KHUYẾN NGHỊ)**
 ```bash
-# Copy sample data làm template
-copy data\sample_comments.csv data\member_TenBan_data.csv
+# Copy template
+copy data\TEMPLATE_DONG_GOP_DATA.csv data\member_TenBan.csv
 
 # Mở và edit file
-notepad data\member_TenBan_data.csv
+notepad data\member_TenBan.csv
 ```
 
+**Option 2: Dùng Excel**
+1. Mở file `data/TEMPLATE_DONG_GOP_DATA.csv` trong Excel
+2. Xóa các dòng mẫu (giữ lại header)
+3. Thêm dữ liệu của bạn
+4. Save as: `data/member_TenBan.csv`
+
 **Format yêu cầu:**
-- Cột 1: `text` - Nội dung comment
-- Cột 2-17: 16 emotions - Giá trị 0 hoặc 1
-- Mỗi comment phải có ít nhất 1 emotion = 1
+
+| comment | joy | trust | fear | surprise | sadness | disgust | anger | anticipation | love | worried | disappointed | proud | embarrassed | jealous | calm | excited |
+|---------|-----|-------|------|----------|---------|---------|-------|--------------|------|---------|--------------|-------|-------------|---------|------|---------|
+| Tôi rất vui vì được thăng chức! | 1 | 1 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 1 |
+| Tôi lo lắng về kỳ thi ngày mai | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
+| Sản phẩm này thật tuyệt vời! | 1 | 1 | 0 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+
+**16 cảm xúc (Emotion Labels):**
+
+| Tiếng Việt | Tiếng Anh | Cột CSV |
+|------------|-----------|---------|
+| vui vẻ | joy | joy |
+| tin tưởng | trust | trust |
+| sợ hãi | fear | fear |
+| ngạc nhiên | surprise | surprise |
+| buồn bã | sadness | sadness |
+| ghê tởm | disgust | disgust |
+| tức giận | anger | anger |
+| mong đợi | anticipation | anticipation |
+| yêu thương | love | love |
+| lo lắng | worried | worried |
+| thất vọng | disappointed | disappointed |
+| tự hào | proud | proud |
+| xấu hổ | embarrassed | embarrassed |
+| ghen tị | jealous | jealous |
+| bình tĩnh | calm | calm |
+| phấn khích | excited | excited |
+
+**Cách đánh nhãn:**
+- **1** = Câu này CÓ cảm xúc đó
+- **0** = Câu này KHÔNG CÓ cảm xúc đó
+- Một câu có thể có NHIỀU cảm xúc (multi-label)
+
+**Ví dụ chi tiết:**
+
+```csv
+"Tôi rất vui vì được thăng chức!",1,1,0,1,0,0,0,0,0,0,0,1,0,0,0,1
+```
+- ✅ vui vẻ (joy) = 1
+- ✅ tin tưởng (trust) = 1
+- ✅ ngạc nhiên (surprise) = 1
+- ✅ tự hào (proud) = 1
+- ✅ phấn khích (excited) = 1
+- ❌ Các cảm xúc khác = 0
+
+**Tips để tạo data tốt:**
+
+✅ **NÊN:**
+- Viết câu tự nhiên, như bình luận thật
+- Đa dạng chủ đề: sản phẩm, dịch vụ, sự kiện, cảm xúc cá nhân
+- Đa dạng độ dài: ngắn (5-10 từ) và dài (20-30 từ)
+- Một câu có thể có nhiều cảm xúc
+- Đánh nhãn chính xác
+
+❌ **KHÔNG NÊN:**
+- Copy paste từ internet (có thể vi phạm bản quyền)
+- Câu quá ngắn: "Tốt", "Hay" (không đủ ngữ cảnh)
+- Câu quá dài: > 50 từ (khó phân tích)
+- Đánh nhãn sai hoặc thiếu
 
 **Tại sao:** 
-- Mỗi người góp data để dataset lớn hơn
+- Mỗi người góp data tiếng Việt để model học được tiếng Việt
 - Dataset lớn → Model tốt hơn
+- 500 câu tiếng Việt → Độ chính xác 75-85%
+
+> 📖 **Xem thêm:** File `HUONG_DAN_DONG_GOP_DATA.md` có hướng dẫn chi tiết hơn
 
 ---
 
@@ -182,8 +248,8 @@ notepad data\member_TenBan_data.csv
 
 **Làm như nào:**
 ```bash
-# Chạy script merge
-python merge_data.py
+# Merge tất cả file member_*.csv thành master dataset
+python merge_data.py data/member_*.csv --output data/master_dataset_vi.csv
 ```
 
 **Kết quả:**
@@ -191,9 +257,9 @@ python merge_data.py
 ======================================================================
 MERGING DATASETS
 ======================================================================
-✓ Loaded data/sample_comments.csv: 100 samples
-✓ Loaded data/member_john_data.csv: 200 samples
-✓ Loaded data/member_alice_data.csv: 150 samples
+✓ Loaded data/member_nam.csv: 100 samples
+✓ Loaded data/member_linh.csv: 150 samples
+✓ Loaded data/member_hoa.csv: 200 samples
 
 Merging 3 files...
 ✓ Removed 5 duplicate texts
@@ -204,20 +270,25 @@ MERGE COMPLETE
 Total samples loaded: 450
 Duplicates removed: 5
 Final dataset size: 445
-Output: data/master_dataset.csv
+Output: data/master_dataset_vi.csv
 ======================================================================
 ```
 
 **Script làm gì:**
-1. Tìm tất cả file CSV trong `data/`
+1. Tìm tất cả file `member_*.csv` trong `data/`
 2. Gộp tất cả lại
-3. Xóa duplicates
-4. Validate format
-5. Tạo `data/master_dataset.csv`
+3. Xóa duplicates (câu trùng lặp)
+4. Validate format (kiểm tra đúng format)
+5. Tạo `data/master_dataset_vi.csv`
+
+**Giải thích tham số:**
+- `data/member_*.csv`: Tất cả file bắt đầu với `member_` trong folder `data/`
+- `--output data/master_dataset_vi.csv`: Lưu kết quả vào file này
 
 **Tại sao:** 
 - Dataset chung có data của tất cả mọi người
 - Training trên dataset chung → Model không bị bias
+- **QUAN TRỌNG:** Phải train trên master dataset, không phải file riêng của bạn!
 
 ---
 
@@ -228,11 +299,11 @@ Output: data/master_dataset.csv
 **Làm như nào:**
 ```bash
 # 1. Add files
-git add data/member_TenBan_data.csv
-git add data/master_dataset.csv
+git add data/member_TenBan.csv
+git add data/master_dataset_vi.csv
 
 # 2. Commit với message rõ ràng
-git commit -m "Add member_TenBan data (200 comments)"
+git commit -m "Add member_TenBan Vietnamese data (100 comments)"
 
 # 3. Push lên GitHub
 git push
@@ -240,8 +311,8 @@ git push
 
 **Kết quả:**
 ```
-[main abc1234] Add member_john data (200 comments)
- 2 files changed, 200 insertions(+)
+[main abc1234] Add member_TenBan Vietnamese data (100 comments)
+ 2 files changed, 100 insertions(+)
 Enumerating objects: 5, done.
 ...
 To https://github.com/Escanor292/PhanLoaiCamXuc.git
@@ -256,10 +327,24 @@ To https://github.com/Escanor292/PhanLoaiCamXuc.git
 **Tại sao:** 
 - Team khác cần data của bạn
 - Master dataset được update cho mọi người
+- Tất cả cùng train trên dataset chung
 
 ---
 
-## 🎓 PHẦN 3: TRAINING (MỖI TUẦN/THÁNG)
+## 🎓 PHẦN 3: TRAINING (MỖI TUẦN)
+
+> **⚠️ LƯU Ý QUAN TRỌNG:** Luôn train với file `master_dataset_vi.csv` (dataset chung), KHÔNG train với file riêng của bạn!
+
+### Tại sao phải train trên master dataset?
+
+| Cách train | Kết quả | Vấn đề |
+|------------|---------|--------|
+| Train trên file riêng (`member_nam.csv`) | Model chỉ tốt với data của bạn | ❌ Bias, overfit, quên data cũ |
+| Train trên master dataset (`master_dataset_vi.csv`) | Model tốt với tất cả data | ✅ Không bias, tổng quát hóa tốt |
+
+**Quy tắc vàng:** Mỗi người train trên CÙNG master dataset, nhưng với KHÁC config (lr, batch_size, epochs, ...)
+
+---
 
 ### Bước 3.1: Pull Master Dataset Mới Nhất
 
@@ -274,13 +359,13 @@ git pull
 ```
 Updating def5678..ghi9012
 Fast-forward
- data/master_dataset.csv | 150 ++++++++++++++++++
+ data/master_dataset_vi.csv | 150 ++++++++++++++++++
  1 file changed, 150 insertions(+)
 ```
 
 **Tại sao:** 
 - Người khác có thể đã thêm data
-- Bạn cần train trên dataset mới nhất
+- Bạn cần train trên dataset mới nhất (có data của tất cả)
 
 ---
 
@@ -312,24 +397,35 @@ Fast-forward
 
 ### Bước 3.3: Training Model
 
-**Làm gì:** Train model với config của bạn
+**Làm gì:** Train model với config của bạn trên master dataset
 
 **Làm như nào:**
 ```bash
 python train_with_args.py \
-    --data data/master_dataset.csv \
+    --data data/master_dataset_vi.csv \
     --output experiments/member_TenBan_lr5e5/ \
     --experiment-name "Member TenBan - LR 5e-5" \
     --lr 5e-5 \
     --register-model
 ```
 
+**⚠️ QUAN TRỌNG:**
+- **PHẢI dùng** `--data data/master_dataset_vi.csv` (dataset chung)
+- **KHÔNG dùng** `--data data/member_TenBan.csv` (file riêng của bạn)
+
 **Giải thích từng tham số:**
-- `--data data/master_dataset.csv`: Dùng master dataset (có data của tất cả)
+- `--data data/master_dataset_vi.csv`: **QUAN TRỌNG** - Dùng master dataset (có data của tất cả)
 - `--output experiments/member_TenBan_lr5e5/`: Lưu model vào folder này
 - `--experiment-name "..."`: Tên experiment (để nhận biết)
 - `--lr 5e-5`: Learning rate = 5e-5
 - `--register-model`: **QUAN TRỌNG** - Đăng ký model vào registry
+
+**Các script training:**
+
+| Script | File data | Khi nào dùng |
+|--------|-----------|--------------|
+| `train.py` | `data/sample_comments.csv` (cố định) | ❌ Không dùng (file cũ, tiếng Anh) |
+| `train_with_args.py` | Tùy chọn với `--data` | ✅ Luôn dùng (linh hoạt) |
 
 **Kết quả:**
 ```
@@ -340,7 +436,7 @@ MULTI-LABEL EMOTION CLASSIFICATION - TRAINING
 Experiment: Member TenBan - LR 5e-5
 
 Configuration:
-  Data: data/master_dataset.csv
+  Data: data/master_dataset_vi.csv
   Learning Rate: 5e-5
   ...
 
@@ -405,7 +501,7 @@ TRAINING COMPLETE!
 ```
 
 **Quá trình training:**
-1. Load data (445 samples)
+1. Load data từ `master_dataset_vi.csv` (445 samples)
 2. Split: 70% train, 15% val, 15% test
 3. Train 5 epochs (~2-3 phút/epoch trên CPU, ~30s/epoch trên GPU)
 4. Evaluate trên test set
@@ -416,6 +512,7 @@ TRAINING COMPLETE!
 - Train model với config của bạn
 - Registry tự động track metrics
 - Tự động so sánh với models khác
+- **Train trên master dataset** → Model không bị bias
 
 ---
 
@@ -663,22 +760,22 @@ Enter text (or 'quit' to exit):
 ### Đầu Tuần (Monday)
 
 - [ ] Pull code mới nhất: `git pull`
-- [ ] Tạo data của bạn: `data/member_TenBan_data.csv`
-- [ ] Merge data: `python merge_data.py`
-- [ ] Commit và push: `git add data/ && git commit -m "..." && git push`
+- [ ] Tạo data tiếng Việt của bạn: `data/member_TenBan.csv` (50-100 câu)
+- [ ] Merge data: `python merge_data.py data/member_*.csv --output data/master_dataset_vi.csv`
+- [ ] Commit và push: `git add data/ && git commit -m "Add Vietnamese data" && git push`
 
 ### Giữa Tuần (Wednesday - Friday)
 
 - [ ] Pull master dataset mới: `git pull`
-- [ ] Training với config của bạn: `python train_with_args.py --register-model`
-- [ ] Commit kết quả: `git add model_registry/ && git commit -m "..." && git push`
+- [ ] Training với master dataset: `python train_with_args.py --data data/master_dataset_vi.csv --register-model`
+- [ ] Commit kết quả: `git add model_registry/ && git commit -m "Training results" && git push`
 
 ### Cuối Tuần (Friday)
 
 - [ ] Pull kết quả của team: `git pull`
 - [ ] Xem tất cả models: `python model_registry.py list`
 - [ ] Deploy best model: `python model_registry.py deploy --model-id <best>`
-- [ ] Test model: `python predict.py`
+- [ ] Test model: `python my_test.py` hoặc `python demo_prediction.py`
 
 ---
 
@@ -777,8 +874,8 @@ git commit -m "fix"
 
 **✅ Good:**
 ```bash
-git commit -m "Add member_john data (200 comments)"
-git commit -m "Training: LR 5e-5 (Macro F1: 0.8123)"
+git commit -m "Add member_nam Vietnamese data (100 comments)"
+git commit -m "Training: LR 5e-5 on Vietnamese data (Macro F1: 0.8123)"
 git commit -m "Deploy best model (Macro F1: 0.8234)"
 ```
 
@@ -803,12 +900,32 @@ git pull
 
 ```bash
 # Backup trước khi merge
-copy data\member_TenBan_data.csv data\member_TenBan_data_backup.csv
+copy data\member_TenBan.csv data\member_TenBan_backup.csv
 ```
 
 ---
 
-### Tip 4: Document Config Của Bạn
+### Tip 4: Luôn Train Trên Master Dataset
+
+**❌ SAI:**
+```bash
+# Train trên file riêng của bạn
+python train_with_args.py --data data/member_nam.csv --register-model
+```
+
+**✅ ĐÚNG:**
+```bash
+# Train trên master dataset (có data của tất cả)
+python train_with_args.py --data data/master_dataset_vi.csv --register-model
+```
+
+**Tại sao:**
+- Train trên file riêng → Model bị bias, overfit, quên data cũ
+- Train trên master dataset → Model tổng quát, không bias
+
+---
+
+### Tip 5: Document Config Của Bạn
 
 Tạo file `experiments/member_TenBan_notes.txt`:
 ```
@@ -830,18 +947,20 @@ Experiment 3: Batch Size 32
 ## 📚 TÀI LIỆU THAM KHẢO
 
 ### Quick Reference
-- **GITHUB_QUICK_START.md** - Quick start guide
-- **QUICK_START_COLLABORATIVE.md** - Collaborative workflow
+- **HUONG_DAN_DONG_GOP_DATA.md** - Hướng dẫn chi tiết đóng góp data tiếng Việt
+- **QUICK_START.md** - Quick start guide
+- **CACH_SU_DUNG_PREDICTION.md** - Cách test prediction
+- **README.md** - Project overview
 
 ### Detailed Guides
-- **COLLABORATIVE_TRAINING_WORKFLOW.md** - Full workflow
-- **GITHUB_SETUP.md** - Git setup details
+- **COLLABORATIVE_TRAINING_WORKFLOW.md** - Full workflow (nếu có)
 - **README.md** - Project overview
 
 ### Tools Documentation
 - **merge_data.py --help** - Merge data tool
 - **model_registry.py --help** - Model registry tool
 - **compare_experiments.py --help** - Compare tool
+- **train_with_args.py --help** - Training tool với tham số
 
 ---
 
@@ -853,14 +972,14 @@ Experiment 3: Batch Size 32
 1. Setup lần đầu (1 lần)
    git clone → pip install
 
-2. Hàng tuần
-   git pull → Tạo data → merge_data.py → git push
+2. Hàng tuần - Góp data tiếng Việt
+   git pull → Tạo data (50-100 câu) → merge_data.py → git push
 
-3. Training
-   git pull → train_with_args.py --register-model → git push
+3. Training trên master dataset
+   git pull → train_with_args.py --data master_dataset_vi.csv --register-model → git push
 
 4. Deploy
-   model_registry.py list → deploy best model
+   model_registry.py list → deploy best model → test với my_test.py
 ```
 
 ### Commands Quan Trọng
@@ -869,11 +988,11 @@ Experiment 3: Batch Size 32
 # Pull code mới
 git pull
 
-# Merge data
-python merge_data.py
+# Merge data tiếng Việt
+python merge_data.py data/member_*.csv --output data/master_dataset_vi.csv
 
-# Training
-python train_with_args.py --data data/master_dataset.csv --register-model
+# Training trên master dataset (QUAN TRỌNG!)
+python train_with_args.py --data data/master_dataset_vi.csv --register-model
 
 # Xem models
 python model_registry.py list
@@ -881,11 +1000,23 @@ python model_registry.py list
 # Deploy
 python model_registry.py deploy --model-id <model_id>
 
+# Test prediction
+python my_test.py
+python demo_prediction.py
+
 # Commit và push
 git add .
 git commit -m "Message"
 git push
 ```
+
+### Quy Tắc Vàng
+
+1. **Luôn train trên `master_dataset_vi.csv`** (dataset chung), không train trên file riêng
+2. **Mỗi người đóng góp 50-100 câu tiếng Việt** để model học được tiếng Việt
+3. **Mỗi người thử config khác nhau** (lr, batch_size, epochs) để tìm config tốt nhất
+4. **Pull thường xuyên** trước khi làm việc, commit, và push
+5. **Commit message rõ ràng** để team hiểu bạn làm gì
 
 ---
 
