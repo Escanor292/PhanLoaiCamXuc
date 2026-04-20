@@ -125,8 +125,7 @@ copy .env.example .env
 - File `.env` chứa cấu hình AUTO_DEPLOY
 - `AUTO_DEPLOY=true` → Model tốt nhất tự động deploy
 - Tất cả team dùng chung config này
-
-> 📖 **Xem thêm:** File `CAU_HINH_AUTO_DEPLOY.md` có giải thích chi tiết về AUTO_DEPLOY
+- Không cần set biến môi trường thủ công trên từng máy
 
 ---
 
@@ -583,8 +582,6 @@ git add .env
 git commit -m "Disable auto-deploy"
 git push
 ```
-
-> 📖 **Xem thêm:** File `CAU_HINH_AUTO_DEPLOY.md` có hướng dẫn chi tiết về AUTO_DEPLOY
 
 **Tại sao:** 
 - Train model với config của bạn
