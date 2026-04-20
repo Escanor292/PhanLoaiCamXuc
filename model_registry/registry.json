@@ -1,0 +1,30 @@
+{
+  "models": [
+    {
+      "model_id": "model_20260420_182651",
+      "path": "model_registry\\models\\model_20260420_182651",
+      "metrics": {
+        "macro_f1": 0.0,
+        "micro_f1": 0.0,
+        "test_loss": 0.46609434485435486,
+        "hamming_loss": 0.14453125
+      },
+      "metadata": {
+        "person": "PHU TAI",
+        "experiment_name": "First Training",
+        "learning_rate": 2e-05,
+        "batch_size": 16,
+        "num_epochs": 2,
+        "dropout_rate": 0.3,
+        "max_length": 512,
+        "data_file": "data/sample_comments.csv",
+        "model_name": "bert-base-uncased"
+      },
+      "registered_at": "2026-04-20T18:26:52.199889",
+      "status": "registered"
+    }
+  ],
+  "production_model": null,
+  "best_model": "model_20260420_182651",
+  "created_at": "2026-04-20T18:26:51.862884"
+}

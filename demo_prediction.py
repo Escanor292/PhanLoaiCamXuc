@@ -48,7 +48,7 @@ def show_no_model_message():
 def run_demo():
     """Run demo prediction."""
     print("="*70)
-    print("DEMO PREDICTION - EMOTION CLASSIFICATION")
+    print("DEMO DỰ ĐOÁN - PHÂN LOẠI CẢM XÚC")
     print("="*70)
     print()
     
@@ -59,22 +59,23 @@ def run_demo():
     
     # Import prediction module
     try:
-        from predict import predict_emotions, load_model
+        from predict import predict_emotions
+        from utils import load_model
         from config import Config
     except ImportError as e:
-        print(f"Error importing modules: {e}")
-        print("Make sure you have installed all dependencies:")
+        print(f"Lỗi import module: {e}")
+        print("Đảm bảo bạn đã cài đặt tất cả dependencies:")
         print("  pip install -r requirements.txt")
         return
     
     # Load model
-    print("Loading model...")
+    print("Đang tải model...")
     try:
         model, tokenizer = load_model('saved_model')
-        print("✓ Model loaded successfully!")
+        print("✓ Model đã tải thành công!")
         print()
     except Exception as e:
-        print(f"✗ Error loading model: {e}")
+        print(f"✗ Lỗi khi tải model: {e}")
         return
     
     # Demo predictions
@@ -87,35 +88,38 @@ def run_demo():
     ]
     
     print("="*70)
-    print("DEMO PREDICTIONS")
+    print("CÁC DỰ ĐOÁN DEMO")
     print("="*70)
     print()
     
     for i, text in enumerate(test_cases, 1):
-        print(f"{i}. Text: \"{text}\"")
+        print(f"{i}. Văn bản: \"{text}\"")
         print("-" * 70)
         
         try:
             result = predict_emotions(text, model, tokenizer, 'cpu')
             
-            print(f"   Predicted Emotions: {', '.join(result['emotions']) if result['emotions'] else 'None'}")
-            print(f"   Top 3 Confidence Scores:")
+            # Convert emotions to Vietnamese
+            emotions_vi = [Config.EMOTION_LABELS_VI.get(e, e) for e in result['emotions']]
+            print(f"   Cảm xúc dự đoán: {', '.join(emotions_vi) if emotions_vi else 'Không có'}")
+            print(f"   Top 3 điểm tin cậy:")
             
             # Sort by confidence
             sorted_scores = sorted(result['scores'].items(), key=lambda x: x[1], reverse=True)
             for emotion, score in sorted_scores[:3]:
-                print(f"     • {emotion:15s}: {score:.4f}")
+                emotion_vi = Config.EMOTION_LABELS_VI.get(emotion, emotion)
+                print(f"     • {emotion_vi:15s}: {score:.4f}")
             
             print()
         except Exception as e:
-            print(f"   ✗ Error: {e}")
+            print(f"   ✗ Lỗi: {e}")
             print()
     
     print("="*70)
-    print("DEMO COMPLETE")
+    print("DEMO HOÀN TẤT")
     print("="*70)
     print()
-    print("To try your own text, run:")
+    print("Để thử văn bản của bạn, chạy:")
     print("  python predict.py")
     print()
 

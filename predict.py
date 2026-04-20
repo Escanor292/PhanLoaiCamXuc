@@ -309,27 +309,28 @@ def display_prediction(text, result, show_all_scores=False):
                                If False, only show predicted emotions.
     """
     print("\n" + "="*70)
-    print("EMOTION PREDICTION RESULTS")
+    print("KẾT QUẢ DỰ ĐOÁN CẢM XÚC")
     print("="*70)
-    print(f"\nInput Text: \"{text}\"")
+    print(f"\nVăn bản: \"{text}\"")
     print("\n" + "-"*70)
     
     if result['emotions']:
-        print(f"\nPredicted Emotions ({len(result['emotions'])}):")
+        print(f"\nCảm xúc dự đoán ({len(result['emotions'])}):")
         print("-" * 70)
         for emotion in result['emotions']:
             score = result['scores'][emotion]
+            emotion_vi = Config.EMOTION_LABELS_VI.get(emotion, emotion)
             # Create a visual bar
             bar_length = int(score * 40)
             bar = "█" * bar_length + "░" * (40 - bar_length)
-            print(f"  {emotion:15s} [{bar}] {score:.3f}")
+            print(f"  {emotion_vi:15s} [{bar}] {score:.3f}")
     else:
-        print("\nPredicted Emotions: None")
-        print("(No emotions exceeded the confidence threshold)")
+        print("\nCảm xúc dự đoán: Không có")
+        print("(Không có cảm xúc nào vượt ngưỡng tin cậy)")
     
     if show_all_scores:
         print("\n" + "-"*70)
-        print("\nAll Emotion Confidence Scores:")
+        print("\nĐiểm tin cậy tất cả cảm xúc:")
         print("-" * 70)
         # Sort by score descending
         sorted_scores = sorted(
@@ -338,10 +339,11 @@ def display_prediction(text, result, show_all_scores=False):
             reverse=True
         )
         for emotion, score in sorted_scores:
+            emotion_vi = Config.EMOTION_LABELS_VI.get(emotion, emotion)
             bar_length = int(score * 40)
             bar = "█" * bar_length + "░" * (40 - bar_length)
             marker = "✓" if emotion in result['emotions'] else " "
-            print(f"{marker} {emotion:15s} [{bar}] {score:.3f}")
+            print(f"{marker} {emotion_vi:15s} [{bar}] {score:.3f}")
     
     print("\n" + "="*70 + "\n")
 
@@ -387,72 +389,72 @@ def main():
         ======================================================================
     """
     print("\n" + "="*70)
-    print("MULTI-LABEL EMOTION CLASSIFICATION SYSTEM")
+    print("HỆ THỐNG PHÂN LOẠI CẢM XÚC ĐA NHÃN")
     print("="*70)
-    print("\nThis system predicts emotions from comment text using BERT.")
-    print(f"Supported emotions: {', '.join(Config.EMOTION_LABELS[:8])},")
-    print(f"                    {', '.join(Config.EMOTION_LABELS[8:])}")
-    print("\nCommands:")
-    print("  - Enter text to predict emotions")
-    print("  - Type 'quit' or 'exit' to exit")
-    print("  - Type 'help' for more information")
+    print("\nHệ thống này dự đoán cảm xúc từ văn bản bình luận sử dụng BERT.")
+    print(f"Các cảm xúc hỗ trợ: {', '.join([Config.EMOTION_LABELS_VI[e] for e in Config.EMOTION_LABELS[:8]])},")
+    print(f"                    {', '.join([Config.EMOTION_LABELS_VI[e] for e in Config.EMOTION_LABELS[8:]])}")
+    print("\nLệnh:")
+    print("  - Nhập văn bản để dự đoán cảm xúc")
+    print("  - Gõ 'quit' hoặc 'exit' để thoát")
+    print("  - Gõ 'help' để xem thêm thông tin")
     print("="*70 + "\n")
     
     # Load model
-    print("Loading model from:", Config.MODEL_SAVE_DIR)
-    print("This may take a moment...")
+    print("Đang tải model từ:", Config.MODEL_SAVE_DIR)
+    print("Vui lòng đợi...")
     
     try:
         model, tokenizer = load_model(Config.MODEL_SAVE_DIR, Config.DEVICE)
-        print(f"✓ Model loaded successfully on device: {Config.DEVICE}")
-        print(f"✓ Prediction threshold: {Config.PREDICTION_THRESHOLD}")
+        print(f"✓ Model đã tải thành công trên thiết bị: {Config.DEVICE}")
+        print(f"✓ Ngưỡng dự đoán: {Config.PREDICTION_THRESHOLD}")
     except FileNotFoundError as e:
-        print(f"\n✗ Error: {str(e)}")
-        print("\nPlease train the model first by running:")
+        print(f"\n✗ Lỗi: {str(e)}")
+        print("\nVui lòng train model trước bằng lệnh:")
         print("  python train.py")
         return
     except Exception as e:
-        print(f"\n✗ Error loading model: {str(e)}")
-        print("\nPlease ensure the model was trained correctly.")
+        print(f"\n✗ Lỗi khi tải model: {str(e)}")
+        print("\nVui lòng đảm bảo model đã được train đúng cách.")
         return
     
     print("\n" + "="*70)
-    print("Ready for predictions!")
+    print("Sẵn sàng dự đoán!")
     print("="*70 + "\n")
     
     # Interactive loop
     while True:
         try:
             # Get user input
-            user_input = input("Enter a comment (or 'quit' to exit): ").strip()
+            user_input = input("Nhập bình luận (hoặc 'quit' để thoát): ").strip()
             
             # Handle empty input
             if not user_input:
-                print("⚠ Please enter some text.\n")
+                print("⚠ Vui lòng nhập văn bản.\n")
                 continue
             
             # Handle commands
-            if user_input.lower() in ['quit', 'exit', 'q']:
-                print("\nThank you for using the Emotion Classification System!")
-                print("Goodbye!\n")
+            if user_input.lower() in ['quit', 'exit', 'q', 'thoat', 'thoát']:
+                print("\nCảm ơn bạn đã sử dụng Hệ thống Phân loại Cảm xúc!")
+                print("Tạm biệt!\n")
                 break
             
             if user_input.lower() == 'help':
                 print("\n" + "="*70)
-                print("HELP")
+                print("TRỢ GIÚP")
                 print("="*70)
-                print("\nHow to use:")
-                print("  1. Enter any comment text when prompted")
-                print("  2. The system will analyze and predict emotions")
-                print("  3. Results show emotions that exceed the confidence threshold")
-                print(f"     (current threshold: {Config.PREDICTION_THRESHOLD})")
-                print("\nTips:")
-                print("  - Longer, more expressive text generally works better")
-                print("  - The system can detect multiple emotions simultaneously")
-                print("  - Confidence scores range from 0.0 (unlikely) to 1.0 (very likely)")
-                print("\nCommands:")
-                print("  quit, exit, q - Exit the program")
-                print("  help          - Show this help message")
+                print("\nCách sử dụng:")
+                print("  1. Nhập văn bản bình luận khi được yêu cầu")
+                print("  2. Hệ thống sẽ phân tích và dự đoán cảm xúc")
+                print("  3. Kết quả hiển thị các cảm xúc vượt ngưỡng tin cậy")
+                print(f"     (ngưỡng hiện tại: {Config.PREDICTION_THRESHOLD})")
+                print("\nMẹo:")
+                print("  - Văn bản dài và rõ ràng thường cho kết quả tốt hơn")
+                print("  - Hệ thống có thể phát hiện nhiều cảm xúc cùng lúc")
+                print("  - Điểm tin cậy từ 0.0 (thấp) đến 1.0 (cao)")
+                print("\nLệnh:")
+                print("  quit, exit, q - Thoát chương trình")
+                print("  help          - Hiển thị trợ giúp")
                 print("="*70 + "\n")
                 continue
             
@@ -470,27 +472,27 @@ def main():
                 display_prediction(user_input, result, show_all_scores=False)
                 
                 # Ask if user wants to see all scores
-                show_all = input("Show all emotion scores? (y/n): ").strip().lower()
-                if show_all in ['y', 'yes']:
+                show_all = input("Hiển thị điểm tất cả cảm xúc? (y/n): ").strip().lower()
+                if show_all in ['y', 'yes', 'c', 'co', 'có']:
                     display_prediction(user_input, result, show_all_scores=True)
             
             except ValueError as e:
-                print(f"\n✗ Input Error: {str(e)}\n")
+                print(f"\n✗ Lỗi đầu vào: {str(e)}\n")
             except RuntimeError as e:
-                print(f"\n✗ Prediction Error: {str(e)}\n")
+                print(f"\n✗ Lỗi dự đoán: {str(e)}\n")
             except Exception as e:
-                print(f"\n✗ Unexpected Error: {str(e)}\n")
-                print("Please try again with different input.\n")
+                print(f"\n✗ Lỗi không mong đợi: {str(e)}\n")
+                print("Vui lòng thử lại với văn bản khác.\n")
         
         except KeyboardInterrupt:
-            print("\n\nInterrupted by user.")
-            print("Thank you for using the Emotion Classification System!")
-            print("Goodbye!\n")
+            print("\n\nBị gián đoạn bởi người dùng.")
+            print("Cảm ơn bạn đã sử dụng Hệ thống Phân loại Cảm xúc!")
+            print("Tạm biệt!\n")
             break
         
         except Exception as e:
-            print(f"\n✗ Unexpected Error: {str(e)}\n")
-            print("Please try again.\n")
+            print(f"\n✗ Lỗi không mong đợi: {str(e)}\n")
+            print("Vui lòng thử lại.\n")
 
 
 if __name__ == "__main__":

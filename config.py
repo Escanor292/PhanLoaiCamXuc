@@ -74,6 +74,26 @@ class Config:
         "excited"
     ]
     
+    # Vietnamese translations for emotion labels
+    EMOTION_LABELS_VI = {
+        "joy": "vui vẻ",
+        "trust": "tin tưởng",
+        "fear": "sợ hãi",
+        "surprise": "ngạc nhiên",
+        "sadness": "buồn bã",
+        "disgust": "ghê tởm",
+        "anger": "tức giận",
+        "anticipation": "mong đợi",
+        "love": "yêu thương",
+        "worried": "lo lắng",
+        "disappointed": "thất vọng",
+        "proud": "tự hào",
+        "embarrassed": "xấu hổ",
+        "jealous": "ghen tị",
+        "calm": "bình tĩnh",
+        "excited": "phấn khích"
+    }
+    
     # Reproducibility
     RANDOM_SEED = 42
     
