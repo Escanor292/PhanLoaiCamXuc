@@ -58,7 +58,7 @@ def validate_dataframe(df, filename):
     return True
 
 
-def merge_datasets(data_files, output_file, remove_duplicates=True, validate=True):
+def merge_datasets(data_files, output_file, remove_duplicates=True, validate=True, conflict_strategy='report'):
     """
     Merge multiple CSV files into one master dataset.
     
@@ -67,6 +67,7 @@ def merge_datasets(data_files, output_file, remove_duplicates=True, validate=Tru
         output_file: Output master dataset path
         remove_duplicates: Whether to remove duplicate texts
         validate: Whether to validate data format
+        conflict_strategy: How to handle conflicts ('report', 'first', 'last', 'merge', 'skip')
         
     Returns:
         DataFrame: Merged dataset
@@ -106,11 +107,98 @@ def merge_datasets(data_files, output_file, remove_duplicates=True, validate=Tru
     print(f"\nMerging {len(all_data)} files...")
     master_df = pd.concat(all_data, ignore_index=True)
     
-    # Remove duplicates if requested
+    # Check for conflicts (same text, different labels)
     duplicates_removed = 0
+    conflicts_found = 0
+    
     if remove_duplicates:
         original_len = len(master_df)
-        master_df = master_df.drop_duplicates(subset=['text'], keep='first')
+        
+        # Find duplicates
+        duplicate_texts = master_df[master_df.duplicated(subset=['text'], keep=False)]
+        
+        if len(duplicate_texts) > 0:
+            # Group by text to find conflicts
+            emotion_cols = [col for col in master_df.columns if col in Config.EMOTION_LABELS]
+            
+            conflicts = []
+            for text, group in duplicate_texts.groupby('text'):
+                if len(group) > 1:
+                    # Check if labels are different
+                    labels_equal = True
+                    first_labels = group.iloc[0][emotion_cols].values
+                    
+                    for idx in range(1, len(group)):
+                        current_labels = group.iloc[idx][emotion_cols].values
+                        if not (first_labels == current_labels).all():
+                            labels_equal = False
+                            break
+                    
+                    if not labels_equal:
+                        conflicts.append({
+                            'text': text,
+                            'count': len(group),
+                            'labels': [group.iloc[i][emotion_cols].to_dict() for i in range(len(group))]
+                        })
+            
+            conflicts_found = len(conflicts)
+            
+            if conflicts_found > 0:
+                print(f"\n⚠ WARNING: Found {conflicts_found} conflicts (same text, different labels)!")
+                print("="*70)
+                
+                # Show first 3 conflicts
+                for i, conflict in enumerate(conflicts[:3], 1):
+                    print(f"\nConflict {i}: \"{conflict['text'][:50]}...\"")
+                    print(f"  Found {conflict['count']} times with different labels:")
+                    
+                    for j, labels in enumerate(conflict['labels'], 1):
+                        emotions = [emotion for emotion, value in labels.items() if value == 1]
+                        emotions_vi = [Config.EMOTION_LABELS_VI.get(e, e) for e in emotions]
+                        print(f"    Version {j}: {', '.join(emotions_vi) if emotions_vi else 'Không có'}")
+                
+                if conflicts_found > 3:
+                    print(f"\n  ... and {conflicts_found - 3} more conflicts")
+                
+                print("\n" + "="*70)
+                print(f"Conflict strategy: {conflict_strategy}")
+                
+                if conflict_strategy == 'report':
+                    print("⚠ Keeping first occurrence of each conflict (default)")
+                    print("  To change: use --conflict-strategy [first|last|merge|skip]")
+                elif conflict_strategy == 'merge':
+                    print("✓ Merging labels (OR logic: if any version has 1, keep 1)")
+                elif conflict_strategy == 'skip':
+                    print("✓ Skipping all conflicting samples")
+                
+                print("="*70)
+        
+        # Handle duplicates based on strategy
+        if conflict_strategy == 'merge' and conflicts_found > 0:
+            # Merge labels using OR logic
+            print("\nMerging conflicting labels...")
+            
+            # Group by text and merge
+            def merge_labels(group):
+                result = group.iloc[0].copy()
+                for emotion in emotion_cols:
+                    # OR logic: if any row has 1, result is 1
+                    result[emotion] = int(group[emotion].max())
+                return result
+            
+            master_df = master_df.groupby('text', as_index=False).apply(merge_labels)
+            master_df = master_df.reset_index(drop=True)
+            
+        elif conflict_strategy == 'skip' and conflicts_found > 0:
+            # Remove all conflicting samples
+            print("\nSkipping conflicting samples...")
+            conflict_texts = [c['text'] for c in conflicts]
+            master_df = master_df[~master_df['text'].isin(conflict_texts)]
+            
+        else:
+            # Default: keep first occurrence
+            master_df = master_df.drop_duplicates(subset=['text'], keep='first')
+        
         duplicates_removed = original_len - len(master_df)
         
         if duplicates_removed > 0:
@@ -125,6 +213,7 @@ def merge_datasets(data_files, output_file, remove_duplicates=True, validate=Tru
     print("="*70)
     print(f"Total samples loaded: {total_samples}")
     print(f"Duplicates removed: {duplicates_removed}")
+    print(f"Conflicts found: {conflicts_found}")
     print(f"Final dataset size: {len(master_df)}")
     print(f"Output: {output_file}")
     print("="*70)
@@ -192,6 +281,17 @@ Examples:
         help='Keep duplicate texts (default: remove duplicates)'
     )
     parser.add_argument(
+        '--conflict-strategy',
+        choices=['report', 'first', 'last', 'merge', 'skip'],
+        default='report',
+        help='''How to handle conflicts (same text, different labels):
+        report: Report conflicts and keep first (default)
+        first: Keep first occurrence
+        last: Keep last occurrence
+        merge: Merge labels using OR logic (if any version has 1, keep 1)
+        skip: Skip all conflicting samples'''
+    )
+    parser.add_argument(
         '--no-validate',
         action='store_true',
         help='Skip data validation (default: validate)'
@@ -231,7 +331,8 @@ Examples:
         data_files=data_files,
         output_file=args.output,
         remove_duplicates=not args.keep_duplicates,
-        validate=not args.no_validate
+        validate=not args.no_validate,
+        conflict_strategy=args.conflict_strategy
     )
     
     if master_df is not None:
