@@ -15,12 +15,16 @@ from sklearn.model_selection import train_test_split
 import numpy as np
 import os
 from tqdm import tqdm
+from dotenv import load_dotenv
 
 from config import Config
 from model import BERTEmotionClassifier
 from dataset import EmotionDataset
 from utils import load_data, compute_metrics, plot_training_curves, save_model
 from model_registry import ModelRegistry
+
+# Load environment variables from .env file
+load_dotenv()
 
 
 def parse_args():
