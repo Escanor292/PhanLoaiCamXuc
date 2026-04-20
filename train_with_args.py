@@ -28,7 +28,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Train Multi-label Emotion Classification Model')
     
     # Data arguments
-    parser.add_argument('--data', type=str, default=Config.DATA_FILE,
+    parser.add_argument('--data', type=str, default='data/sample_comments.csv',
                         help='Path to training data CSV file')
     parser.add_argument('--output', type=str, default=Config.MODEL_SAVE_DIR,
                         help='Directory to save model checkpoints')
