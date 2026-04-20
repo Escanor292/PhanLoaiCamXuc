@@ -9,7 +9,7 @@ Model hiện tại được train trên tiếng Anh, nên độ chính xác vớ
 - Model hiểu tiếng Việt tốt hơn
 - Dự đoán chính xác hơn nhiều
 
-**Mục tiêu:** Mỗi thành viên đóng góp 50-100 câu tiếng Việt
+**Mục tiêu:** Mỗi thành viên đóng góp 300-500 câu tiếng Việt
 
 ---
 
