@@ -96,7 +96,41 @@ Successfully installed ...
 
 ---
 
-### Bước 1.4: Verify Setup
+### Bước 1.4: Kiểm tra file .env (AUTO_DEPLOY)
+
+**Làm gì:** Kiểm tra cấu hình AUTO_DEPLOY đã có chưa
+
+**Làm như nào:**
+```bash
+# Kiểm tra file .env có tồn tại không
+cat .env
+```
+
+**Kết quả mong đợi:**
+```
+AUTO_DEPLOY=true
+REGISTRY_DIR=model_registry
+DEFAULT_EPOCHS=5
+DEFAULT_BATCH_SIZE=16
+DEFAULT_LEARNING_RATE=2e-5
+```
+
+**Nếu không có file .env:**
+```bash
+# Copy từ template
+copy .env.example .env
+```
+
+**Tại sao:** 
+- File `.env` chứa cấu hình AUTO_DEPLOY
+- `AUTO_DEPLOY=true` → Model tốt nhất tự động deploy
+- Tất cả team dùng chung config này
+
+> 📖 **Xem thêm:** File `CAU_HINH_AUTO_DEPLOY.md` có giải thích chi tiết về AUTO_DEPLOY
+
+---
+
+### Bước 1.5: Verify Setup
 
 **Làm gì:** Kiểm tra xem setup đã OK chưa
 
@@ -507,11 +541,56 @@ TRAINING COMPLETE!
 4. Evaluate trên test set
 5. Register model vào registry
 6. Check xem có phải best model không
+7. **AUTO_DEPLOY:** Nếu model tốt hơn → Tự động deploy (nếu `AUTO_DEPLOY=true` trong file `.env`)
+
+**Về AUTO_DEPLOY:**
+
+File `.env` đã được cấu hình sẵn:
+```
+AUTO_DEPLOY=true
+```
+
+**Điều này có nghĩa là:**
+- ✅ Nếu model của bạn tốt hơn model hiện tại → **Tự động deploy**
+- ✅ Không cần chạy lệnh deploy thủ công
+- ✅ Model production tự động cập nhật
+
+**Kết quả khi AUTO_DEPLOY=true:**
+```
+🎉 NEW BEST MODEL FOUND!
+======================================================================
+Previous Best: model_20260420_120000 (Macro F1: 0.8123)
+New Best: model_20260420_143022 (Macro F1: 0.8234)
+Improvement: +0.0111
+======================================================================
+
+AUTO_DEPLOY enabled. Deploying best model...
+✓ Backed up current model to: model_registry/backups/backup_20260420_143022
+✓ Model deployed to production: saved_model/
+✓ Model deployed successfully!
+```
+
+**Nếu muốn tắt AUTO_DEPLOY:**
+```bash
+# Sửa file .env
+notepad .env
+
+# Đổi thành
+AUTO_DEPLOY=false
+
+# Commit và push
+git add .env
+git commit -m "Disable auto-deploy"
+git push
+```
+
+> 📖 **Xem thêm:** File `CAU_HINH_AUTO_DEPLOY.md` có hướng dẫn chi tiết về AUTO_DEPLOY
 
 **Tại sao:** 
 - Train model với config của bạn
 - Registry tự động track metrics
 - Tự động so sánh với models khác
+- **AUTO_DEPLOY:** Model tốt nhất tự động deploy → Tiết kiệm thời gian
 - **Train trên master dataset** → Model không bị bias
 
 ---
@@ -670,25 +749,52 @@ Improvement over baseline: +8.2%
 
 ## 🚀 PHẦN 5: DEPLOY MODEL TỐT NHẤT
 
-### Bước 5.1: Deploy Model
+> **💡 LƯU Ý:** Nếu `AUTO_DEPLOY=true` trong file `.env`, model tốt nhất sẽ **TỰ ĐỘNG DEPLOY** sau khi training. Bạn **KHÔNG CẦN** làm bước này!
 
-**Làm gì:** Deploy model tốt nhất vào production
+### Bước 5.1: Kiểm tra AUTO_DEPLOY
+
+**Làm gì:** Kiểm tra xem AUTO_DEPLOY có bật không
+
+**Làm như nào:**
+```bash
+# Xem file .env
+cat .env
+```
+
+**Kết quả:**
+```
+AUTO_DEPLOY=true  ← Đã bật, model tự động deploy
+```
+
+**Nếu AUTO_DEPLOY=true:**
+- ✅ Model tốt nhất **TỰ ĐỘNG DEPLOY** sau khi training
+- ✅ **KHÔNG CẦN** chạy lệnh deploy thủ công
+- ✅ Bỏ qua Bước 5.2
+
+**Nếu AUTO_DEPLOY=false:**
+- ❌ Phải deploy thủ công (xem Bước 5.2)
+
+---
+
+### Bước 5.2: Deploy thủ công (Chỉ khi AUTO_DEPLOY=false)
+
+**Làm gì:** Deploy model tốt nhất vào production (nếu chưa tự động deploy)
 
 **Làm như nào:**
 
-**Option 1: Manual Deploy**
+**Option 1: Deploy model cụ thể**
 ```bash
-# Deploy model cụ thể
+# Xem danh sách models
+python model_registry.py list
+
+# Deploy model tốt nhất
 python model_registry.py deploy --model-id model_20260420_150000
 ```
 
-**Option 2: Auto Deploy (Khuyến nghị)**
-```bash
-# Enable auto-deploy (1 lần)
-$env:AUTO_DEPLOY = "true"
-
-# Sau đó training sẽ tự động deploy nếu tốt hơn
-python train_with_args.py --data data/master_dataset.csv --register-model
+**Option 2: Dùng script tự động**
+```powershell
+# Script tự động: pull → merge → train → deploy
+.\auto_train_and_deploy.ps1
 ```
 
 **Kết quả:**
@@ -718,7 +824,7 @@ DEPLOYING MODEL TO PRODUCTION
 
 ---
 
-### Bước 5.2: Test Model Production
+### Bước 5.3: Test Model Production
 
 **Làm gì:** Test model vừa deploy
 
