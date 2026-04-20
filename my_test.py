@@ -15,7 +15,7 @@ print("✓ Model đã tải!\n")
 # THAY ĐỔI VĂN BẢN Ở ĐÂY
 # ========================================
 test_texts = [
-    "đụ má vãi lồn",
+    "fuck you",
 ]
 
 print("="*70)
@@ -28,7 +28,7 @@ for i, text in enumerate(test_texts, 1):
     print(f"{i}. Văn bản: \"{text}\"")
     print("-" * 70)
     
-    result = predict_emotions(text, model, tokenizer, 'cpu')
+    result = predict_emotions(text, model, tokenizer, 'cpu', threshold=0.4)
     
     # Hiển thị cảm xúc
     emotions_vi = [Config.EMOTION_LABELS_VI.get(e, e) for e in result['emotions']]

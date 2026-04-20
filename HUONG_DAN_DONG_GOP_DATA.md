@@ -167,11 +167,11 @@ python compare_experiments.py
 
 | Số thành viên | Câu/người | Tổng câu | Độ chính xác dự kiến |
 |---------------|-----------|----------|----------------------|
-| 3 người | 50 câu | 150 câu | 65-75% |
-| 5 người | 100 câu | 500 câu | 75-85% |
-| 10 người | 100 câu | 1000 câu | 85-90% |
+| 3 người       | 300 câu   | 1500 câu | 65-75%               |
+| 5 người       | 100 câu   | 2500 câu  | 75-85%               |
+| 10 người      | 100 câu   | 10000 câu | 85-90%               |
 
-**Khuyến nghị:** Mỗi người nên đóng góp ít nhất 50 câu để có kết quả tốt.
+**Khuyến nghị:** Mỗi người nên đóng góp ít nhất 300 câu để có kết quả tốt.
 
 ---
 
