@@ -49,6 +49,8 @@ data/*.json
 !data/.gitkeep
 !data/sample_comments.csv
 !data/TEMPLATE_DONG_GOP_DATA.csv
+!data/member_*.csv
+!data/master_dataset_vi.csv
 
 # Training outputs
 *.png
