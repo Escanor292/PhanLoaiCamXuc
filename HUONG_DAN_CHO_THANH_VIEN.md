@@ -325,22 +325,30 @@ Output: data/master_dataset_vi.csv
 
 ---
 
-### Bước 2.4: Commit và Push Data
+### Bước 2.4: Kiểm Tra Trước Khi Push
 
-**Làm gì:** Upload data của bạn lên GitHub để team khác dùng
+**Làm gì:** Kiểm tra để đảm bảo không xóa file trước khi push
 
 **Làm như nào:**
 ```bash
-# 1. Add files
+# 1. Kiểm tra trước khi push (QUAN TRỌNG!)
+python check_before_push.py
+
+# 2. Nếu OK, tiếp tục add files
 git add data/member_TenBan.csv
 git add data/master_dataset_vi.csv
 
-# 2. Commit với message rõ ràng
+# 3. Commit với message rõ ràng
 git commit -m "Add member_TenBan Vietnamese data (100 comments)"
 
-# 3. Push lên GitHub
+# 4. Push lên GitHub
 git push
 ```
+
+**⚠️ QUY TẮC QUAN TRỌNG:**
+- **CHỈ ĐƯỢC PHÉP:** Thêm file mới, sửa đổi file hiện có
+- **KHÔNG ĐƯỢC PHÉP:** Xóa file (sẽ bị từ chối tự động)
+- Script `check_before_push.py` sẽ cảnh báo nếu bạn xóa file
 
 **Kết quả:**
 ```
@@ -592,21 +600,25 @@ git push
 
 ---
 
-### Bước 3.4: Commit Kết Quả
+### Bước 3.4: Kiểm Tra và Commit Kết Quả
 
-**Làm gì:** Upload kết quả training lên GitHub
+**Làm gì:** Kiểm tra và upload kết quả training lên GitHub
 
 **Làm như nào:**
 ```bash
-# Commit registry (chứa metrics)
+# 1. Kiểm tra trước khi commit (QUAN TRỌNG!)
+python check_before_push.py
+
+# 2. Nếu OK, commit registry (chứa metrics)
 git add model_registry/registry.json
 git commit -m "Training: Member TenBan - LR 5e-5 (Macro F1: 0.8123)"
 git push
 ```
 
-**Lưu ý:** 
+**⚠️ QUY TẮC:**
 - **KHÔNG commit** folder `experiments/` (quá lớn)
 - **CHỈ commit** `model_registry/registry.json` (chứa metrics)
+- **KHÔNG được xóa** file của người khác
 
 **Tại sao:** 
 - Team khác biết kết quả của bạn
@@ -863,14 +875,17 @@ Enter text (or 'quit' to exit):
 ### Đầu Tuần (Monday)
 
 - [ ] Pull code mới nhất: `git pull`
+- [ ] **Kiểm tra trước khi làm việc:** `python check_before_push.py`
 - [ ] Tạo data tiếng Việt của bạn: `data/member_TenBan.csv` (50-100 câu)
 - [ ] Merge data: `python merge_data.py data/member_*.csv --output data/master_dataset_vi.csv`
+- [ ] **Kiểm tra trước khi push:** `python check_before_push.py`
 - [ ] Commit và push: `git add data/ && git commit -m "Add Vietnamese data" && git push`
 
 ### Giữa Tuần (Wednesday - Friday)
 
 - [ ] Pull master dataset mới: `git pull`
 - [ ] Training với master dataset: `python train_with_args.py --data data/master_dataset_vi.csv --register-model`
+- [ ] **Kiểm tra trước khi push:** `python check_before_push.py`
 - [ ] Commit kết quả: `git add model_registry/ && git commit -m "Training results" && git push`
 
 ### Cuối Tuần (Friday)
@@ -1091,6 +1106,9 @@ Experiment 3: Batch Size 32
 # Pull code mới
 git pull
 
+# Kiểm tra trước khi làm việc (QUAN TRỌNG!)
+python check_before_push.py
+
 # Merge data tiếng Việt
 python merge_data.py data/member_*.csv --output data/master_dataset_vi.csv
 
@@ -1107,6 +1125,9 @@ python model_registry.py deploy --model-id <model_id>
 python my_test.py
 python demo_prediction.py
 
+# Kiểm tra trước khi push (QUAN TRỌNG!)
+python check_before_push.py
+
 # Commit và push
 git add .
 git commit -m "Message"
@@ -1120,6 +1141,8 @@ git push
 3. **Mỗi người thử config khác nhau** (lr, batch_size, epochs) để tìm config tốt nhất
 4. **Pull thường xuyên** trước khi làm việc, commit, và push
 5. **Commit message rõ ràng** để team hiểu bạn làm gì
+6. **⚠️ KHÔNG ĐƯỢC XÓA FILE** - Chỉ được thêm hoặc sửa file
+7. **Luôn chạy `python check_before_push.py`** trước khi push
 
 ---
 
