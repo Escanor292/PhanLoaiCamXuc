@@ -91,6 +91,29 @@
       },
       "registered_at": "2026-04-22T09:06:54.023218",
       "status": "registered"
+    },
+    {
+      "model_id": "model_20260422_093206",
+      "path": "model_registry/models/model_20260422_093206",
+      "metrics": {
+        "macro_f1": 0.0,
+        "micro_f1": 0.0,
+        "test_loss": 0.44628481566905975,
+        "hamming_loss": 0.235
+      },
+      "metadata": {
+        "person": "tranan",
+        "experiment_name": "Member An - v4 (327 samples)",
+        "learning_rate": 2e-05,
+        "batch_size": 16,
+        "num_epochs": 5,
+        "dropout_rate": 0.3,
+        "max_length": 512,
+        "data_file": "data/member_an.csv",
+        "model_name": "bert-base-uncased"
+      },
+      "registered_at": "2026-04-22T09:32:06.667216",
+      "status": "registered"
     }
   ],
   "production_model": null,
