@@ -84,6 +84,7 @@ def load_and_merge_data(data_dir):
 def load_base_model(model_registry, model_id=None):
     """
     Load a pre-trained model from the model registry for transfer learning.
+    If model files don't exist locally, try to download from cloud storage.
     
     Args:
         model_registry (ModelRegistry): Model registry instance
@@ -93,12 +94,6 @@ def load_base_model(model_registry, model_id=None):
         tuple: (model, base_model_info) where:
             - model (BERTEmotionClassifier): Loaded model with pre-trained weights
             - base_model_info (dict): Information about the base model
-    
-    Example:
-        >>> registry = ModelRegistry()
-        >>> model, info = load_base_model(registry)
-        Loading base model: model_20260422_124631
-        Base model metrics: macro_f1=0.0, test_loss=0.3516
     """
     # Get base model info
     if model_id is None:
@@ -120,21 +115,40 @@ def load_base_model(model_registry, model_id=None):
     print(f"  Test Loss: {base_model_info['metrics']['test_loss']:.4f}")
     print(f"  Macro F1: {base_model_info['metrics']['macro_f1']:.4f}")
     
+    # Check if model file exists
+    model_file = os.path.join(model_path, "pytorch_model.bin")
+    if not os.path.exists(model_file):
+        print(f"⚠️  Model file not found locally: {model_file}")
+        print("🔄 Attempting to download from cloud storage...")
+        
+        try:
+            from model_sharing import ModelSharing
+            sharing = ModelSharing()
+            if sharing.download_model(model_id, model_path):
+                print("✅ Model downloaded successfully!")
+            else:
+                print("❌ Failed to download model. Starting from scratch.")
+                return None, None
+        except ImportError:
+            print("❌ Model sharing not available. Starting from scratch.")
+            return None, None
+        except Exception as e:
+            print(f"❌ Download error: {e}. Starting from scratch.")
+            return None, None
+    
     # Load model weights
     model = BERTEmotionClassifier(
         num_labels=Config.NUM_LABELS,
         dropout_rate=Config.DROPOUT_RATE
     )
     
-    model_file = os.path.join(model_path, "pytorch_model.bin")
-    if not os.path.exists(model_file):
-        print(f"Model file not found: {model_file}. Starting from scratch.")
+    try:
+        model.load_state_dict(torch.load(model_file, map_location='cpu'))
+        print(f"  ✓ Loaded pre-trained weights from {model_id}")
+        return model, base_model_info
+    except Exception as e:
+        print(f"❌ Failed to load model weights: {e}. Starting from scratch.")
         return None, None
-    
-    model.load_state_dict(torch.load(model_file, map_location='cpu'))
-    print(f"  ✓ Loaded pre-trained weights from {model_id}")
-    
-    return model, base_model_info
 
 
 def train_epoch(model, dataloader, optimizer, criterion, device):

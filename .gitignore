@@ -42,6 +42,13 @@ saved_model/
 *.pt
 *.pth
 
+# Model registry - ONLY keep metadata, ignore model files
+model_registry/models/*/pytorch_model.bin
+model_registry/models/*/model.bin
+model_registry/models/*/*.pt
+model_registry/models/*/*.pth
+model_registry/backups/
+
 # Data files
 data/*.csv
 data/*.txt
