@@ -199,17 +199,17 @@ Em tự ti ngoại hình nên thiếu kỹ năng giao tiếp.,0,0,1,0,1,0,0,0,0,
 Nhận ra mình chưa cố gắng và đổ lỗi cho hoàn cảnh.,0,1,0,0,1,0,0,1,0,0,0,1,0,0,0,0
 Em rơi nước mắt vì lời chia sẻ quá thật.,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0
 Thiếu kỹ năng đối diện khó khăn nên tiêu cực.,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
-"Những video của anh luôn đến đúng lúc em cần, cảm ơn anh rất nhiều.",1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
-"Tự dưng lướt thấy video này, đúng tâm trạng của em, cảm ơn anh.",1,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0
-"Em đọc mà muốn khóc vì thấy mình trong đó, cảm giác vô dụng và mất phương hướng.",0,0,0,0,1,0,0,0,0,1,1,0,1,0,0,0
-"Nghe chia sẻ rất thấm, giúp em nhìn lại bản thân và bớt đổ lỗi.",0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0
-"Em ghét bản thân vì không giỏi giao tiếp, nhưng đang tập thành thật với cảm xúc của mình.",0,0,1,0,1,0,0,0,0,1,1,0,1,0,0,0
+"""Những video của anh luôn đến đúng lúc em cần, cảm ơn anh rất nhiều.""",1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+"""Tự dưng lướt thấy video này, đúng tâm trạng của em, cảm ơn anh.""",1,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0
+"""Em đọc mà muốn khóc vì thấy mình trong đó, cảm giác vô dụng và mất phương hướng.""",0,0,0,0,1,0,0,0,0,1,1,0,1,0,0,0
+"""Nghe chia sẻ rất thấm, giúp em nhìn lại bản thân và bớt đổ lỗi.""",0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0
+"""Em ghét bản thân vì không giỏi giao tiếp, nhưng đang tập thành thật với cảm xúc của mình.""",0,0,1,0,1,0,0,0,0,1,1,0,1,0,0,0
 Nhờ video em nhận ra sai lầm trước đây và mong được dẫn dắt thêm.,1,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0
-"Gần thi em khá mơ hồ nhưng cũng tự tin vì đã cố gắng, mong may mắn.",1,0,1,0,0,0,0,1,0,1,0,0,0,0,0,1
+"""Gần thi em khá mơ hồ nhưng cũng tự tin vì đã cố gắng, mong may mắn.""",1,0,1,0,0,0,0,1,0,1,0,0,0,0,0,1
 Video rất hay và đúng với thực trạng của em và nhiều bạn trẻ.,1,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0
 Nghe xong em thấy buồn và chông chênh nếu một ngày không còn được nghe chia sẻ này.,0,1,0,0,1,0,0,0,1,0,0,0,0,0,0,0
-"Em luôn mơ hồ về nỗ lực của mình, cảm thấy tự ti và khó đạt mục tiêu.",0,0,1,0,1,0,0,0,0,1,1,0,1,0,0,0
-"12 năm học nhưng chưa cố gắng thật sự, giờ đứng trước lựa chọn thấy bơ vơ.",0,0,1,0,1,0,0,0,0,1,1,0,1,0,0,0
+"""Em luôn mơ hồ về nỗ lực của mình, cảm thấy tự ti và khó đạt mục tiêu.""",0,0,1,0,1,0,0,0,0,1,1,0,1,0,0,0
+"""12 năm học nhưng chưa cố gắng thật sự, giờ đứng trước lựa chọn thấy bơ vơ.""",0,0,1,0,1,0,0,0,0,1,1,0,1,0,0,0
 Nhờ video em nhận ra cần kết nối với bản thân để tìm lối đi riêng.,1,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0
 Em cần tìm định hướng và bản lĩnh cho chính mình.,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0
 Nghe chia sẻ giúp em cố gắng cải thiện bản thân và mở lòng hơn.,1,1,0,0,0,0,0,1,0,0,0,1,0,0,1,0
@@ -220,50 +220,50 @@ Mới ra trường em stress nhưng nhờ chia sẻ này em vượt qua được
 Em luôn mơ hồ về năng lực của chính mình và kỹ năng sống.,0,0,1,0,1,0,0,0,0,1,1,0,1,0,0,0
 Bạn này thiếu bản lĩnh và sự thích nghi. Đi làm việc không ai làm hài lòng bạn cả mà bạn phải tập làm hài lòng người khác và phải có thái độ cầu tiến.,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0
 Em có đam mê nhưng không có điều kiện nên đành bẻ lái kiếm nhiều tiền rồi quay lại đam mê.,0,0,1,0,1,0,0,1,0,0,0,0,0,0,0,0
-"E nhìn thấy bản thân trong câu chuyện của bạn ấy, và nhờ anh chia sẻ e mới nhận ra được vấn đề của bản thân mình sau gần 7 năm trượt dài.",0,1,0,0,1,0,0,1,0,0,0,0,0,0,0,0
+"""E nhìn thấy bản thân trong câu chuyện của bạn ấy, và nhờ anh chia sẻ e mới nhận ra được vấn đề của bản thân mình sau gần 7 năm trượt dài.""",0,1,0,0,1,0,0,1,0,0,0,0,0,0,0,0
 Thật may mắn khi em đã tìm được cái mình thích cái mình giỏi nhưng lại chưa thể làm được.,1,1,0,0,1,0,0,1,0,0,0,0,0,0,1,0
-"Cuộc sống vốn dĩ đã khó cân bằng , nhưng để cân bằng đc nó thì đó là 1 bài toán khó chưa có lời giải đáp, mình cũng đang trong tình trạng đó .",0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0
+"""Cuộc sống vốn dĩ đã khó cân bằng , nhưng để cân bằng đc nó thì đó là 1 bài toán khó chưa có lời giải đáp, mình cũng đang trong tình trạng đó .""",0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0
 Mình giờ mình còn chẳng khát khao tìm câu trả lời nữa.,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0
-"Sau đó em dành thời gian để nhìn nhận lại bên trong mình, liệu bản thân mình thích gì, cần gì, mình mạnh điểm nào, yếu điểm nào.",0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0
-"Hôm nay e đang rất rối, đang buồn 1 số việc. Vô tình nghe đc bài giảng của a e cảm thấy thật sự vô cùng ý nghĩa.",1,1,0,1,1,0,0,1,0,0,0,0,0,0,1,0
-"Hãy suy nghĩ đơn giản, không có công việc nào mà không mệt, không mệt thân thì mệt não.",0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0
-"Em hiện đang học năm cuối cấp 3, cái khiến em suy nghĩ và cảm thấy mơ hồ chính là thế mạnh của mình.",0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0
-"Mọi thứ cũng không biết nên bắt đầu từ đâu, làm lại như thế nào và ...",0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
+"""Sau đó em dành thời gian để nhìn nhận lại bên trong mình, liệu bản thân mình thích gì, cần gì, mình mạnh điểm nào, yếu điểm nào.""",0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0
+"""Hôm nay e đang rất rối, đang buồn 1 số việc. Vô tình nghe đc bài giảng của a e cảm thấy thật sự vô cùng ý nghĩa.""",1,1,0,1,1,0,0,1,0,0,0,0,0,0,1,0
+"""Hãy suy nghĩ đơn giản, không có công việc nào mà không mệt, không mệt thân thì mệt não.""",0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+"""Em hiện đang học năm cuối cấp 3, cái khiến em suy nghĩ và cảm thấy mơ hồ chính là thế mạnh của mình.""",0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0
+"""Mọi thứ cũng không biết nên bắt đầu từ đâu, làm lại như thế nào và ...""",0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 Em muốn học ngành tâm lí học nhưng em cảm thấy mọi thứ mơ hồ và Không biết phải như thế nào.,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 Thật sự muốn kiếm được đam mê thật là khó.,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0
 Em công nhận anh nói chuyện rất thuyết phục bằng chứng là đã khiến em nhấn đăng ký.,1,1,0,0,0,0,0,1,0,0,0,0,0,0,1,1
 Em cảm thấy mình còn thiếu bản lĩnh  và kĩ năng của bản thân.,0,0,1,0,1,0,0,0,0,1,1,0,1,0,0,0
 Em đang đỗ lỗi cho cấp trên vì đã không có chương trình đào tạo cho em để em có thể tiến bộ.,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0
-"Em đang mơ hồ về công việc của mình, sự nghiệp của mình. Không biết nên lựa sự nghiệp như thế nào.",0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
+"""Em đang mơ hồ về công việc của mình, sự nghiệp của mình. Không biết nên lựa sự nghiệp như thế nào.""",0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 Em mơ màng về ngành học của mình ở đại học hầu như suốt thời gian đầu mà em đi học đại học.,0,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0
 Em cũng chưa biết tương lai em sẽ làm gì nữa. Mỗi lần nghĩ đến tương lai thì em lại cảm thấy rất mơ hồ.,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
-"Em đang sát gần tới cuộc thi THPTQG rồi, em hiện đang có một sự say mê với một lĩnh vực của riêng mình rồi, cơ mà em vẫn bị gia đình chi phối.",0,1,1,0,0,0,0,1,0,1,0,0,0,0,0,0
-"em đã đi làm từ hè lớp 10 và nghiệt ngã hơn anh nào rất nhiều =)),mong anh tìm đc đúng con đường của mình.",1,1,0,0,0,0,0,0,1,0,0,1,0,0,1,0
+"""Em đang sát gần tới cuộc thi THPTQG rồi, em hiện đang có một sự say mê với một lĩnh vực của riêng mình rồi, cơ mà em vẫn bị gia đình chi phối.""",0,1,1,0,0,0,0,1,0,1,0,0,0,0,0,0
+"""em đã đi làm từ hè lớp 10 và nghiệt ngã hơn anh nào rất nhiều =)),mong anh tìm đc đúng con đường của mình.""",1,1,0,0,0,0,0,0,1,0,0,1,0,0,1,0
 Ở đâu cũng có chính trị và phe phái hết.,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
 Vấn đề tất cả nằm ở bản thân em. Không chịu thay đổi không chịu cố gắng.,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0
 Em đang sát gần tới cuộc thi THPTQG rồi... em sợ là mình sẽ phí hoài tuổi trẻ của mình.,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
-"Em đang vướng vào tình trạng giống hệt bạn ấy :( thực sự giờ em khá là bế tắc, khủng hoảng, vô định hướng trong nghề nghiệp.",0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
-"Em vẫn còn đổi lỗi cho hoàn cảnh dù không nhiều như trước, khi mình phán xét người khác thì mình lên nhìn vào bản thân mình đầu tiên.",0,1,0,0,0,0,0,0,1,0,0,1,0,0,1,0
+"""Em đang vướng vào tình trạng giống hệt bạn ấy :( thực sự giờ em khá là bế tắc, khủng hoảng, vô định hướng trong nghề nghiệp.""",0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
+"""Em vẫn còn đổi lỗi cho hoàn cảnh dù không nhiều như trước, khi mình phán xét người khác thì mình lên nhìn vào bản thân mình đầu tiên.""",0,1,0,0,0,0,0,0,1,0,0,1,0,0,1,0
 Đang máu lửa với công việc. Chúc các bạn thành công!,1,1,0,0,0,0,0,0,1,0,0,1,0,0,1,1
 Đồng cảm thật sự. Y chang mình hiện tại.,0,1,0,0,1,0,0,0,0,1,0,0,0,0,0,0
-"Biết ơn anh Trí rất nhiều. Hãy tự nhìn vào bên trong, ý thức, chất vấn, cảnh tỉnh bản thân mình.",1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0
+"""Biết ơn anh Trí rất nhiều. Hãy tự nhìn vào bên trong, ý thức, chất vấn, cảnh tỉnh bản thân mình.""",1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0
 Hôm nay là lần đầu dậy sớm... mọi thứ như tay trắng làm lại từ đầu...,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 Em cũng có thời gian đổ lỗi... hiện tại dù vẫn chưa tìm ra hướng đi cho bản thân nhưng em vẫn cố gắng thích nghi.,0,1,0,0,1,0,0,0,1,0,0,1,0,0,1,0
 Với bản thân em... sau khi em ra trường và đi xin việc làm thì em đã tạch phỏng vấn...,0,1,0,0,1,0,0,0,1,0,1,1,0,0,0,0
 Mong anh cho nhiều những video như này để em có nhiều suy nghĩ hơn về cuộc sống...,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1
-"Nhờ dịch bệnh mình đã biết đến nhiều điều ,nhất là làm sao để tích lũy đầu tư cho tương lai.",1,1,0,0,0,0,0,0,1,0,0,1,0,0,1,0
+"""Nhờ dịch bệnh mình đã biết đến nhiều điều ,nhất là làm sao để tích lũy đầu tư cho tương lai.""",1,1,0,0,0,0,0,0,1,0,0,1,0,0,1,0
 mình đã và đang tham gia vào cái ngành khó nhằn... có những lúc chán nản ê chề...,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 Cảm ơn anh rất nhiều. Em cũng suýt buông xuôi rồi.,1,1,0,0,0,0,0,0,1,0,0,1,0,0,1,1
 em có một niềm tin kinh khủng là mình không đủ bản lĩnh hay kỷ luật để vượt qua bản thân.,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
-"thật may vì vô tình nhấp được vào video này ạ! câu chuyện quá thật , quá đồng cảm luôn ạ.",1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1
-"Cảm ơn anh nhiều, em đang học sai ngành... em yêu sáng tạo và thiết kế...",0,1,1,0,1,0,0,0,1,0,0,1,0,0,0,0
+"""thật may vì vô tình nhấp được vào video này ạ! câu chuyện quá thật , quá đồng cảm luôn ạ.""",1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1
+"""Cảm ơn anh nhiều, em đang học sai ngành... em yêu sáng tạo và thiết kế...""",0,1,1,0,1,0,0,0,1,0,0,1,0,0,0,0
 Mấy ngày trước trong mùa dịch em cũng đi tìm công việc rất nhiều và tìm không được...,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 mình không biết bản thân mình thật sự giỏi về việc gì...,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 em theo đúng đam mê của mình là bếp Âu nhưng... em nản quá anh.,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 Em đang tự đổ lỗi cho bản thân anh ạ. Gần như em vẫn cứ chơi vơi...,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 em băn khoăn liệu mình nên kiếm tiền để thực hiện ước mơ hay theo đuổi đam mê.,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0
 Em thấy câu hỏi này nó mong lung... em thấy chính mình mất phương hướng.,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
-"Chào a Trí, em cũng đang gặp bế tắc giống bạn ấy, e thất nghiệp...",0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
+"""Chào a Trí, em cũng đang gặp bế tắc giống bạn ấy, e thất nghiệp...""",0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 Ở thời điểm hiện tại em chỉ là sinh viên năm nhất... cảm giác mơ hồ về tương lai...,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 nhan sắc thì ối giời ơi.,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
 E tốt nghiệp cấp 3 năm 2018... giờ e đang rất là mông lung và stress...,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
@@ -273,7 +273,7 @@ Cứ tưởng mình rất tồi tệ... em tìm được cái nghề này...,1,1
 Em không biết em đi đúng hay sai. Em sợ em đi sai...,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 Em đang khủng hoảng tâm lý và rất cần sự chia sẻ...,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 Cháu 18... cảm giác được khai sáng ra điều gì đó...,1,1,0,1,0,0,0,1,0,0,0,0,0,0,1,1
-"Em năm nay 12, em đang mơ hồ về ngành học đại học...",0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
+"""Em năm nay 12, em đang mơ hồ về ngành học đại học...""",0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 Cảm ơn bài chia sẻ... luôn đổ lỗi cho người khác...,1,1,0,0,0,0,0,1,1,0,0,1,0,0,1,0
 Em đang tưởng tượng chính tương lai sau này của mình!,0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0
 Em cũng đang trong tình trạng như bạn này đồng cảm ạ.,0,1,0,0,1,0,0,0,1,0,0,0,0,0,1,0
@@ -282,7 +282,7 @@ Thật sự buồn khi em đang bị trường hợp như vậy ạ.,0,0,1,0,1,0
 24 tuổi ........ thất bại quá a ơi.,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 hay lắm anh ơi... sau những khó khăn bản thân e đã mạnh mẽ hơn...,1,1,0,0,0,0,0,1,1,0,0,1,0,0,1,1
 Nhờ video của anh mà em vững tin hơn...,1,1,0,0,0,0,0,1,1,0,0,1,0,0,1,1
-"Thực sự em thấy không ổn, không còn biết mình muốn gì nữa.",0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
+"""Thực sự em thấy không ổn, không còn biết mình muốn gì nữa.""",0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 Fan ông béo mất phương hướng không hiểu bản thân huhu.,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 Em chưa đi làm... em rối lắm em mệt lắm...,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 Em cũng đang lâm vào tình trang như vậy... mình chả làm đc cái j.,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
@@ -291,19 +291,19 @@ Em không thể kiên trì tự học tập... đổ lỗi...,0,0,1,0,1,0,0,0,0,
 Đúng là mình đang tìm cách đổ lỗi... Cảm ơn anh vì đã đánh thức em.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,0
 Video chốt sales/bán khóa học rất hay nhưng chưa thấy chỉ dẫn hữu ích.,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0
 Giờ mới hiểu sau bao năm làm nhiều thứ mình muốn.,1,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0
-"Bài phân tích cô đọng, dễ hiểu, sâu sắc. Cảm ơn bạn.",1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0
+"""Bài phân tích cô đọng, dễ hiểu, sâu sắc. Cảm ơn bạn.""",1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0
 Video thật ý nghĩa trên chặng đường tương lai.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0
-"Cảm ơn anh, hãy nuôi dưỡng sự ổn định từ bên trong.",1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,0
+"""Cảm ơn anh, hãy nuôi dưỡng sự ổn định từ bên trong.""",1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,0
 Quyết định đứng lên sửa sai sau 4 năm học sai ngành.,1,1,0,0,0,0,0,1,1,0,0,1,0,0,1,1
 Làm sao để biết mình thích gì và muốn gì.,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0
-"Thiếu điểm vào trường, tự trách rồi được thức tỉnh.",1,1,0,0,1,0,0,1,0,0,0,0,0,0,1,1
+"""Thiếu điểm vào trường, tự trách rồi được thức tỉnh.""",1,1,0,0,1,0,0,1,0,0,0,0,0,0,1,1
 Đang theo đuổi đam mê nhưng chưa biết kiếm tiền.,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 Em đang mông lung về đam mê và bế tắc.,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 Sau khi đi làm vẫn chưa biết mục đích tiếp theo.,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 Đang trong giai đoạn mông lung sự nghiệp.,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 Tự trách vì không cố gắng và sợ học lại.,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 Nghe anh như tát vào mặt nhưng rất bổ ích.,0,1,0,1,0,0,0,1,0,0,0,0,0,0,0,1
-"Rất hay và ý nghĩa, cảm ơn người thầy.",1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1
+"""Rất hay và ý nghĩa, cảm ơn người thầy.""",1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1
 Em rất hoang mang về định hướng nghề nghiệp.,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 Bài chia sẻ giúp em nhận ra vấn đề của mình.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0
 Em mơ hồ về tương lai và thấy hoảng.,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
@@ -312,7 +312,7 @@ Quảng cáo sách dỏm.,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0
 Em muốn tham gia khóa học ở cuối video thì phải làm sao.,0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0
 Em rất hoang mang về định hướng nghề nghiệp mới.,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 Bài viết bổ ích giúp em nhận ra vấn đề.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0
-"Quá giống câu chuyện của em, em mông lung quá.",0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
+"""Quá giống câu chuyện của em, em mông lung quá.""",0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 Em rất mơ hồ về việc mình thích làm gì.,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 Thực sự rất thích video này.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1
 Em cảm thấy hoảng và mơ hồ về tương lai.,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
@@ -323,6 +323,262 @@ Em tự nhận mình hay đổ lỗi và tự ti.,0,0,1,0,1,0,0,0,0,1,1,0,0,1,0,
 Một sản phẩm chất lượng.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1
 Tuổi trẻ chênh vênh và chưa hiểu bản thân.,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
 Em đang mất ý chí cầu tiến.,0,0,1,0,1,0,0,0,0,1,1,0,0,0,0,0
-"Cảm ơn anh, những chia sẻ rất gần gũi.",1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0
+"""Cảm ơn anh, những chia sẻ rất gần gũi.""",1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0
 Nghe thấm từng câu từng chữ.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1
 Đúng những gì em cần nghe lúc này.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1
+quá hay và ý nghĩa !,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+Bài này ít mà chất quá. Kiến thức tổng quát. Đúng là biết mình biết người!,1,1,0,0,0,0,0,1,0,0,0,0,1,0,0,1
+"""Đúng chủ đề mà em với gia đình đang thảo luận, cảm ơn thầy nhiều về những chia sẻ mở rộng tư duy như thế này""",1,1,0,1,0,0,0,1,0,0,0,0,0,0,1,0
+Thầy là 1 người đầy tâm tuệ. Thực sự rất nể,1,1,0,0,0,0,0,0,1,0,0,1,0,0,1,0
+Vừa hài vừa hay vừa sâu sắc.,1,1,0,1,0,0,0,1,0,0,0,0,0,0,1,1
+không thể hay hơn được nữa ạ. Cảm ơn chủ tịch nhiều ạ,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0
+Giá trị sử dụng khôn ngoan hơn giá trị kinh tế,0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0
+Đỉnh cao của trí tuệ.,1,1,0,0,0,0,0,0,0,0,0,1,0,0,1,0
+Biết ơn Thầy Tuấn!,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0
+Hay và thấu hiểu được lòng người.,1,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0
+Xác định phục vụ đối tượng nào rồi mới xây dựng sp.,0,1,0,0,0,0,0,1,1,0,0,0,0,0,1,0
+Tôn trọng giữa người và người sẽ có qua có lại.,1,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0
+Cái cần nhất là ông không nói : đào đâu ra lắm người giàu như vậy trong khi người trung bình rất nhiều.,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+Nếu biết đời vô thường sao không sống khiêm tốn?,0,1,0,1,0,0,0,1,0,0,0,0,0,0,1,0
+"""Trước đây e cũng từng nghĩ làm việc tay chân là mất mặt, nhưng giờ em rất tự hào vì nỗ lực làm hai công việc để giúp gia đình.""",1,1,0,0,0,0,0,1,0,0,0,1,0,0,1,1
+Mình thực sự rất bất ngờ trước sự chuyên nghiệp và tận tâm của anh tài xế.,1,1,0,1,0,0,0,0,1,0,0,0,0,0,1,1
+"""Tự nhiên xem xong nước mắt rơi, câu chuyện khiến em rất xúc động.""",0,1,0,0,1,0,0,0,1,0,0,0,0,0,1,0
+"""Em thật sự đã khóc khi xem video này, cảm thấy biết ơn vì những gì mình đang có.""",1,1,0,0,0,0,0,0,1,1,0,0,0,0,1,0
+Gia đình bình thường nhưng chúng tôi trân trọng những ngày còn được sống bên nhau.,1,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0
+"""Không hiểu sao mình lại xúc động khi xem video này, sự tử tế thật đáng quý.""",1,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0
+"""Thật sự mến bác tài xế, làm nghề nào cũng cần sự trân trọng.""",1,1,0,0,0,0,0,0,1,0,0,0,1,0,1,0
+Video này chạm vào tim và tạo thêm động lực sống.,1,1,0,0,0,0,0,1,1,0,0,1,0,0,0,1
+Xem xong thấy biết ơn vì còn sức khỏe và bình yên mỗi ngày.,1,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0
+"""Một video quá hay và ý nghĩa, trân trọng công việc và đặt tâm huyết vào nghề.""",1,1,0,0,0,0,0,1,1,0,0,0,1,0,1,1
+"""Xem đến đoạn này thấy sống mũi cay cay, câu chuyện thật tuyệt vời.""",0,1,0,0,1,0,0,0,1,1,0,0,0,0,1,0
+Biết ơn vì video đã giúp mình có cái nhìn tích cực hơn về nghề.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,0
+Em cũng yêu công việc của mình và mong được quay lại với nghề đã chọn.,1,1,0,0,0,0,0,1,1,0,0,1,0,0,1,0
+Câu chuyện bình dị nhưng khiến mình rất xúc động và suy ngẫm.,0,1,0,0,1,0,0,0,1,0,0,0,0,0,1,0
+Cuộc đời bình thường nhưng vẫn đầy ý nghĩa và đáng trân trọng.,1,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0
+"""Trước đây e cũng từng nghĩ làm việc tay chân là mất mặt, nhưng giờ em rất tự hào vì nỗ lực làm hai công việc để giúp gia đình.""",1,1,0,0,0,0,0,1,0,0,0,1,0,0,1,1
+Mình thực sự rất bất ngờ trước sự chuyên nghiệp và tận tâm của anh tài xế.,1,1,0,1,0,0,0,0,1,0,0,0,0,0,1,1
+"""Tự nhiên xem xong nước mắt rơi, câu chuyện khiến em rất xúc động.""",0,1,0,0,1,0,0,0,1,0,0,0,0,0,1,0
+"""Em thật sự đã khóc khi xem video này, cảm thấy biết ơn vì những gì mình đang có.""",1,1,0,0,0,0,0,0,1,1,0,0,0,0,1,0
+Gia đình bình thường nhưng chúng tôi trân trọng những ngày còn được sống bên nhau.,1,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0
+"""Không hiểu sao mình lại xúc động khi xem video này, sự tử tế thật đáng quý.""",1,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0
+"""Thật sự mến bác tài xế, làm nghề nào cũng cần sự trân trọng.""",1,1,0,0,0,0,0,0,1,0,0,0,1,0,1,0
+Video này chạm vào tim và tạo thêm động lực sống.,1,1,0,0,0,0,0,1,1,0,0,1,0,0,0,1
+Xem xong thấy biết ơn vì còn sức khỏe và bình yên mỗi ngày.,1,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0
+"""Một video quá hay và ý nghĩa, trân trọng công việc và đặt tâm huyết vào nghề.""",1,1,0,0,0,0,0,1,1,0,0,0,1,0,1,1
+"""Xem đến đoạn này thấy sống mũi cay cay, câu chuyện thật tuyệt vời.""",0,1,0,0,1,0,0,0,1,1,0,0,0,0,1,0
+Biết ơn vì video đã giúp mình có cái nhìn tích cực hơn về nghề.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,0
+Em cũng yêu công việc của mình và mong được quay lại với nghề đã chọn.,1,1,0,0,0,0,0,1,1,0,0,1,0,0,1,0
+Câu chuyện bình dị nhưng khiến mình rất xúc động và suy ngẫm.,0,1,0,0,1,0,0,0,1,0,0,0,0,0,1,0
+Cuộc đời bình thường nhưng vẫn đầy ý nghĩa và đáng trân trọng.,1,1,0,0,0,0,0,0,0,1,0,0,0,0,1,0
+Nghe xong muốn đổi qua lm lái xe quá ạ.,1,0,0,1,0,0,0,1,0,0,0,0,0,0,1,1
+"""E coi tới lần 2 rồi anh ơi, clip quá hay và ý nghĩa , cám ơn anh Quéo rất nhiều ạ.""",1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+"""Video nào cũng mang tính giáo dục, niềm tin và hy vọng!!""",1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Câu chuyện thực sự truyền cảm hứng,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Coi đoạn clip giữa anh và anh Charles tự nhiên em mún khóc luôn ạ.,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0
+"""Cảm ơn vì những chia sẻ của anh, em thật sự bất ngờ về cuộc sống của anh Charles, đúng là mỗi người mỗi lựa chọn.""",1,1,0,1,0,0,0,1,1,0,0,0,0,0,1,0
+Mỗi lần xem video của chú Trí cháu lại học thêm được ít nhất 1 bài học mới về cuộc sống.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+"""Wow. Ko biết nói j, rơi nước mắt thật sự luôn ạ...""",0,0,0,1,1,0,0,0,0,0,0,0,0,0,1,0
+"""Em vừa mới có suy nghĩ chán cuộc sống chán công việc hiện tại thì xem được video này, thật sự rất đúng lúc.""",1,1,0,0,1,0,0,1,0,1,0,0,0,0,1,0
+Anh chia se chan thanh em cực ki thich ak anh queo dai k cua em,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Cảm ơn anh Trí rất nhiều vì video hay và ý nghĩa này ạ.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+"""1 video tuyệt vời a ạ , mà chủ đề này nó lại là số đông luôn ấy a ,mong anh làm thêm video như này , để dân lao động ít bằng cấp như em thấy mình cũng có ích gì đó cho xã hội.""",1,1,0,0,0,0,0,1,1,0,0,1,0,0,1,1
+"""Thank you so much for sharing, Charles — your words were truly touching. I feel inspired, uplifted, and deeply content with my own life after listening to you.""",1,1,0,1,0,0,0,1,1,0,0,0,0,0,1,1
+Cảm ơn a Trí ban đầu chỉ là nghe chơi đi bộ không ngờ nó có sức lay động nội tâm và quyết tâm bên trong e.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+"""Tôi đã vỗ tay một mình, khi đang xem hết video ,tôi rất vui và quên cả tuổi 62 của mình.""",1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1
+"""Cảm ơn anh về những câu chuyện thú vị mà anh đã chia sẽ cho bọn trẻ tụi em , chúc anh thật nhiều sức khỏe để làm tiếp nhiều đề tài thú vị như thế này .""",1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+"""mong anh ra nhiều những clip đời thường và giản dị nhất như vầy , những chủ đề này như có 1 chút j đó động lực với cảm giác chữa lành trong bối cảnh đời sống khó khăn hiện tại.""",1,1,0,0,0,0,0,1,1,1,0,0,0,0,1,0
+"""Cảm ơn bác Charles, cảm ơn anh Trí và ekip, video hay quá đi ạ , vừa xem video vừa đọc phụ đề để học hỏi thêm cách dùng tiếng anh cũng rất hữu ích nữa ạ.""",1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+"""Nếu thấy được sự hạnh phúc, bình an ấy là sự giàu sang rồi.""",1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0
+"""wow, lần đầu tiên mình để lại comment ở youtube mặc dù thường xuyên xem cũng như đã xem từ rất lâu rồi. Video đầu tiên mang lại cho mình nhiều cảm xúc và thật sự nghẹn ngào.""",0,0,0,1,1,0,0,0,1,0,0,0,0,0,1,0
+Video của anh thực sự đúng với những gì mà em hướng tới. Cuộc sống hạnh phúc nhất là được kiếm tiền lo cho mình và gia đình và mình biết ơn công việc đó.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Cuối cùng sau bao năm coi anh thì em quyết định sub. Vì em không có thiện cảm lắm với những khóa học kỹ năng... Giờ thì thấy kênh cực kỳ giá trị ạ.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Cảm ơn anh Trí và bác Charles đã chia sẻ trải nghiệm này ạ. Nói thật thì bài chia sẻ này làm em thấy có giá trị và em tin nó sẽ chạm tới được nhiều người.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+"""Video của anh cực kì hay và ý nghĩa, chỉ có những người giàu kinh nghiệm sống mới có thể nói lên được những điều như trên .""",1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+"""video truyền tải thông điệp rất tích cực ạ, cảm ơn anh nhiều.""",1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+"""Hay quá nhà viết kịch bản, quả không sai trút nào, ở đời gieo nhân nào thì gặp quả báo mà thôi.""",1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0
+"""Phim hay tuyệt đỉnh, hết bất ngờ nọ đến bất ngờ kia, cảm ơn nhà viết kịch bản và đạo diễn rất nhiều.""",1,1,0,1,0,0,0,1,1,0,0,0,0,0,1,1
+Giỏi giang giàu có thì sao .....luỵ tình nhu nhược khiến bản thân thấp hèn trong mắt người ....,0,0,0,0,1,0,1,1,0,0,1,0,0,0,0,0
+"""Không sai trút nào, bà mẹ chồng quá khố nạn cho nên con trai bà cũng vậy, gia đình nhà Nam chính sớm gặp quả báo là cái chắc, phim hay thật.""",1,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0
+"""Phim nào cũng có bọn a dua, gió chiều nào che chiều đó, bọn như thế kg đc việc gì.""",0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0
+Rồi thằng chồng này phải hối hận đến hết đời này cũng không được tha thứ.,0,0,0,0,1,0,1,1,0,0,1,0,0,0,0,0
+"""Nên mạnh mẽ ly hôn vời thằng chồng sở Khanh đó đi, ham giàu bỏ vợ cưới tiểu tam, quá tồi tệ.""",0,0,0,0,1,1,1,1,0,0,1,0,0,0,0,0
+Nếu chú rể khốn nạn như vậy thì cô dâu cứ đổi chú rể ngay đi cho tra nam chố mắt ra mà nhìn bị phá sản đi.,0,0,0,0,1,0,1,1,0,0,1,0,0,0,0,0
+Dài dòng xử đẹp chúng nó đi mệt.,0,0,0,0,0,1,1,1,0,0,1,0,0,0,0,0
+Con mẹ chồng nầy ham tiền mà bỏ con dâu quí giá.bà sẻ hối hận suốt đời.làm ác sẻ gặp quả báo.,0,0,0,0,1,0,1,1,0,0,1,0,0,0,0,0
+Phim võ mồm nhiều quá.,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0
+"""Xem đến phút thứ 6, không thèm xem nữa ! Thúi thúi quá chừng !""",0,0,0,0,1,1,1,0,0,0,1,0,0,0,0,0
+"""Tôi mà thế là t vẫn hận thằng chồng nha, chẳng qua con kia lật bài nhanh quá mới thấy hối hận vs vợ.""",0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0
+"""Rất hay , cái kết đẹp.""",1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+ý là tại sao muốn hại người ta là phải đến tát và nói ra ý định của mình dậy?,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0
+"""phim hay, chúc kênh ngày càng phát triển nhé!""",1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+2 lần anh ấy nhìn người mình yêu hạnh phúc bên người khác...,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0
+Từ bộ phim ta rút ra được bài học là trước khi kẻ thù của mình nằm gục dưới đất không còn bất kì cơ hội phản khán nào thì tốt nhất đừng bao giờ nói bất kỳ điều gì với kẻ thù.,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+là t thì t chọn anh người yêu cũ độc thân cả đời để chờ đợi mình chứ không phải thằng chồng ngoại tình.,0,0,0,0,0,1,1,0,0,0,1,0,0,1,0,0
+Fim này coi đi coi lại vẫn muốn coi. Hay. Ý nghĩa.,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+Cái kết rất hài lòng cho một tình yêu dù muộn nhưng đúng người.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Kịch bản này k có gì mới nhưng mà đạo diễn khai thác các nhân viên quá ok.,1,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0
+Đoạn kết hay nhưng review lại không chi tiết.,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+"""Phim hay thật, tặng ad 1 sub & 1 like, chúc kênh càng ngày càng phát triển.""",1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Cảm động qua.,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0
+Thấy bà nữ chính có làm đc cái j đâu toàn hù doạ.,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0
+Câu chuyện mà vợ lớn đi trả thù tiểu tam chỉ có ở trong phim.,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0
+Tên nhân vật gì lú quá má.,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+"""Má oi, hay vc luôn á""",1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1
+nếu cô bồ k lật mặt thì bà vợ là cái thá gì đâu.,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0
+cả quá trình k có cái nào vui nổi.,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0
+"""Nữ chính thật may mắn, gặp đc người tốt giúp mình trả thù.""",1,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0
+Cái kết của con nhỏ độc ác kia phải hơn thế cho nó biết đau khổ.,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0
+Phim hay. Kết đẹp. Thank ad làm clip nha.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Kịch bản quá thường.,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+Phim nhảm nhất thế giới.,0,0,0,0,0,1,1,1,0,0,1,0,0,0,0,0
+"""Kết vậy là đẹp rồi, nhưng vẫn cay thằng chồng thật.""",0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0
+Người mẹ từ tốn đối đáp bình tĩnh giải thích cho cả đại gia đình từng hành động nghe mà thấm.,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0
+"""Nữ chính hiền lành nhân hậu, thấy thương quá.""",0,1,0,0,1,1,0,0,0,1,0,0,0,0,1,0
+Lâu rồi mới coi bộ phim đã đến vậy.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Kaka. Mèn đét ơi khúc cuối bà vợ già này cũng không vừa à nha.,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1
+"""Xem đến phút thứ 10 đoán ra kịch bản tráo con rồi, quá ok.""",1,1,0,1,0,0,0,1,0,0,0,0,0,0,1,1
+Cuối cùng cặp đôi hoàn hảo nhất cháu trai sẽ được hạnh phúc.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Vô lý đem đứa nhỏ về nuôi cho đã.,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0
+Hay quá đi phim hay quá coi không chán luôn.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Ui là trời tiếng thuyết minh nghe chán nhỉ.,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0
+Xem phim này bực mình vãi.,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0
+"""Kẻ ác cũng bị chết, con gái bị đi tù còn hai mẹ con được sống hạnh phúc.""",1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Mẹ kiếp bác sĩ ở đó làm gì mà không giải quyết được vấn đề.,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0
+Ở hiền gặp lành.,1,1,0,0,0,0,0,1,1,0,0,0,1,0,1,1
+Ngoài đời mà vậy chắc chắn sẽ loạn mất.,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0
+Phim hay,1,1,0,0,0,0,0,1,0,0,0,0,0,0,1,1
+Phim rất hay nam và nữ chính rất đẹp đôi.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Đúng là ác giả ác báo mà gieo nhân nào gặp quả ấy.,0,1,0,0,0,0,0,1,0,0,0,1,0,0,1,0
+Cả bệnh viện mà không có nổi một người để tiểu tam làm càn vậy trời.,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0
+Đây là cái kết tuyệt vời cho hai mẹ con nữ chính.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Người cha bắt vợ nuôi con tiểu tam là không thể chấp nhận.,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0
+Nghe giọng thuyết minh mắc mệt.,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0
+Mẹ quá hiền hậu.,0,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0
+Chồng mu muội nghe trà xanh rồi không có kết đẹp đâu,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0
+Vì ơn nghĩa trả giá quá đắt người đàn ông này bỏ cũng không oan cảm ơn kênh.,0,1,0,0,0,0,0,0,1,0,0,1,0,0,0,0
+Thật hay càng nghe càng hấp dẫn.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Đáng đời cho cha con bay lắm.,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0
+Đứa con vậy uổng công mang nặng đẻ đau.,0,0,0,0,1,1,1,0,0,0,1,0,0,0,0,0
+Nữ chính mạnh mẽ dứt khoát quá OK tìm được hạnh phúc tuyệt vời.,1,1,0,0,0,0,0,1,1,0,0,1,0,0,1,1
+Đứa con gái thật bất hiếu.,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0
+Sao bỏ con trời tội nghiệp bé.,0,0,0,0,1,1,0,0,0,0,1,0,0,0,0,0
+Hoan hô ly dị rồi.,1,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1
+Chồng vô lương tâm thì bỏ ngay.,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0
+Dì già trơ trẽn quá à,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0
+Phim hay tuyệt vời nữ chính rất mạnh mẽ.,1,1,0,0,0,0,0,1,1,0,0,1,0,0,1,1
+Thằng chồng quá khốn nạn vợ đẹp con ngoan không biết trân trọng.,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0
+Tiểu tam quá độc ác.,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0
+Phim chi lạ vậy trời.,0,0,0,1,0,0,0,0,0,0,1,1,0,0,0,0
+Thằng chồng cặn bã nhưng đứa con gái thật hồ đồ.,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0
+Chồng tồi thì bỏ ngay.,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0
+Phim xem nhàm chán quá.,0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0
+Muốn đập vào mặt con trà xanh đó.,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0
+Quá trơ trẽn làm hư trẻ con.,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0
+Nữ chính xấu thế.,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0
+Trẻ con bạc bẽo.,0,0,0,0,1,1,0,0,0,0,1,0,0,0,0,0
+Người mẹ đau lòng nhất khi con gọi tiểu tam là mẹ.,0,0,0,0,1,1,0,0,0,0,1,0,0,0,0,0
+Nữ chính thông minh rút lui khỏi nơi bẩn thỉu này.,1,1,0,0,0,0,0,1,1,0,0,1,0,0,1,1
+Đàn ông thay lòng đổi dạ chẳng khác gì quả dưa.,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0
+Đúng là thằng chồng không biết nhục.,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0
+"Phim hay lồng tiếng vừa hài hước, nữ chính quá tuyệt vời.",1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,1
+"Trời ơi nhỏ cháu gái cưng quá, nam nữ chính đẹp đôi.",1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,1
+"Phim hay, con bé dễ thương lắm luôn.",1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0
+Phim nữ chính nam chính đẹp xuất sắc.,1,1,0,0,0,0,0,1,1,0,0,1,0,0,0,1
+Phim hay quá nam chính nữ chính đẹp đôi dễ thương.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Con gái thật dễ thương đáng yêu.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0
+Phim hay diễn viên đẹp diễn xuất xuất sắc.,1,1,0,0,0,0,0,1,1,0,0,1,0,0,0,1
+"Phim nữ chính hài rất vui, xem cười bể bụng luôn.",1,1,0,1,0,0,0,1,1,0,0,0,0,0,0,1
+"Phim hay dễ thương lắm, em bé cũng dễ thương.",1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0
+Cặp đôi dễ thương kết có hậu.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Phim rất hay kết thúc đẹp diễn viên chính xuất sắc.,1,1,0,0,0,0,0,1,1,0,0,1,0,0,1,1
+Thuyết minh hay quá phim càng thấy hay.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0
+Giọng thuyết minh thật đáng yêu.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0
+Phim hay diễn viên đẹp và khá hài hước.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Bé con quá đáng yêu.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,0
+Phim vừa hay vừa hài.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Phim hay cặp đôi đẹp thích quá.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Phim hay nam nữ chính đẹp đôi mẹ chồng dễ thương em bé đáng yêu.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Phim lôi cuốn vui hài.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Phim hay kết thúc có hậu.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Gì vậy má phim mà tổng tài nhuộm tóc trắng bộ muốn bạc đầu à.,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+Lồng tiếng không đúng nội dung ai cũng dùng chữ anh làm không có thiện cảm.,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0
+Phim ok nhưng thuyết minh xem để xưng hô cho đúng.,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0
+Trời ơi dịch gì kỳ quá mất hứng.,0,0,0,1,1,0,1,0,0,0,1,0,0,0,0,0
+Phim hay diễn viên đẹp nhưng thuyết minh lộn xộn.,1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0
+Mai mốt bạn đừng dịch nữa nghe thấy ghét quá.,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0
+Diễn biến phim hơi dài thuyết minh rối nhưng coi giải trí được.,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+Phim hay nhưng thuyết minh xưng hô loạn xạ.,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0
+Phim hay nữ chính mạnh mẽ xem mới vui.,1,1,0,0,0,0,0,1,1,0,0,0,1,0,0,1
+Cái kết hay lắm bọn phản bội bị quả báo.,1,1,0,0,0,0,0,1,1,0,0,0,1,0,0,1
+Phim hay cách hành xử của nữ chính đã quá.,1,1,0,0,0,0,0,1,1,0,0,0,1,0,0,1
+Phim hay nữ chính mạnh mẽ dứt khoát đúng ý.,1,1,0,0,0,0,0,1,1,0,0,0,1,0,0,1
+Nam chính đẹp trai dễ thương quá chừng.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1
+Nữ chính đẹp quá vóc dáng tuyệt vời.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1
+Phim hay nhưng thuyết minh lộn xộn tùm lum.,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0
+Hay trả thù quá nữ chính dứt khoát.,1,1,0,0,0,0,0,1,1,0,0,0,1,0,0,1
+Nhân quả công bằng cái kết thật đẹp.,1,1,0,0,0,0,0,1,1,0,0,0,1,0,1,1
+Phim hay thích nữ chính mạnh mẽ.,1,1,0,0,0,0,0,1,1,0,0,0,1,0,0,1
+Phim hay nhưng phiên dịch chán quá.,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0
+Phim hay quá diễn viên chính có tình cảm.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Phim hay nữ chính đẹp gái mạnh mẽ tuyệt vời.,1,1,0,0,0,0,0,1,1,0,0,1,0,0,0,1
+Phim xem khoái thật diễn xuất rất xuất sắc.,1,1,0,1,0,0,0,1,0,0,0,0,0,0,0,1
+Phim này kết thúc rất hay ác giả ác báo.,1,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0
+Film quá hay xem rất đã cảm ơn chủ kênh.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1
+Tần Tống đẹp trai quá phim hay.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1
+Tôi cũng muốn mình thông minh và mạnh mẽ như nữ chính.,1,1,0,0,0,0,0,1,0,0,0,1,0,0,0,1
+Kết thúc chắc rất có hậu rất cảm ơn.,1,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0
+Phim rất hay người phụ nữ đánh tiểu tam tuyệt vời.,1,1,0,0,0,0,0,1,1,0,0,1,0,0,0,1
+Phim hay thích xem phụ nữ mạnh mẽ như vậy.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,0,1
+Giờ mới xem được bộ phim hay và cái kết tuyệt vời.,1,1,0,1,0,0,0,1,0,0,0,0,0,0,0,1
+Bộ phim hay nhiều tình tiết hấp dẫn.,1,1,0,1,0,0,0,1,0,0,0,0,0,0,1,0
+Phim hay quá lâu rồi mới được xem toàn tập như thế này.,1,1,0,1,0,0,0,1,0,0,0,0,0,0,1,1
+Nam chính diễn xuất rất tốt.,1,1,0,0,0,0,0,0,0,0,0,1,0,0,1,0
+Nữ chính đóng quá hay quá mạnh mẽ xuất sắc.,1,1,0,1,0,0,0,1,1,0,0,1,0,0,0,1
+Cuối cùng cũng thành cặp đôi trai tài gái sắc.,1,1,0,1,0,0,0,1,1,0,0,0,0,0,0,1
+Phim hay quá,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1
+Xem mà thấy mát lòng mát dạ.,1,1,0,0,0,0,0,1,0,0,0,0,0,0,1,1
+Phim hay diễn viên chính xinh đẹp.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1
+Phim hay đầy tính nhân văn thiện ác rõ ràng.,1,1,0,0,0,0,0,1,0,0,0,0,1,0,1,0
+Phim rất hay nữ chính rất dũng cảm.,1,1,0,0,0,0,0,1,1,0,0,1,0,0,0,1
+Phim hay nữ chính rất mạnh mẽ.,1,1,0,0,0,0,0,1,1,0,0,1,0,0,0,1
+Xem phim mà thấy đã quá cảm ơn đạo diễn.,1,1,0,1,0,0,0,1,0,0,0,0,0,0,1,1
+Phim hay diễn viên trẻ đẹp.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1
+Phim này hay quá cảm ơn.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1
+Phim thật hay cảm ơn tác giả.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1
+Tần tổng vừa đẹp vừa hài.,1,1,0,1,0,0,0,0,1,0,0,0,0,0,0,1
+Yêu nữ chính quá thích nữ chính ăn miếng trả miếng.,1,1,0,1,0,0,0,1,1,0,0,1,0,0,0,1
+Dan bà phải như nữ chính này mới được.,1,1,0,0,0,0,0,1,1,0,0,1,0,0,0,1
+Phim rất hay người đến sau sẽ hạnh phúc.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,0
+Tuyệt vời lắm diễn hay lắm.,1,1,0,1,0,0,0,0,1,0,0,1,0,0,0,1
+Nhân quả nhãn tiền là đây,1,1,0,0,0,0,0,1,0,0,0,0,1,0,1,0
+Phim hay kết thật thích đáng.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Vào phim thấy nữ chính rất dễ thương và mạnh mẽ.,1,1,0,0,0,0,0,1,1,0,0,1,0,0,1,1
+Phim hay tình cảm diễn viên xinh đẹp kết có hậu.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Phim hay,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1
+Phim rất hay,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1
+Phim hay nữ 9 mạnh mẽ thích.,1,1,0,0,0,0,0,1,1,0,0,1,0,0,1,1
+Phim hay cảm ơn,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1
+Phim hay đỉnh của chóp.,1,1,0,0,0,0,0,1,0,0,0,0,0,0,1,1
+Phim rất hay có hậu.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Phim hay nội dung rất có ý nghĩa.,1,1,0,0,0,0,0,1,0,0,0,0,1,0,1,0
+Phim xem đã nư.,1,1,0,1,0,0,0,1,0,0,0,0,0,0,1,1
+Phim hay diễn viên trẻ đẹp.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1
+Phim này hay thật.,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1
+Phim hay đáng đời cho kẻ lăng nhăng.,1,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0
+Nam chính đẹp trai ghê nữ chính đẹp.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1
+Phim hay rất có hậu.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Phim hay nín thở lâu rồi xem rất cuốn.,1,1,0,1,0,0,0,1,1,0,0,0,0,0,0,1
+Phim rất hay kết thúc có hậu.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Phim quá hay luôn.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1
+Phim rất hay cảm ơn bạn đã chia sẻ.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1
+Phim hay võ thuật rất tuyệt.,1,1,0,0,0,0,0,1,0,0,0,1,0,0,1,1
+Phim hay rất có hậu.,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+Phim rất hay nữ chính mạnh mẽ xuất sắc.,1,1,0,0,0,0,0,1,1,0,0,1,0,0,0,1
+Phim hay nội dung hấp dẫn.,1,1,0,1,0,0,0,1,0,0,0,0,0,0,1,1
+Phim xem đã mắt ghê.,1,1,0,1,0,0,0,1,0,0,0,0,0,0,1,1
+Phim quá hay tuyệt vời.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1
+Phim hay cảm ơn đạo diễn.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1
+Phim hay rất có ý nghĩa.,1,1,0,0,0,0,0,1,1,0,0,0,1,0,1,0
+Phim hay đỉnh của chóp.,1,1,0,0,0,0,0,1,0,0,0,0,0,0,1,1
+Phim hay quá hồi hộp.,1,1,0,1,0,0,0,1,0,0,0,0,0,0,1,1
+Phim hay xem rất thích.,1,1,0,0,0,0,0,0,1,0,0,0,0,0,1,1

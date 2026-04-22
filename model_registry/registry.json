@@ -114,6 +114,52 @@
       },
       "registered_at": "2026-04-22T09:32:06.667216",
       "status": "registered"
+    },
+    {
+      "model_id": "model_20260422_104954",
+      "path": "model_registry/models/model_20260422_104954",
+      "metrics": {
+        "macro_f1": 0.0,
+        "micro_f1": 0.0,
+        "test_loss": 0.4059664309024811,
+        "hamming_loss": 0.25815217391304346
+      },
+      "metadata": {
+        "person": "tranan",
+        "experiment_name": "Member An - v5 (456 samples)",
+        "learning_rate": 2e-05,
+        "batch_size": 16,
+        "num_epochs": 10,
+        "dropout_rate": 0.3,
+        "max_length": 512,
+        "data_file": "data/member_an.csv",
+        "model_name": "bert-base-uncased"
+      },
+      "registered_at": "2026-04-22T10:49:54.394118",
+      "status": "registered"
+    },
+    {
+      "model_id": "model_20260422_124631",
+      "path": "model_registry/models/model_20260422_124631",
+      "metrics": {
+        "macro_f1": 0.0,
+        "micro_f1": 0.0,
+        "test_loss": 0.3515261461337407,
+        "hamming_loss": 0.2549715909090909
+      },
+      "metadata": {
+        "person": "tranan",
+        "experiment_name": "Member An - v6 (583 samples)",
+        "learning_rate": 2e-05,
+        "batch_size": 16,
+        "num_epochs": 10,
+        "dropout_rate": 0.3,
+        "max_length": 512,
+        "data_file": "data/member_an.csv",
+        "model_name": "bert-base-uncased"
+      },
+      "registered_at": "2026-04-22T12:46:31.700109",
+      "status": "registered"
     }
   ],
   "production_model": null,
