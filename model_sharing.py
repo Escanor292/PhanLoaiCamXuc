@@ -162,12 +162,12 @@ class ModelSharing:
     def sync_best_model(self):
         """Tự động sync model tốt nhất."""
         best_model = self.registry.get_best_model()
-        if best_model:
+        if best_model and isinstance(best_model, dict):
             model_id = best_model['model_id']
             print(f"🔄 Syncing best model: {model_id}")
             return self.upload_model(model_id)
         else:
-            print("❌ No best model found!")
+            print("❌ No best model found or invalid model data!")
             return False
 
 
