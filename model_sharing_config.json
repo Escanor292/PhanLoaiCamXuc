@@ -1,6 +1,6 @@
 {
   "sharing_method": "huggingface",
-  "huggingface_repo": "Escanor292/emotion-classification",
+  "huggingface_repo": "emotion-classification-vn/emotion-classification",
   "gdrive_folder_id": null,
   "dropbox_token": null,
   "base_url": null
