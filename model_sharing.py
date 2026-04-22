@@ -69,39 +69,38 @@ class ModelSharing:
     def _upload_to_huggingface(self, model_id, model_path):
         """Upload model lên Hugging Face Hub."""
         try:
-            from huggingface_hub import HfApi, create_repo
+            from huggingface_hub import HfApi, create_repo, upload_folder
             
             api = HfApi()
             repo_id = self.config['huggingface_repo']
             
-            # Tạo repo nếu chưa có
+            print(f"📤 Uploading to Hugging Face: {repo_id}")
+            
+            # Tạo repo nếu chưa có (organization repo)
             try:
-                create_repo(repo_id, exist_ok=True)
-            except:
-                pass
+                create_repo(repo_id, exist_ok=True, repo_type="model")
+                print(f"✅ Repository ready: {repo_id}")
+            except Exception as e:
+                print(f"⚠️  Repository may already exist: {e}")
             
-            # Upload model files
-            model_files = [
-                'pytorch_model.bin',
-                'tokenizer.json',
-                'tokenizer_config.json',
-                'training_config.json'
-            ]
-            
-            for file_name in model_files:
-                file_path = os.path.join(model_path, file_name)
-                if os.path.exists(file_path):
-                    api.upload_file(
-                        path_or_fileobj=file_path,
-                        path_in_repo=f"{model_id}/{file_name}",
-                        repo_id=repo_id
-                    )
-            
-            print(f"✅ Model {model_id} uploaded to Hugging Face!")
-            return True
+            # Upload toàn bộ folder model
+            try:
+                upload_folder(
+                    folder_path=model_path,
+                    repo_id=repo_id,
+                    path_in_repo=model_id,
+                    commit_message=f"Upload model {model_id}"
+                )
+                print(f"✅ Model {model_id} uploaded successfully!")
+                print(f"🔗 View at: https://huggingface.co/{repo_id}/tree/main/{model_id}")
+                return True
+                
+            except Exception as e:
+                print(f"❌ Upload failed: {e}")
+                return False
             
         except ImportError:
-            print("❌ huggingface_hub not installed. Run: pip install huggingface_hub")
+            print("❌ huggingface_hub not installed. Run: pip install -U huggingface_hub")
             return False
         except Exception as e:
             print(f"❌ Upload failed: {e}")
@@ -123,34 +122,38 @@ class ModelSharing:
     def _download_from_huggingface(self, model_id, target_path):
         """Download model từ Hugging Face Hub."""
         try:
-            from huggingface_hub import hf_hub_download
+            from huggingface_hub import snapshot_download
             
             repo_id = self.config['huggingface_repo']
             
-            model_files = [
-                'pytorch_model.bin',
-                'tokenizer.json', 
-                'tokenizer_config.json',
-                'training_config.json'
-            ]
+            print(f"📥 Downloading from Hugging Face: {repo_id}/{model_id}")
             
-            for file_name in model_files:
-                try:
-                    downloaded_file = hf_hub_download(
-                        repo_id=repo_id,
-                        filename=f"{model_id}/{file_name}",
-                        local_dir=target_path,
-                        local_dir_use_symlinks=False
-                    )
-                    print(f"✅ Downloaded {file_name}")
-                except Exception as e:
-                    print(f"⚠️  Could not download {file_name}: {e}")
-            
-            print(f"✅ Model {model_id} downloaded!")
-            return True
+            # Download toàn bộ folder model
+            try:
+                snapshot_download(
+                    repo_id=repo_id,
+                    allow_patterns=f"{model_id}/*",
+                    local_dir=os.path.dirname(target_path),
+                    local_dir_use_symlinks=False
+                )
+                
+                # Move files từ subfolder lên target_path
+                downloaded_path = os.path.join(os.path.dirname(target_path), model_id)
+                if os.path.exists(downloaded_path):
+                    import shutil
+                    if os.path.exists(target_path):
+                        shutil.rmtree(target_path)
+                    shutil.move(downloaded_path, target_path)
+                
+                print(f"✅ Model {model_id} downloaded successfully!")
+                return True
+                
+            except Exception as e:
+                print(f"❌ Download failed: {e}")
+                return False
             
         except ImportError:
-            print("❌ huggingface_hub not installed. Run: pip install huggingface_hub")
+            print("❌ huggingface_hub not installed. Run: pip install -U huggingface_hub")
             return False
         except Exception as e:
             print(f"❌ Download failed: {e}")

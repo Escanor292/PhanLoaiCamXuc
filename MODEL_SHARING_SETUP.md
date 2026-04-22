@@ -11,18 +11,28 @@
 
 #### Bước 1: Cài Đặt
 ```bash
-pip install huggingface_hub
+pip install -U huggingface_hub
 ```
 
-#### Bước 2: Tạo Account
-1. Đăng ký tại: https://huggingface.co/
-2. Tạo Access Token: https://huggingface.co/settings/tokens
-3. Login: `huggingface-cli login`
+#### Bước 2: Tạo Account và Token
+1. **Đăng ký tài khoản** tại: https://huggingface.co/
+2. **Tạo fine-grained token:**
+   - Vào: https://huggingface.co/settings/tokens
+   - Chọn "New token" → "Fine-grained"
+   - **Cấp quyền write repository** (quan trọng!)
+   - Không cần bật webhooks, billing, jobs hay discussions
+3. **Login:**
+   ```bash
+   hf auth login
+   # Nhập token vừa tạo
+   ```
 
-#### Bước 3: Cấu Hình
+#### Bước 3: Cấu Hình Repo Dùng Chung Cho Team
 ```bash
-python model_sharing.py config --method huggingface --repo "your-username/emotion-classification"
+python model_sharing.py config --method huggingface --repo "your-org/emotion-classification"
 ```
+
+**Lưu ý:** Dùng **organization repo** thay vì personal repo để team cùng truy cập.
 
 #### Bước 4: Upload Model Tốt Nhất
 ```bash
@@ -122,8 +132,9 @@ pip install huggingface_hub
 
 ### Lỗi: "Authentication failed"
 ```bash
-huggingface-cli login
+hf auth login
 # Nhập token từ https://huggingface.co/settings/tokens
+# Đảm bảo token có quyền write repository
 ```
 
 ### Lỗi: "Model not found on cloud"
@@ -145,10 +156,13 @@ Nếu auto-download thất bại, có thể download thủ công:
 ### Bước 1: Setup (1 lần)
 ```bash
 # Cài đặt dependencies
-pip install huggingface_hub
+pip install -U huggingface_hub
 
-# Cấu hình
-python model_sharing.py config --method huggingface --repo "team-username/emotion-classification"
+# Login với token có quyền write
+hf auth login
+
+# Cấu hình organization repo
+python model_sharing.py config --method huggingface --repo "your-org/emotion-classification"
 
 # Upload model hiện tại
 python model_sharing.py sync
