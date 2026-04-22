@@ -15,11 +15,126 @@ from transformers import BertTokenizer
 from tqdm import tqdm
 import numpy as np
 import warnings
+import glob
+import pandas as pd
 
 from config import Config
 from model import BERTEmotionClassifier
 from dataset import EmotionDataset
 from utils import load_data, compute_metrics, plot_training_curves, save_model
+from model_registry import ModelRegistry
+
+
+def load_and_merge_data(data_dir):
+    """
+    Load and merge all CSV files from data directory.
+    
+    This function automatically finds and merges all CSV files in the data directory,
+    excluding template files. It's useful for combining contributions from multiple
+    team members into a single training dataset.
+    
+    Args:
+        data_dir (str): Path to directory containing CSV files
+    
+    Returns:
+        tuple: (texts, labels) where:
+            - texts (list): List of text samples
+            - labels (np.ndarray): Binary label matrix of shape (N, 16)
+    
+    Example:
+        >>> texts, labels = load_and_merge_data("data/")
+        Found 3 data files:
+          - data/member_an.csv (583 samples)
+          - data/member_khac.csv (200 samples)
+          - data/sample_comments.csv (100 samples)
+        Total: 883 samples
+    """
+    # Find all CSV files except templates
+    csv_files = glob.glob(os.path.join(data_dir, "*.csv"))
+    csv_files = [f for f in csv_files if "TEMPLATE" not in f.upper() and ".gitkeep" not in f]
+    
+    if not csv_files:
+        raise FileNotFoundError(f"No CSV files found in {data_dir}")
+    
+    print(f"Found {len(csv_files)} data file(s):")
+    
+    all_texts = []
+    all_labels = []
+    
+    for csv_file in sorted(csv_files):
+        try:
+            texts, labels = load_data(csv_file)
+            all_texts.extend(texts)
+            all_labels.append(labels)
+            print(f"  ✓ {csv_file} ({len(texts)} samples)")
+        except Exception as e:
+            print(f"  ✗ {csv_file} - Error: {e}")
+    
+    if not all_texts:
+        raise ValueError("No valid data loaded from CSV files")
+    
+    # Merge all labels
+    merged_labels = np.vstack(all_labels)
+    
+    print(f"Total: {len(all_texts)} samples")
+    
+    return all_texts, merged_labels
+
+
+def load_base_model(model_registry, model_id=None):
+    """
+    Load a pre-trained model from the model registry for transfer learning.
+    
+    Args:
+        model_registry (ModelRegistry): Model registry instance
+        model_id (str, optional): Specific model ID to load. If None, loads best model.
+    
+    Returns:
+        tuple: (model, base_model_info) where:
+            - model (BERTEmotionClassifier): Loaded model with pre-trained weights
+            - base_model_info (dict): Information about the base model
+    
+    Example:
+        >>> registry = ModelRegistry()
+        >>> model, info = load_base_model(registry)
+        Loading base model: model_20260422_124631
+        Base model metrics: macro_f1=0.0, test_loss=0.3516
+    """
+    # Get base model info
+    if model_id is None:
+        base_model_info = model_registry.get_best_model()
+        if base_model_info is None:
+            print("No best model found in registry. Starting from scratch.")
+            return None, None
+    else:
+        base_model_info = model_registry.get_model_info(model_id)
+        if base_model_info is None:
+            print(f"Model {model_id} not found in registry. Starting from scratch.")
+            return None, None
+    
+    model_id = base_model_info['model_id']
+    model_path = base_model_info['path']
+    
+    print(f"Loading base model: {model_id}")
+    print(f"  Path: {model_path}")
+    print(f"  Test Loss: {base_model_info['metrics']['test_loss']:.4f}")
+    print(f"  Macro F1: {base_model_info['metrics']['macro_f1']:.4f}")
+    
+    # Load model weights
+    model = BERTEmotionClassifier(
+        num_labels=Config.NUM_LABELS,
+        dropout_rate=Config.DROPOUT_RATE
+    )
+    
+    model_file = os.path.join(model_path, "pytorch_model.bin")
+    if not os.path.exists(model_file):
+        print(f"Model file not found: {model_file}. Starting from scratch.")
+        return None, None
+    
+    model.load_state_dict(torch.load(model_file, map_location='cpu'))
+    print(f"  ✓ Loaded pre-trained weights from {model_id}")
+    
+    return model, base_model_info
 
 
 def train_epoch(model, dataloader, optimizer, criterion, device):
@@ -269,16 +384,9 @@ def main():
     
     # 3. Load data from CSV
     print("\n[3/10] Loading data...")
-    data_path = os.path.join(Config.DATA_DIR, "sample_comments.csv")
     
-    if not os.path.exists(data_path):
-        raise FileNotFoundError(
-            f"Dataset file not found at '{data_path}'. "
-            f"Please ensure the file exists or run generate_sample_data.py first."
-        )
-    
-    texts, labels = load_data(data_path)
-    print(f"Loaded {len(texts)} samples")
+    # Auto-merge all CSV files in data directory
+    texts, labels = load_and_merge_data(Config.DATA_DIR)
     print(f"Label shape: {labels.shape}")
     
     # 4. Split data into train/val/test
@@ -345,10 +453,27 @@ def main():
     
     # 6. Initialize model, optimizer, and loss function
     print("\n[6/10] Initializing model...")
-    model = BERTEmotionClassifier(
-        num_labels=Config.NUM_LABELS,
-        dropout_rate=Config.DROPOUT_RATE
-    )
+    
+    # Try to load base model for transfer learning
+    base_model_info = None
+    if Config.USE_TRANSFER_LEARNING:
+        print("Transfer learning enabled. Checking for base model...")
+        registry = ModelRegistry()
+        model, base_model_info = load_base_model(registry, Config.BASE_MODEL_ID)
+        
+        if model is None:
+            print("No base model available. Initializing from scratch...")
+            model = BERTEmotionClassifier(
+                num_labels=Config.NUM_LABELS,
+                dropout_rate=Config.DROPOUT_RATE
+            )
+    else:
+        print("Transfer learning disabled. Initializing from scratch...")
+        model = BERTEmotionClassifier(
+            num_labels=Config.NUM_LABELS,
+            dropout_rate=Config.DROPOUT_RATE
+        )
+    
     model = model.to(device)
     print(f"Model: BERTEmotionClassifier")
     print(f"Parameters: {sum(p.numel() for p in model.parameters()):,}")

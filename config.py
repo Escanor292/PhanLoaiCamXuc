@@ -51,6 +51,10 @@ class Config:
     VAL_SPLIT = 0.15
     TEST_SPLIT = 0.15
     
+    # Transfer Learning Configuration
+    USE_TRANSFER_LEARNING = True  # Load best model from registry
+    BASE_MODEL_ID = None  # None = auto-select best model, or specify model_id
+    
     # Prediction Configuration
     PREDICTION_THRESHOLD = 0.5
     
