@@ -38,10 +38,10 @@ class Config:
     NUM_LABELS = 16
     DROPOUT_RATE = 0.3
     
-    # Training Configuration
+    # Training Configuration (OPTIMIZED FOR TRANSFER LEARNING)
     LEARNING_RATE = 2e-5
     BATCH_SIZE = 16
-    NUM_EPOCHS = 5
+    NUM_EPOCHS = 3  # Reduced from 5 - Transfer Learning needs fewer epochs
     MAX_LENGTH = 512  # Maximum token sequence length
     
     # Data Configuration
@@ -51,9 +51,10 @@ class Config:
     VAL_SPLIT = 0.15
     TEST_SPLIT = 0.15
     
-    # Transfer Learning Configuration
-    USE_TRANSFER_LEARNING = True  # Load best model from registry
+    # Transfer Learning Configuration (AUTO-ENABLED FOR ALL MEMBERS)
+    USE_TRANSFER_LEARNING = True  # Always enabled - model learns from best existing model
     BASE_MODEL_ID = None  # None = auto-select best model, or specify model_id
+    AUTO_MERGE_DATA = True  # Automatically merge all CSV files in data/ directory
     
     # Prediction Configuration
     PREDICTION_THRESHOLD = 0.5

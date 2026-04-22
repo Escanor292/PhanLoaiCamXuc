@@ -382,11 +382,23 @@ def main():
     else:
         print(f"Device: {device}")
     
-    # 3. Load data from CSV
-    print("\n[3/10] Loading data...")
+    # 3. Load and merge data from all CSV files
+    print("\n[3/10] Loading and merging data...")
     
-    # Auto-merge all CSV files in data directory
-    texts, labels = load_and_merge_data(Config.DATA_DIR)
+    if Config.AUTO_MERGE_DATA:
+        # Auto-merge all CSV files in data directory
+        texts, labels = load_and_merge_data(Config.DATA_DIR)
+    else:
+        # Load single file (legacy mode)
+        data_path = os.path.join(Config.DATA_DIR, "sample_comments.csv")
+        if not os.path.exists(data_path):
+            raise FileNotFoundError(
+                f"Dataset file not found at '{data_path}'. "
+                f"Please ensure the file exists or enable AUTO_MERGE_DATA."
+            )
+        texts, labels = load_data(data_path)
+        print(f"Loaded {len(texts)} samples")
+    
     print(f"Label shape: {labels.shape}")
     
     # 4. Split data into train/val/test

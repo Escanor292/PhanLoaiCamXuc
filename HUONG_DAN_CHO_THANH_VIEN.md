@@ -457,52 +457,65 @@ Fast-forward
 
 ---
 
-### Bước 3.3: Training Model (Với Transfer Learning)
+### Bước 3.3: Training Model (Siêu Đơn Giản!)
 
-**Làm gì:** Train model với config của bạn trên master dataset, model sẽ tự động học từ model tốt nhất
+**Làm gì:** Train model với Transfer Learning - CHỈ CẦN 1 LỆNH!
 
 **Làm như nào:**
 
-**Option 1: Training đơn giản (KHUYẾN NGHỊ)**
+**🎯 CÁCH ĐỂ KHUYẾN NGHỊ - Siêu đơn giản:**
 ```bash
-# Tự động load model tốt nhất và train tiếp
-python train_incremental.py --epochs 3
+# CHỈ CẦN LỆNH NÀY THÔI!
+python train_simple.py
 ```
 
-**Option 2: Training với nhiều tùy chọn**
-```bash
-# Training với transfer learning (mặc định)
-python train_incremental.py \
-    --epochs 3 \
-    --lr 2e-5 \
-    --batch-size 16
+**Script tự động làm TẤT CẢ:**
+1. ✅ Tìm và merge TẤT CẢ file CSV trong `data/`
+2. ✅ Load model tốt nhất từ registry (Transfer Learning)
+3. ✅ Train 3 epochs (tối ưu cho Transfer Learning)
+4. ✅ Register model mới
+5. ✅ Auto-deploy nếu model tốt nhất
 
-# Training từ đầu (không dùng transfer learning)
-python train_incremental.py --no-transfer --epochs 5
-
-# Training từ model cụ thể
-python train_incremental.py --base-model model_20260422_124631 --epochs 3
-```
-
-**⚠️ QUAN TRỌNG:**
-- Script tự động dùng **TẤT CẢ** file CSV trong `data/` (tự động merge)
-- Model tự động học từ **MODEL TỐT NHẤT** trong registry
-- Chỉ cần 2-3 epochs (thay vì 5-10) vì model đã có kiến thức cũ
-
-**Giải thích tham số:**
-- `--epochs 3`: Số epochs (2-3 là đủ với transfer learning)
-- `--lr 2e-5`: Learning rate
-- `--batch-size 16`: Batch size
-- `--no-transfer`: Tắt transfer learning (train từ đầu)
-- `--base-model <id>`: Chọn model cụ thể làm base (mặc định: best model)
+**Không cần tham số, không cần config - MỌI THỨ ĐÃ TỐI ƯU SẴN!**
 
 **Kết quả:**
 ```
-======================================================================
-MULTI-LABEL EMOTION CLASSIFICATION - TRAINING
-======================================================================
+================================================================================
+🚀 SIMPLE TRAINING - AUTO TRANSFER LEARNING
+================================================================================
 
-[3/10] Loading data...
+✅ Transfer Learning: ENABLED (learns from best model)
+✅ Auto Data Merge: ENABLED (uses all CSV files)
+✅ Auto Deploy: ENABLED (if model is best)
+✅ Optimized Settings: 3 epochs, LR=2e-5
+
+Just sit back and relax! 🎯
+================================================================================
+
+📊 Found 3 data file(s):
+   • member_an.csv
+   • member_khac.csv
+   • sample_comments.csv
+
+🏆 Current Best Model:
+   • Model ID: model_20260422_124631
+   • Test Loss: 0.3516
+   • Macro F1: 0.0
+   • Person: tranan
+
+🎯 Your new model will learn from this best model!
+
+🔧 Training Settings:
+   • Transfer Learning: ✅ ENABLED
+   • Auto Data Merge: ✅ ENABLED
+   • Epochs: 3
+   • Learning Rate: 2e-05
+   • Batch Size: 16
+
+🚀 Starting training...
+================================================================================
+
+[3/10] Loading and merging data...
 Found 3 data file(s):
   ✓ data/member_an.csv (583 samples)
   ✓ data/member_khac.csv (100 samples)
@@ -512,89 +525,63 @@ Total: 783 samples
 [6/10] Initializing model...
 Transfer learning enabled. Checking for base model...
 Loading base model: model_20260422_124631
-  Path: model_registry/models/model_20260422_124631
-  Test Loss: 0.3516
-  Macro F1: 0.0
   ✓ Loaded pre-trained weights from model_20260422_124631
-
-Model: BERTEmotionClassifier
-Parameters: 109,500,000
-Trainable parameters: 109,500,000
 
 [7/10] Starting training...
 Epochs: 3
-Batch size: 16
 
-Epoch 1/3
-Training: 100%|████████████| 35/35 [01:20<00:00]
-  Train Loss: 0.2845  ← Thấp ngay từ đầu!
-  Val Loss: 0.2567
-  Micro F1: 0.8234
-  Macro F1: 0.7956
+Epoch 1/3: Train Loss: 0.2845, Val Loss: 0.2567 ← Tốt ngay từ đầu!
+Epoch 2/3: Train Loss: 0.2234, Val Loss: 0.2123
+Epoch 3/3: Train Loss: 0.1956, Val Loss: 0.1987
 
-Epoch 2/3
-Training: 100%|████████████| 35/35 [01:18<00:00]
-  Train Loss: 0.2234
-  Val Loss: 0.2123
-  Micro F1: 0.8567
-  Macro F1: 0.8234
-
-Epoch 3/3
-Training: 100%|████████████| 35/35 [01:19<00:00]
-  Train Loss: 0.1956
-  Val Loss: 0.1987
-  Micro F1: 0.8678
-  Macro F1: 0.8345
-
-======================================================================
-FINAL EVALUATION ON TEST SET
-======================================================================
-Test Loss: 0.2045
-Micro F1: 0.8623
+Test Loss: 0.2045 ← Tốt hơn model cũ (0.3516)!
 Macro F1: 0.8289
 
-======================================================================
-REGISTERING MODEL
-======================================================================
-Model ID: model_20260422_150000
-✓ Model registered successfully!
-
 🎉 NEW BEST MODEL FOUND!
-Previous Best: model_20260422_124631 (Test Loss: 0.3516)
-New Best: model_20260422_150000 (Test Loss: 0.2045)
-Improvement: -0.1471 (42% better!)
-
 AUTO_DEPLOY enabled. Deploying best model...
-✓ Model deployed to production: saved_model/
-======================================================================
+✅ Model deployed to production!
+
+================================================================================
+🎉 TRAINING COMPLETED SUCCESSFULLY!
+================================================================================
+
+✅ Your model has been trained and registered!
+✅ If it's the best model, it's automatically deployed!
+
+Next steps:
+1. Check results: python model_registry.py list
+2. Test model: python my_test.py
+3. Commit results: git add model_registry/ && git commit -m 'Training results' && git push
 ```
 
-**So sánh Transfer Learning vs Train từ đầu:**
+**Các cách khác (nếu muốn tùy chỉnh):**
 
-| Metric | Train từ đầu (5 epochs) | Transfer Learning (3 epochs) |
-|--------|-------------------------|------------------------------|
-| Epoch 1 Loss | 0.4523 | 0.2845 ← Tốt hơn ngay! |
-| Final Test Loss | 0.2234 | 0.2045 ← Tốt hơn! |
-| Training Time | ~8 phút | ~4 phút ← Nhanh hơn! |
-| Macro F1 | 0.8123 | 0.8289 ← Chính xác hơn! |
+**Cách 2: Với tùy chọn**
+```bash
+# Tùy chỉnh epochs và learning rate
+python train_incremental.py --epochs 5 --lr 1e-5
 
-**Tại sao Transfer Learning tốt hơn:**
-1. **Model không quên kiến thức cũ** - Giữ lại những gì đã học từ 583 samples cũ
-2. **Học nhanh hơn** - Chỉ cần điều chỉnh với 100 samples mới
-3. **Chính xác hơn** - Kết hợp kiến thức cũ + mới
+# Train từ đầu (không dùng Transfer Learning)
+python train_incremental.py --no-transfer --epochs 5
+```
 
-**Quá trình training:**
-1. Tự động tìm và merge TẤT CẢ file CSV trong `data/`
-2. Load model tốt nhất từ registry (model_20260422_124631)
-3. Train 3 epochs với data mới (783 samples = 583 cũ + 100 mới + 100 sample)
-4. Model học thêm từ data mới mà KHÔNG QUÊN data cũ
-5. Register model mới vào registry
-6. **AUTO_DEPLOY:** Nếu tốt hơn → Tự động deploy
+**Cách 3: Script cũ (không khuyến nghị)**
+```bash
+# Cách cũ - phức tạp hơn
+python train_with_args.py --data data/master_dataset_vi.csv --register-model
+```
 
-**Tại sao:** 
-- Transfer learning giúp model học nhanh và chính xác hơn
-- Model không bị "quên" data cũ khi học data mới
-- Tiết kiệm thời gian training (3 epochs thay vì 5-10)
+**⚠️ QUAN TRỌNG:**
+- **Transfer Learning đã BẬT MẶC ĐỊNH** - model tự động học từ model tốt nhất
+- **Auto-merge đã BẬT MẶC ĐỊNH** - tự động dùng TẤT CẢ file CSV
+- **Chỉ cần 3 epochs** - Transfer Learning không cần nhiều epochs
+- **Tất cả đã tối ưu sẵn** - không cần config gì thêm
+
+**Tại sao chỉ cần 1 lệnh:**
+- ✅ Transfer Learning **LUÔN BẬT** - model học từ model tốt nhất
+- ✅ Auto-merge **LUÔN BẬT** - tự động dùng tất cả data
+- ✅ Settings **ĐÃ TỐI ƯU** - 3 epochs, LR=2e-5
+- ✅ Auto-deploy **LUÔN BẬT** - model tốt nhất tự động deploy
 
 ---
 
@@ -882,7 +869,7 @@ Enter text (or 'quit' to exit):
 ### Giữa Tuần (Wednesday - Friday)
 
 - [ ] Pull master dataset mới: `git pull`
-- [ ] Training với transfer learning: `python train_incremental.py --epochs 3`
+- [ ] Training siêu đơn giản: `python train_simple.py`
 - [ ] **Kiểm tra trước khi push:** `python check_before_push.py`
 - [ ] Commit kết quả: `git add model_registry/ && git commit -m "Training results" && git push`
 
@@ -1110,8 +1097,11 @@ python check_before_push.py
 # Merge data tiếng Việt
 python merge_data.py data/member_*.csv --output data/master_dataset_vi.csv
 
-# Training với transfer learning (KHUYẾN NGHỊ!)
-python train_incremental.py --epochs 3
+# Training siêu đơn giản (KHUYẾN NGHỊ!)
+python train_simple.py
+
+# Training với tùy chọn
+python train_incremental.py --epochs 3 --lr 2e-5
 
 # Training từ đầu (nếu cần)
 python train_incremental.py --no-transfer --epochs 5
