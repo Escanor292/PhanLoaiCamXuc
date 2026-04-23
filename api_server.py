@@ -10,7 +10,7 @@ API Endpoints:
     GET /health - Health check
 """
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template_string
 from flask_cors import CORS
 import torch
 import numpy as np
@@ -155,6 +155,16 @@ def predict_emotions(text, threshold=0.4):
             'success': False,
             'error': str(e)
         }
+
+@app.route('/', methods=['GET'])
+def index():
+    """Serve the web demo interface"""
+    try:
+        with open('web_demo.html', 'r', encoding='utf-8') as f:
+            content = f.read()
+        return render_template_string(content)
+    except Exception as e:
+        return f"Error loading web_demo.html: {e}", 500
 
 @app.route('/health', methods=['GET'])
 def health_check():
