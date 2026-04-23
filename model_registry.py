@@ -20,9 +20,27 @@ Usage:
 import json
 import os
 from datetime import datetime
+import sys
+import io
+
+# Fix console encoding for Windows
+if sys.platform == 'win32':
+    try:
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+        sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
+    except Exception:
+        pass
 from pathlib import Path
 import shutil
 import argparse
+
+
+def safe_print(text):
+    """Prints text, stripping emojis if encoding fails."""
+    try:
+        print(text)
+    except UnicodeEncodeError:
+        print(text.encode('ascii', 'ignore').decode('ascii'))
 
 
 class ModelRegistry:
