@@ -45,7 +45,7 @@ copy data\TEMPLATE_DONG_GOP_DATA.csv data\member_TenCuaBan.csv
 
 Mở file `data/member_TenCuaBan.csv` và thêm các câu bình luận tiếng Việt theo định dạng sau:
 
-| comment | joy | trust | fear | surprise | ... (16 cảm xúc) |
+| text | joy | trust | fear | surprise | ... (16 cảm xúc) |
 | :--- | :---: | :---: | :---: | :---: | :--- |
 | "Tôi rất vui vì được thăng chức!" | 1 | 1 | 0 | 1 | ... |
 
