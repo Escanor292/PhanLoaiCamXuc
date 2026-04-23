@@ -49,15 +49,17 @@ model_registry/models/*/*.pt
 model_registry/models/*/*.pth
 model_registry/backups/
 
-# Data files
+# Data files - IMPORTANT: Each member only commits their own CSV
+# Other members' CSV files are NOT pulled to avoid duplicate training
 data/*.csv
 data/*.txt
 data/*.json
 !data/.gitkeep
-!data/sample_comments.csv
-!data/TEMPLATE_DONG_GOP_DATA.csv
-!data/member_*.csv
-!data/master_dataset_vi.csv
+!data/TEMPLATE_DONG_GOP_DATA.csv  # Template - always pull
+!data/sample_comments.csv          # Sample data - always pull
+# Note: Member CSV files (member_*.csv) are ignored by default
+# Each member only has their own CSV file locally
+data/merged_temp.csv  # Temporary merged file
 
 # Training outputs
 *.png

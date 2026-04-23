@@ -33,10 +33,12 @@ class Config:
     """
     
     # Model Configuration
-    MODEL_NAME = "bert-base-uncased"
-    HIDDEN_SIZE = 768  # BERT base hidden dimension
+    MODEL_NAME = "vinai/phobert-base"  # PhoBERT for Vietnamese (NEW DEFAULT)
+    # MODEL_NAME = "bert-base-uncased"  # Old BERT for English (use --model-type bert to use this)
+    HIDDEN_SIZE = 768  # BERT/PhoBERT base hidden dimension
     NUM_LABELS = 16
     DROPOUT_RATE = 0.3
+    LSTM_HIDDEN_SIZE = 256  # For PhoBERT BiLSTM layer
     
     # Training Configuration (OPTIMIZED FOR TRANSFER LEARNING)
     LEARNING_RATE = 2e-5
@@ -55,6 +57,7 @@ class Config:
     USE_TRANSFER_LEARNING = True  # Always enabled - model learns from best existing model
     BASE_MODEL_ID = None  # None = auto-select best model, or specify model_id
     AUTO_MERGE_DATA = True  # Automatically merge all CSV files in data/ directory
+    AUTO_SYNC_CLOUD = True  # Automatically sync best model to Hugging Face after training
     
     # Prediction Configuration
     PREDICTION_THRESHOLD = 0.5

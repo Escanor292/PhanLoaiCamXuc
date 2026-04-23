@@ -19,6 +19,7 @@ from dotenv import load_dotenv
 
 from config import Config
 from model import BERTEmotionClassifier
+from model_phobert import PhoBERTEmotionClassifier, HybridEmotionClassifier
 from dataset import EmotionDataset
 from utils import load_data, compute_metrics, plot_training_curves, save_model
 from model_registry import ModelRegistry
@@ -38,10 +39,15 @@ def parse_args():
                         help='Directory to save model checkpoints')
     
     # Model arguments
-    parser.add_argument('--model-name', type=str, default=Config.MODEL_NAME,
-                        help='Pre-trained BERT model name')
+    parser.add_argument('--model-type', type=str, default='phobert',
+                        choices=['bert', 'phobert', 'hybrid'],
+                        help='Model architecture: bert (old), phobert (new - default), or hybrid')
+    parser.add_argument('--model-name', type=str, default=None,
+                        help='Pre-trained model name (auto-selected based on model-type if not specified)')
     parser.add_argument('--dropout', type=float, default=Config.DROPOUT_RATE,
                         help='Dropout rate')
+    parser.add_argument('--lstm-hidden-size', type=int, default=256,
+                        help='LSTM hidden size (only for phobert/hybrid models)')
     parser.add_argument('--max-length', type=int, default=Config.MAX_LENGTH,
                         help='Maximum sequence length')
     
@@ -68,6 +74,8 @@ def parse_args():
                         help='Name for this experiment (for logging)')
     parser.add_argument('--register-model', action='store_true',
                         help='Register model to central registry after training')
+    parser.add_argument('--transfer-from', type=str, default=None,
+                        help='Model ID to transfer learn from (enables transfer learning)')
     
     return parser.parse_args()
 
@@ -135,18 +143,28 @@ def main():
     """Main training function."""
     args = parse_args()
     
+    # Auto-select model name based on model type
+    if args.model_name is None:
+        if args.model_type == 'bert':
+            args.model_name = Config.MODEL_NAME  # bert-base-uncased
+        elif args.model_type in ['phobert', 'hybrid']:
+            args.model_name = 'vinai/phobert-base'
+    
     print("="*70)
     print("MULTI-LABEL EMOTION CLASSIFICATION - TRAINING")
     print("="*70)
     print(f"\nExperiment: {args.experiment_name}")
     print(f"\nConfiguration:")
+    print(f"  Model Type: {args.model_type.upper()} {'🆕' if args.model_type != 'bert' else ''}")
     print(f"  Data: {args.data}")
     print(f"  Output: {args.output}")
-    print(f"  Model: {args.model_name}")
+    print(f"  Base Model: {args.model_name}")
     print(f"  Epochs: {args.epochs}")
     print(f"  Batch Size: {args.batch_size}")
     print(f"  Learning Rate: {args.lr}")
     print(f"  Dropout: {args.dropout}")
+    if args.model_type in ['phobert', 'hybrid']:
+        print(f"  LSTM Hidden Size: {args.lstm_hidden_size}")
     print(f"  Max Length: {args.max_length}")
     print(f"  Random Seed: {args.seed}")
     
@@ -202,7 +220,18 @@ def main():
     print("CREATING DATASETS")
     print("="*70)
     
-    tokenizer = BertTokenizer.from_pretrained(args.model_name)
+    # Load appropriate tokenizer
+    if args.model_type == 'bert':
+        from transformers import BertTokenizer
+        tokenizer = BertTokenizer.from_pretrained(args.model_name)
+    else:
+        from transformers import AutoTokenizer
+        try:
+            tokenizer = AutoTokenizer.from_pretrained(args.model_name)
+        except Exception as e:
+            print(f"⚠️ Failed to load {args.model_name} tokenizer: {e}")
+            print("Falling back to multilingual BERT...")
+            tokenizer = AutoTokenizer.from_pretrained('bert-base-multilingual-cased')
     
     train_dataset = EmotionDataset(train_texts, train_labels, tokenizer, args.max_length)
     val_dataset = EmotionDataset(val_texts, val_labels, tokenizer, args.max_length)
@@ -222,23 +251,90 @@ def main():
     print("INITIALIZING MODEL")
     print("="*70)
     
-    model = BERTEmotionClassifier(
-        num_labels=len(Config.EMOTION_LABELS),
-        dropout_rate=args.dropout
-    )
-    model = model.to(device)
+    # Check if transfer learning is requested
+    transfer_learning = args.transfer_from is not None
+    base_model_loaded = False
     
-    print(f"✓ Model initialized")
+    if transfer_learning:
+        print(f"\n🔄 TRANSFER LEARNING MODE")
+        print(f"   Loading base model: {args.transfer_from}")
+        
+        try:
+            from transfer_learning import load_base_model_for_transfer
+            
+            # Try to load base model
+            base_model, base_tokenizer, base_info = load_base_model_for_transfer(
+                args.model_type, 
+                device
+            )
+            
+            if base_model is not None:
+                model = base_model
+                base_model_loaded = True
+                print(f"\n✅ Transfer Learning ENABLED")
+                print(f"   Base model: {base_info['model_id']}")
+                print(f"   Will fine-tune with new data")
+            else:
+                print(f"\n⚠️  Could not load base model")
+                print(f"   Will train from scratch instead")
+                transfer_learning = False
+        except Exception as e:
+            print(f"\n⚠️  Transfer learning failed: {e}")
+            print(f"   Will train from scratch instead")
+            transfer_learning = False
+    
+    # If not transfer learning or failed, initialize new model
+    if not base_model_loaded:
+        if args.model_type == 'bert':
+            print("📦 Loading BERT base model (English)...")
+            model = BERTEmotionClassifier(
+                num_labels=len(Config.EMOTION_LABELS),
+                dropout_rate=args.dropout
+            )
+        elif args.model_type == 'phobert':
+            print("📦 Loading PhoBERT + BiLSTM + Attention model (Vietnamese)...")
+            model = PhoBERTEmotionClassifier(
+                num_labels=len(Config.EMOTION_LABELS),
+                dropout_rate=args.dropout,
+                lstm_hidden_size=args.lstm_hidden_size
+            )
+        else:  # hybrid
+            print("📦 Loading Hybrid PhoBERT model (Vietnamese)...")
+            model = HybridEmotionClassifier(
+                num_labels=len(Config.EMOTION_LABELS),
+                dropout_rate=args.dropout,
+                lstm_hidden_size=args.lstm_hidden_size
+            )
+        
+        model = model.to(device)
+    
+    print(f"\n✓ Model initialized")
+    print(f"  Architecture: {args.model_type.upper()}")
+    if transfer_learning and base_model_loaded:
+        print(f"  Mode: Transfer Learning (Fine-tuning) ⭐")
+    else:
+        print(f"  Mode: Training from scratch")
     print(f"  Total parameters: {sum(p.numel() for p in model.parameters()):,}")
     print(f"  Trainable parameters: {sum(p.numel() for p in model.parameters() if p.requires_grad):,}")
     
     # Optimizer and loss
-    optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr)
+    # Use lower learning rate for transfer learning
+    if transfer_learning and base_model_loaded:
+        effective_lr = args.lr * 0.5  # Half the learning rate for fine-tuning
+        print(f"\n🔧 Transfer Learning: Using lower learning rate ({effective_lr:.2e})")
+        optimizer = torch.optim.AdamW(model.parameters(), lr=effective_lr)
+    else:
+        optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr)
+    
     criterion = nn.BCEWithLogitsLoss()
     
     # Training loop
     print(f"\n{'='*70}")
     print("TRAINING")
+    if transfer_learning and base_model_loaded:
+        print("MODE: TRANSFER LEARNING (Fine-tuning existing model)")
+    else:
+        print("MODE: FROM SCRATCH (Using PhoBERT pre-trained weights)")
     print("="*70)
     
     train_losses = []
@@ -274,9 +370,11 @@ def main():
             
             training_config = {
                 'experiment_name': args.experiment_name,
+                'model_type': args.model_type,
                 'model_name': args.model_name,
                 'num_labels': len(Config.EMOTION_LABELS),
                 'dropout_rate': args.dropout,
+                'lstm_hidden_size': args.lstm_hidden_size if args.model_type != 'bert' else None,
                 'learning_rate': args.lr,
                 'batch_size': args.batch_size,
                 'num_epochs': args.epochs,
@@ -360,10 +458,12 @@ def main():
         metadata = {
             'person': os.getenv('USER', os.getenv('USERNAME', 'unknown')),
             'experiment_name': args.experiment_name,
+            'model_type': args.model_type,
             'learning_rate': args.lr,
             'batch_size': args.batch_size,
             'num_epochs': args.epochs,
             'dropout_rate': args.dropout,
+            'lstm_hidden_size': args.lstm_hidden_size if args.model_type != 'bert' else None,
             'max_length': args.max_length,
             'data_file': args.data,
             'model_name': args.model_name

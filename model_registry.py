@@ -37,12 +37,13 @@ class ModelRegistry:
     - Support auto-deployment
     """
     
-    def __init__(self, registry_dir='model_registry'):
+    def __init__(self, registry_dir='model_registry', keep_only_best=True):
         """
         Initialize model registry.
         
         Args:
             registry_dir: Directory to store registry data
+            keep_only_best: If True, only keep the best model (saves disk space)
         """
         self.registry_dir = Path(registry_dir)
         self.registry_dir.mkdir(exist_ok=True)
@@ -51,17 +52,24 @@ class ModelRegistry:
         self.models_dir = self.registry_dir / 'models'
         self.models_dir.mkdir(exist_ok=True)
         
+        self.keep_only_best = keep_only_best
+        
         self.registry = self._load_registry()
     
     def _load_registry(self):
         """Load registry from file."""
         if self.registry_file.exists():
             with open(self.registry_file, 'r') as f:
-                return json.load(f)
+                data = json.load(f)
+                # Ensure keep_only_best setting is loaded
+                if 'keep_only_best' not in data:
+                    data['keep_only_best'] = self.keep_only_best
+                return data
         return {
             'models': [],
             'production_model': None,
             'best_model': None,
+            'keep_only_best': self.keep_only_best,
             'created_at': datetime.now().isoformat()
         }
     
@@ -84,6 +92,38 @@ class ModelRegistry:
         """
         model_id = f"model_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         
+        # Check if new model is better than current best
+        current_best = self.get_best_model()
+        is_better = False
+        
+        if current_best is None:
+            # First model
+            is_better = True
+            print(f"\n{'='*70}")
+            print(f"📝 FIRST MODEL - Will be registered")
+            print(f"{'='*70}")
+        else:
+            # Compare with current best
+            current_best_f1 = current_best['metrics'].get('macro_f1', 0)
+            new_f1 = metrics.get('macro_f1', 0)
+            
+            print(f"\n{'='*70}")
+            print(f"📊 COMPARING WITH CURRENT BEST MODEL")
+            print(f"{'='*70}")
+            print(f"Current Best: {current_best['model_id']}")
+            print(f"  Macro F1: {current_best_f1:.4f}")
+            print(f"\nNew Model:")
+            print(f"  Macro F1: {new_f1:.4f}")
+            print(f"\nDifference: {new_f1 - current_best_f1:+.4f}")
+            
+            if new_f1 > current_best_f1:
+                is_better = True
+                print(f"\n✅ NEW MODEL IS BETTER! Will replace current model.")
+            else:
+                print(f"\n❌ NEW MODEL IS NOT BETTER. Will not be saved.")
+                print(f"{'='*70}\n")
+                return None
+        
         # Copy model to registry
         model_registry_path = self.models_dir / model_id
         
@@ -102,22 +142,65 @@ class ModelRegistry:
             'status': 'registered'
         }
         
+        # If keep_only_best mode, remove old models
+        if self.keep_only_best and current_best is not None:
+            print(f"\n🗑️  Removing old model to save space...")
+            self._remove_old_models(keep_model_id=model_id)
+        
         self.registry['models'].append(model_entry)
         self._save_registry()
         
         print(f"\n{'='*70}")
-        print(f"MODEL REGISTERED")
+        print(f"✅ MODEL REGISTERED")
         print(f"{'='*70}")
         print(f"Model ID: {model_id}")
         print(f"Macro F1: {metrics.get('macro_f1', 'N/A'):.4f}")
         print(f"Micro F1: {metrics.get('micro_f1', 'N/A'):.4f}")
         print(f"Person: {metadata.get('person', 'Unknown')}")
+        if self.keep_only_best:
+            print(f"\n💾 Storage Mode: Keep Only Best (saves disk space)")
+            print(f"   Old models have been removed")
         print(f"{'='*70}\n")
         
         # Auto-evaluate if this is the best model
         self._auto_evaluate()
         
         return model_id
+    
+    def _remove_old_models(self, keep_model_id=None):
+        """
+        Remove old models to save disk space.
+        
+        Args:
+            keep_model_id: Model ID to keep (don't delete)
+        """
+        models_to_remove = []
+        
+        for model in self.registry['models']:
+            if model['model_id'] != keep_model_id:
+                models_to_remove.append(model)
+        
+        for model in models_to_remove:
+            # Remove model files
+            model_path = Path(model['path'])
+            if model_path.exists():
+                try:
+                    shutil.rmtree(model_path)
+                    print(f"   ✓ Removed: {model['model_id']}")
+                except Exception as e:
+                    print(f"   ⚠️  Could not remove {model['model_id']}: {e}")
+            
+            # Remove from registry
+            self.registry['models'].remove(model)
+        
+        # Update best_model and production_model if they were removed
+        if self.registry.get('best_model') not in [keep_model_id]:
+            self.registry['best_model'] = keep_model_id
+        
+        if self.registry.get('production_model') not in [keep_model_id, None]:
+            self.registry['production_model'] = None
+        
+        self._save_registry()
     
     def _auto_evaluate(self):
         """
@@ -248,6 +331,8 @@ class ModelRegistry:
         
         print(f"\n{'='*80}")
         print(f"MODEL REGISTRY - Top {min(top_n, len(sorted_models))} Models (sorted by {sort_by})")
+        if self.keep_only_best:
+            print(f"💾 Storage Mode: KEEP ONLY BEST (saves disk space)")
         print(f"{'='*80}\n")
         
         for i, model in enumerate(sorted_models[:top_n], 1):
@@ -305,12 +390,19 @@ class ModelRegistry:
         return model['path'] if model else None
     
     def get_best_model(self):
-        """Get best model path."""
+        """Get best model entry (full object)."""
         best_id = self.registry.get('best_model')
         if not best_id:
+            # If no best_model set but have models, return first one
+            if self.registry['models']:
+                return self.registry['models'][0]
             return None
         
-        model = self._get_model_by_id(best_id)
+        return self._get_model_by_id(best_id)
+    
+    def get_best_model_path(self):
+        """Get best model path."""
+        model = self.get_best_model()
         return model['path'] if model else None
     
     def get_model_info(self, model_id):
@@ -414,11 +506,10 @@ Examples:
         registry.deploy_model(args.model_id)
     
     elif args.command == 'best':
-        best_path = registry.get_best_model()
-        if best_path:
-            print(f"\nBest model path: {best_path}")
-            best_id = registry.registry['best_model']
-            best_model = registry._get_model_by_id(best_id)
+        best_model = registry.get_best_model()
+        if best_model:
+            print(f"\nBest model: {best_model['model_id']}")
+            print(f"Path: {best_model['path']}")
             print(f"Macro F1: {best_model['metrics']['macro_f1']:.4f}")
         else:
             print("\n⚠ No best model found. Register models first.")
