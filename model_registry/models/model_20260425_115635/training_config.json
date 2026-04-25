@@ -1,8 +1,0 @@
-{
-  "model_type": "hybrid",
-  "epochs": 5,
-  "batch_size": 16,
-  "learning_rate": 2e-05,
-  "lstm_hidden_size": 256,
-  "max_length": 256
-}
