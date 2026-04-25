@@ -111,9 +111,9 @@ class PhoBERTEmotionClassifier(nn.Module):
         # Load PhoBERT model
         try:
             self.phobert = AutoModel.from_pretrained('vinai/phobert-base')
-            print("✅ PhoBERT model loaded successfully")
+            print("[OK] PhoBERT model loaded successfully")
         except Exception as e:
-            print(f"⚠️ Failed to load PhoBERT: {e}")
+            print(f"[WARN] Failed to load PhoBERT: {e}")
             print("Falling back to multilingual BERT...")
             self.phobert = AutoModel.from_pretrained('bert-base-multilingual-cased')
         
@@ -244,9 +244,9 @@ class HybridEmotionClassifier(nn.Module):
         # Load PhoBERT
         try:
             self.phobert = AutoModel.from_pretrained('vinai/phobert-base')
-            print("✅ PhoBERT model loaded successfully")
+            print("[OK] PhoBERT loaded")
         except Exception as e:
-            print(f"⚠️ Failed to load PhoBERT: {e}")
+            print(f"[WARN] Failed to load PhoBERT: {e}")
             print("Falling back to multilingual BERT...")
             self.phobert = AutoModel.from_pretrained('bert-base-multilingual-cased')
         
