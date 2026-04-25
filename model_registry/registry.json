@@ -1,0 +1,29 @@
+{
+  "models": [
+    {
+      "model_id": "model_20260425_115635",
+      "path": "model_registry\\models\\model_20260425_115635",
+      "metrics": {
+        "test_loss": 0.4353,
+        "macro_f1": 0.0475,
+        "micro_f1": 0.3333,
+        "hamming_loss": 0.1533
+      },
+      "metadata": {
+        "person": "khanh",
+        "experiment_name": "Khanh Training - 2026-04-25 11:56",
+        "model_type": "hybrid",
+        "learning_rate": 2e-05,
+        "batch_size": 16,
+        "epochs": 5,
+        "lstm_hidden_size": 256
+      },
+      "registered_at": "2026-04-25T11:56:36.226155",
+      "status": "registered"
+    }
+  ],
+  "production_model": null,
+  "best_model": "model_20260425_115635",
+  "created_at": "2026-04-20T18:26:51.862884",
+  "keep_only_best": true
+}

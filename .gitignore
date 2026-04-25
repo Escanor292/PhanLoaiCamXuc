@@ -1,0 +1,75 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Model checkpoints and saved models
+saved_model/
+*.bin
+*.pt
+*.pth
+
+# Model registry - ONLY keep metadata, ignore model files
+model_registry/models/*/pytorch_model.bin
+model_registry/models/*/model.bin
+model_registry/models/*/*.pt
+model_registry/models/*/*.pth
+model_registry/backups/
+
+# Data files - IMPORTANT: Each member only commits their own CSV
+# Other members' CSV files are NOT pulled to avoid duplicate training
+data/*.csv
+data/*.txt
+data/*.json
+!data/.gitkeep
+!data/TEMPLATE_DONG_GOP_DATA.csv  # Template - always pull
+!data/sample_comments.csv          # Sample data - always pull
+# Note: Member CSV files (member_*.csv) are ignored by default
+# Each member only has their own CSV file locally
+data/merged_temp.csv  # Temporary merged file
+
+# Training outputs
+*.png
+*.jpg
+*.jpeg
+training_curves.png
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

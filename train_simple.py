@@ -1,0 +1,325 @@
+"""
+Simple Training Script - Hybrid PhoBERT for Team Members
+
+This is the SIMPLEST way for team members to train a model.
+Just run: python train_simple.py
+
+What it does automatically:
+1. Uses HYBRID PhoBERT model (most powerful for Vietnamese)
+2. Merges ALL CSV files in data/ directory
+3. Trains for 5 epochs (optimal for Hybrid model)
+4. Registers the new model
+5. Auto-deploys if it's the best model
+
+No parameters needed - everything is optimized!
+"""
+
+import os
+import sys
+from datetime import datetime
+
+# Add current directory to path
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+from config import Config
+from model_registry import ModelRegistry
+from model_sharing import ModelSharing
+
+
+def print_banner():
+    """Print welcome banner."""
+    print("=" * 80)
+    print("🚀 SIMPLE TRAINING - HYBRID PHOBERT (MOST POWERFUL)")
+    print("=" * 80)
+    print()
+    print("✅ Model: Hybrid PhoBERT + BiLSTM + Attention")
+    print("✅ Optimized for: Vietnamese text")
+    print("✅ Incremental Training: Only train NEW data ⭐")
+    print("✅ Auto Data Merge: ENABLED (merges all CSV files) ⭐")
+    print("✅ Transfer Learning: ENABLED (learns from best model) ⭐")
+    print("✅ Keep Only Best: ENABLED (saves disk space) ⭐")
+    print("✅ Auto Deploy: ENABLED (if model is best)")
+    print("✅ Settings: 5 epochs, LR=2e-5, LSTM=256")
+    print()
+    print("Just sit back and relax! 🎯")
+    print("This will take longer but gives BEST results!")
+    print("=" * 80)
+
+
+def check_data_files():
+    """Check if there are CSV files to train on."""
+    import glob
+    
+    csv_files = glob.glob(os.path.join(Config.DATA_DIR, "*.csv"))
+    csv_files = [f for f in csv_files if "TEMPLATE" not in f.upper() and "merged_temp" not in f.lower()]
+    
+    if not csv_files:
+        print("❌ ERROR: No CSV files found in data/ directory!")
+        print()
+        print("Please add your data first:")
+        print("1. Create data/member_YourName.csv")
+        print("2. Follow the format in HUONG_DAN_DONG_GOP_DATA.md")
+        print("3. Then run this script again")
+        return False, []
+    
+    print(f"📊 Found {len(csv_files)} data file(s):")
+    for csv_file in sorted(csv_files):
+        print(f"   • {os.path.basename(csv_file)}")
+    print()
+    
+    return True, csv_files
+
+
+def merge_all_data(csv_files):
+    """
+    Merge all CSV files and extract only NEW data that hasn't been trained.
+    
+    Args:
+        csv_files (list): List of CSV file paths
+    
+    Returns:
+        tuple: (merged_file_path, new_samples_count, stats)
+    """
+    print("\n" + "="*80)
+    print("📦 AUTO-MERGING DATA + INCREMENTAL TRAINING")
+    print("="*80)
+    
+    # Use data tracker to get only new data
+    from data_tracker import DataTracker
+    tracker = DataTracker()
+    
+    new_data_df, stats = tracker.get_new_data(csv_files)
+    
+    if len(new_data_df) == 0:
+        print("\n❌ NO NEW DATA TO TRAIN!")
+        print("   All data has been trained already.")
+        print("\n💡 To train anyway:")
+        print("   1. Add new data to CSV files")
+        print("   2. Or reset tracker: python data_tracker.py reset")
+        return None, 0, stats
+    
+    print(f"\n✅ Proceeding with {len(new_data_df)} NEW samples")
+    
+    # Save to temporary file
+    merged_file = os.path.join(Config.DATA_DIR, "merged_temp.csv")
+    new_data_df.to_csv(merged_file, index=False)
+    print(f"   • Saved to: {merged_file}")
+    print("="*80)
+    
+    return merged_file, len(new_data_df), stats
+
+
+def show_current_best():
+    """Show current best model info."""
+    try:
+        registry = ModelRegistry()
+        best_model = registry.get_best_model()
+        
+        if best_model:
+            print("🏆 Current Best Model:")
+            print(f"   • Model ID: {best_model['model_id']}")
+            print(f"   • Test Loss: {best_model['metrics']['test_loss']:.4f}")
+            print(f"   • Macro F1: {best_model['metrics']['macro_f1']:.4f}")
+            print(f"   • Person: {best_model['metadata'].get('person', 'Unknown')}")
+            print()
+            print("🎯 Your new model will learn from this best model!")
+        else:
+            print("📝 No existing models found. Training from scratch...")
+        
+        print()
+        
+    except Exception as e:
+        print(f"⚠️  Could not load model registry: {e}")
+        print("Training will start from scratch...")
+        print()
+
+
+def main_simple():
+    """Main function for simple training."""
+    print_banner()
+    
+    # Check if data files exist
+    has_data, csv_files = check_data_files()
+    if not has_data:
+        return
+    
+    # Merge all data files and get only NEW data
+    try:
+        merged_file, new_samples_count, merge_stats = merge_all_data(csv_files)
+        
+        if merged_file is None or new_samples_count == 0:
+            print("\n" + "="*80)
+            print("⏭️  TRAINING SKIPPED - No new data")
+            print("="*80)
+            return
+    except Exception as e:
+        print(f"❌ ERROR: Failed to process data: {e}")
+        return
+    
+    # Show current best model
+    show_current_best()
+    
+    # Confirm settings
+    print("🔧 Training Settings:")
+    print(f"   • Model Type: Hybrid PhoBERT (Most Powerful)")
+    print(f"   • Architecture: PhoBERT + BiLSTM + Attention")
+    print(f"   • Data Files: {len(csv_files)} files merged")
+    print(f"   • Total Samples: Check merge summary above")
+    print(f"   • Epochs: 5 (optimal for Hybrid)")
+    print(f"   • Learning Rate: {Config.LEARNING_RATE}")
+    print(f"   • Batch Size: {Config.BATCH_SIZE}")
+    print(f"   • LSTM Hidden Size: 256")
+    print()
+    
+    # Start training
+    print("🚀 Starting training with Hybrid PhoBERT...")
+    print("⏱️  This may take longer but gives BEST results!")
+    print("=" * 80)
+    
+    try:
+        # Import transfer learning module
+        from transfer_learning import (
+            load_base_model_for_transfer,
+            should_use_transfer_learning,
+            get_transfer_learning_settings,
+            print_transfer_learning_info
+        )
+        
+        # Show transfer learning info
+        print_transfer_learning_info()
+        
+        # Check if transfer learning is enabled
+        use_transfer = should_use_transfer_learning()
+        
+        if use_transfer:
+            # Try to load base model
+            device = 'cuda' if __import__('torch').cuda.is_available() else 'cpu'
+            base_model, base_tokenizer, base_info = load_base_model_for_transfer('hybrid', device)
+            
+            # Get optimal settings
+            settings = get_transfer_learning_settings(base_info)
+            epochs = settings['epochs']
+            learning_rate = settings['learning_rate']
+            
+            print(f"\n🔧 Training Settings ({settings['description']}):")
+            print(f"   • Epochs: {epochs}")
+            print(f"   • Learning Rate: {learning_rate}")
+            print()
+        else:
+            epochs = 10
+            learning_rate = Config.LEARNING_RATE
+            base_model = None
+            print("\n⚠️  Transfer Learning DISABLED")
+            print("   Training from scratch...")
+        
+        # Import and run train_with_args
+        from train_with_args import main as train_main
+        
+        # Get person name from environment or prompt
+        person = os.getenv('USER', os.getenv('USERNAME', 'team_member'))
+        
+        # Set up arguments for hybrid training
+        sys.argv = [
+            'train_with_args.py',
+            '--model-type', 'hybrid',
+            '--data', merged_file,  # Use merged file!
+            '--epochs', str(epochs),
+            '--batch-size', str(Config.BATCH_SIZE),
+            '--lr', str(learning_rate),
+            '--lstm-hidden-size', '256',
+            '--dropout', str(Config.DROPOUT_RATE),
+            '--max-length', '256',
+            '--experiment-name', f'Hybrid Training by {person} - {datetime.now().strftime("%Y-%m-%d %H:%M")}',
+            '--register-model'
+        ]
+        
+        # Add transfer learning flag if base model exists
+        if base_model is not None:
+            sys.argv.extend(['--transfer-from', base_info['model_id']])
+        
+        # Run training
+        train_main()
+        
+        # Mark data as trained
+        print("\n" + "="*80)
+        print("📝 Marking data as trained...")
+        print("="*80)
+        
+        from data_tracker import DataTracker
+        import pandas as pd
+        
+        tracker = DataTracker()
+        trained_df = pd.read_csv(merged_file)
+        tracker.mark_as_trained(csv_files, trained_df)
+        
+        print("=" * 80)
+        print("🎉 TRAINING COMPLETED SUCCESSFULLY!")
+        print("=" * 80)
+        print()
+        
+        if base_model is not None:
+            print("✅ Your Hybrid PhoBERT model has been fine-tuned with Transfer Learning!")
+            print("✅ Model learned from previous knowledge + new data!")
+        else:
+            print("✅ Your Hybrid PhoBERT model has been trained from scratch!")
+        
+        print("✅ If it's the best model, it's automatically deployed!")
+        
+        # Auto-sync to Hugging Face
+        if getattr(Config, 'AUTO_SYNC_CLOUD', False):
+            print("\n" + "="*80)
+            print("🔄 AUTO-SYNCING TO HUGGING FACE")
+            print("="*80)
+            try:
+                sharing = ModelSharing()
+                if sharing.sync_best_model():
+                    print("✅ Model synced to Hugging Face successfully!")
+                else:
+                    print("⚠️  Model sync to Hugging Face failed.")
+            except Exception as e:
+                print(f"⚠️  Error during auto-sync: {e}")
+            print("="*80)
+        
+        print()
+        print("📊 Model Features:")
+        print("   • PhoBERT: Optimized for Vietnamese")
+        print("   • BiLSTM: Understands context in both directions")
+        print("   • Attention: Focuses on important words")
+        if base_model is not None:
+            print("   • Transfer Learning: Keeps old knowledge + learns new ⭐")
+        print(f"   • Auto-Merge: Trained on {len(csv_files)} files ⭐")
+        print()
+        print("Next steps:")
+        print("1. Check results: python model_registry.py list")
+        print("2. Compare models: python compare_experiments.py")
+        print("3. Test model: python demo_phobert.py --mode interactive")
+        print("4. Commit results: git add model_registry/ && git commit -m 'Hybrid PhoBERT training results' && git push")
+        print()
+        
+    except Exception as e:
+        print("=" * 80)
+        print("❌ TRAINING FAILED!")
+        print("=" * 80)
+        print(f"Error: {e}")
+        print()
+        print("Troubleshooting:")
+        print("1. Check if you have enough disk space")
+        print("2. Check if your CSV files are valid")
+        print("3. Check internet connection (PhoBERT needs to download)")
+        print("4. Try with PhoBERT instead: python train_unified.py --model-type phobert")
+        print("5. Or use old BERT: python train_unified.py --model-type bert")
+        print()
+    
+    finally:
+        # Clean up temporary merged file
+        if len(csv_files) > 1:
+            try:
+                if os.path.exists(merged_file):
+                    os.remove(merged_file)
+                    print(f"\n🧹 Cleaned up temporary file: {merged_file}")
+            except Exception as e:
+                print(f"\n⚠️  Could not remove temporary file: {e}")
+
+
+if __name__ == "__main__":
+    main_simple()
