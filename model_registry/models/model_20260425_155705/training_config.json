@@ -1,0 +1,19 @@
+{
+    "experiment_name": "Hybrid Training by PHU TAI - 2026-04-25 15:44",
+    "model_type": "hybrid",
+    "model_name": "vinai/phobert-base",
+    "num_labels": 16,
+    "dropout_rate": 0.3,
+    "lstm_hidden_size": 256,
+    "learning_rate": 2e-05,
+    "batch_size": 16,
+    "num_epochs": 10,
+    "max_length": 256,
+    "random_seed": 42,
+    "best_epoch": 10,
+    "best_val_loss": 0.43605467677116394,
+    "train_loss": 0.4078877568244934,
+    "val_loss": 0.43605467677116394,
+    "micro_f1": 0.0,
+    "macro_f1": 0.0
+}

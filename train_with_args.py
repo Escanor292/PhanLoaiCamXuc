@@ -353,8 +353,8 @@ def main():
         val_loss, val_predictions, val_labels_array = evaluate(model, val_loader, criterion, device)
         val_losses.append(val_loss)
         
-        # Compute metrics
-        metrics = compute_metrics(val_labels_array, val_predictions, Config.PREDICTION_THRESHOLD)
+        # Compute metrics (predictions first, then labels - matching utils.py signature)
+        metrics = compute_metrics(val_predictions, val_labels_array, Config.PREDICTION_THRESHOLD)
         
         print(f"\nResults:")
         print(f"  Train Loss: {train_loss:.4f}")
@@ -405,7 +405,7 @@ def main():
     print("="*70)
     
     test_loss, test_predictions, test_labels_array = evaluate(model, test_loader, criterion, device)
-    test_metrics = compute_metrics(test_labels_array, test_predictions, Config.PREDICTION_THRESHOLD)
+    test_metrics = compute_metrics(test_predictions, test_labels_array, Config.PREDICTION_THRESHOLD)
     
     print(f"\nTest Results:")
     print(f"  Test Loss: {test_loss:.4f}")
