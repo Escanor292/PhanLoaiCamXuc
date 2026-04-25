@@ -22,6 +22,38 @@ from config import Config
 from model import BERTEmotionClassifier
 from model_phobert import PhoBERTEmotionClassifier, HybridEmotionClassifier
 from dataset import EmotionDataset
+
+
+def get_optimal_batch_size(requested_batch_size, device):
+    """
+    Determine optimal batch size based on device and memory.
+    """
+    if device.type == 'cpu':
+        print("💻 Using CPU - keeping small batch size to avoid lag")
+        return min(requested_batch_size, 16)
+    
+    try:
+        # Check GPU memory if using CUDA
+        if device.type == 'cuda':
+            gpu_name = torch.cuda.get_device_name(0)
+            total_mem = torch.cuda.get_device_properties(0).total_memory / (1024**3) # GB
+            print(f"🚀 GPU Detected: {gpu_name} ({total_mem:.1f}GB)")
+            
+            # Simple heuristic for batch size
+            if total_mem > 12: # High-end GPU
+                optimal = 64
+            elif total_mem > 6: # Mid-range GPU
+                optimal = 32
+            else: # Entry-level GPU
+                optimal = 16
+                
+            print(f"📊 Auto-optimized batch size: {optimal} (based on GPU memory)")
+            return optimal
+    except Exception as e:
+        print(f"⚠️ Could not optimize batch size automatically: {e}")
+        
+    return requested_batch_size
+
 from utils import load_data, compute_metrics, plot_training_curves, save_model
 from model_registry import ModelRegistry
 
@@ -174,12 +206,13 @@ def main():
     np.random.seed(args.seed)
     
     # Device configuration
-    if args.device:
-        device = torch.device(args.device)
-    else:
-        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    # Set device
+    device = torch.device(args.device if args.device else ('cuda' if torch.cuda.is_available() else 'cpu'))
     
-    print(f"  Device: {device}")
+    # Auto-adjust batch size based on device
+    args.batch_size = get_optimal_batch_size(args.batch_size, device)
+    
+    print(f"Using device: {device}")
     
     if device.type == 'cpu':
         print("\n⚠ Warning: Training on CPU. This will be slow!")
@@ -215,6 +248,33 @@ def main():
     print(f"  Training: {len(train_texts)} samples ({len(train_texts)/len(texts)*100:.1f}%)")
     print(f"  Validation: {len(val_texts)} samples ({len(val_texts)/len(texts)*100:.1f}%)")
     print(f"  Test: {len(test_texts)} samples ({len(test_texts)/len(texts)*100:.1f}%)")
+    
+    # Calculate Positive Weights for imbalanced data
+    # pos_weight = num_negatives / num_positives
+    print(f"\n{'='*70}")
+    print("CALCULATING POSITIVE WEIGHTS (for imbalance)")
+    print("="*70)
+    
+    num_positives = np.sum(train_labels, axis=0)
+    num_negatives = len(train_labels) - num_positives
+    
+    # Avoid division by zero and cap extreme weights
+    pos_weights = []
+    for pos, neg in zip(num_positives, num_negatives):
+        if pos == 0:
+            weight = 10.0  # Default weight if no positives in batch
+        else:
+            weight = neg / pos
+        # Cap weight at 25.0 to avoid extreme gradients
+        weight = min(float(weight), 25.0)
+        pos_weights.append(weight)
+    
+    pos_weight_tensor = torch.tensor(pos_weights, dtype=torch.float32).to(device)
+    
+    print(f"✓ Weights calculated for {len(pos_weights)} labels")
+    for label, weight in zip(Config.EMOTION_LABELS, pos_weights):
+        if weight > 1.0:
+            print(f"  {label:15s}: {weight:.2f}x")
     
     # Create datasets and dataloaders
     print(f"\n{'='*70}")
@@ -327,7 +387,8 @@ def main():
     else:
         optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr)
     
-    criterion = nn.BCEWithLogitsLoss()
+    # Use Positive Weights for imbalanced multi-label classification
+    criterion = nn.BCEWithLogitsLoss(pos_weight=pos_weight_tensor)
     
     # Training loop
     print(f"\n{'='*70}")

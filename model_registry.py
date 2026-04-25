@@ -212,6 +212,20 @@ class ModelRegistry:
             # Remove from registry
             self.registry['models'].remove(model)
         
+        # Also cleanup orphaned folders (not in registry)
+        print(f"   🔎 Checking for orphaned model folders...")
+        tracked_ids = {m['model_id'] for m in self.registry['models']}
+        if keep_model_id:
+            tracked_ids.add(keep_model_id)
+            
+        for folder in self.models_dir.iterdir():
+            if folder.is_dir() and folder.name not in tracked_ids:
+                try:
+                    shutil.rmtree(folder)
+                    print(f"   ✓ Removed orphaned: {folder.name}")
+                except Exception as e:
+                    print(f"   ⚠️  Could not remove orphaned {folder.name}: {e}")
+        
         # Update best_model and production_model if they were removed
         if self.registry.get('best_model') not in [keep_model_id]:
             self.registry['best_model'] = keep_model_id

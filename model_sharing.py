@@ -50,7 +50,7 @@ class ModelSharing:
         with open(self.config_file, 'w') as f:
             json.dump(self.config, f, indent=2)
     
-    def upload_model(self, model_id):
+    def upload_model(self, model_id, **kwargs):
         """Upload model lên cloud storage."""
         model_info = self.registry.get_model_info(model_id)
         if not model_info:
@@ -60,15 +60,18 @@ class ModelSharing:
         model_path = model_info['path']
         
         if self.config['sharing_method'] == 'huggingface':
-            return self._upload_to_huggingface(model_id, model_path)
+            return self._upload_to_huggingface(model_id, model_path, path_in_repo=kwargs.get('path_in_repo', model_id))
         elif self.config['sharing_method'] == 'gdrive':
             return self._upload_to_gdrive(model_id, model_path)
         else:
             print(f"❌ Sharing method {self.config['sharing_method']} not implemented yet!")
             return False
     
-    def _upload_to_huggingface(self, model_id, model_path):
+    def _upload_to_huggingface(self, model_id, model_path, path_in_repo=None):
         """Upload model lên Hugging Face Hub."""
+        if path_in_repo is None:
+            path_in_repo = model_id
+            
         try:
             from huggingface_hub import HfApi, create_repo, upload_folder
             
@@ -89,11 +92,11 @@ class ModelSharing:
                 upload_folder(
                     folder_path=model_path,
                     repo_id=repo_id,
-                    path_in_repo=model_id,
+                    path_in_repo=path_in_repo,
                     commit_message=f"Upload model {model_id}"
                 )
                 print(f"✅ Model {model_id} uploaded successfully!")
-                print(f"🔗 View at: https://huggingface.co/{repo_id}/tree/main/{model_id}")
+                print(f"🔗 View at: https://huggingface.co/{repo_id}/tree/main/{path_in_repo}")
                 return True
                 
             except Exception as e:
@@ -165,8 +168,8 @@ class ModelSharing:
         best_model = self.registry.get_best_model()
         if best_model and isinstance(best_model, dict):
             model_id = best_model['model_id']
-            print(f"🔄 Syncing best model: {model_id}")
-            return self.upload_model(model_id)
+            print(f"🔄 Syncing best model: {model_id} to 'current_model' path")
+            return self.upload_model(model_id, path_in_repo="current_model")
         else:
             print("❌ No best model found or invalid model data!")
             return False

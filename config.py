@@ -44,7 +44,7 @@ class Config:
     LEARNING_RATE = 2e-5
     BATCH_SIZE = 16
     NUM_EPOCHS = 3  # Reduced from 5 - Transfer Learning needs fewer epochs
-    MAX_LENGTH = 512  # Maximum token sequence length
+    MAX_LENGTH = 100  # Giảm xuống 100 để tăng tốc độ huấn luyện
     
     # Data Configuration
     DATA_DIR = "data/"
