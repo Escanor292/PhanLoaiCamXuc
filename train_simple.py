@@ -231,7 +231,7 @@ def main_simple():
             epochs = settings['epochs']
             learning_rate = settings['learning_rate']
             
-            print(f"\n🔧 Training Settings ({settings['description']}):")
+            print(f"\n🔧 Cài đặt huấn luyện ({settings['description']}):")
             print(f"   • Epochs: {epochs}")
             print(f"   • Learning Rate: {learning_rate}")
             print()
@@ -239,8 +239,8 @@ def main_simple():
             epochs = 10
             learning_rate = Config.LEARNING_RATE
             base_model = None
-            print("\n⚠️  Transfer Learning DISABLED")
-            print("   Training from scratch...")
+            print("\n⚠️  Đã TẮT Transfer Learning")
+            print("   Đang huấn luyện từ đầu...")
         
         # Import and run train_with_args
         from train_with_args import main as train_main
@@ -272,7 +272,7 @@ def main_simple():
         
         # Mark data as trained
         print("\n" + "="*80)
-        print("📝 Marking data as trained...")
+        print("📝 Đang đánh dấu dữ liệu đã huấn luyện...")
         print("="*80)
         
         from data_tracker import DataTracker
@@ -283,61 +283,62 @@ def main_simple():
         tracker.mark_as_trained(csv_files, trained_df)
         
         print("=" * 80)
-        print("🎉 TRAINING COMPLETED SUCCESSFULLY!")
+        print("🎉 HUẤN LUYỆN THÀNH CÔNG RỰC RỠ!")
         print("=" * 80)
         print()
         
         if base_model is not None:
-            print("✅ Your Hybrid PhoBERT model has been fine-tuned with Transfer Learning!")
-            print("✅ Model learned from previous knowledge + new data!")
+            print("✅ Mô hình Hybrid PhoBERT của bạn đã được tinh chỉnh với Transfer Learning!")
+            print("✅ Mô hình đã học được kiến thức cũ + dữ liệu mới! ⭐")
         else:
-            print("✅ Your Hybrid PhoBERT model has been trained from scratch!")
+            print("✅ Mô hình Hybrid PhoBERT của bạn đã được huấn luyện từ đầu!")
         
-        print("✅ If it's the best model, it's automatically deployed!")
+        print("✅ Nếu đây là mô hình tốt nhất, nó sẽ tự động được triển khai!")
         
         # Auto-sync to Hugging Face
         if getattr(Config, 'AUTO_SYNC_CLOUD', False):
             print("\n" + "="*80)
-            print("🔄 AUTO-SYNCING TO HUGGING FACE")
+            print("🔄 ĐANG TỰ ĐỘNG ĐỒNG BỘ LÊN HUGGING FACE")
             print("="*80)
             try:
                 sharing = ModelSharing()
                 if sharing.sync_best_model():
-                    print("✅ Model synced to Hugging Face successfully!")
+                    print("✅ Đồng bộ lên Hugging Face thành công!")
                 else:
-                    print("⚠️  Model sync to Hugging Face failed.")
+                    print("⚠️  Đồng bộ lên Hugging Face thất bại.")
             except Exception as e:
-                print(f"⚠️  Error during auto-sync: {e}")
+                print(f"⚠️  Lỗi khi tự động đồng bộ: {e}")
             print("="*80)
         
         print()
-        print("📊 Model Features:")
-        print("   • PhoBERT: Optimized for Vietnamese")
-        print("   • BiLSTM: Understands context in both directions")
-        print("   • Attention: Focuses on important words")
+        print("📊 Tính năng mô hình:")
+        print("   • PhoBERT: Tối ưu cho tiếng Việt")
+        print("   • BiLSTM: Hiểu ngữ cảnh hai chiều")
+        print("   • Attention: Tập trung vào các từ quan trọng")
         if base_model is not None:
-            print("   • Transfer Learning: Keeps old knowledge + learns new ⭐")
-        print(f"   • Auto-Merge: Trained on {len(csv_files)} files ⭐")
+            print("   • Transfer Learning: Giữ kiến thức cũ + học cái mới ⭐")
+        print(f"   • Auto-Merge: Đã huấn luyện trên {len(csv_files)} file ⭐")
         print()
-        print("Next steps:")
-        print("1. Check results: python model_registry.py list")
-        print("2. Compare models: python compare_experiments.py")
-        print("3. Test model: python demo_phobert.py --mode interactive")
-        print("4. Commit results: git add model_registry/ && git commit -m 'Hybrid PhoBERT training results' && git push")
+        print("Các bước tiếp theo:")
+        print("1. Xem danh sách: python model_registry.py list")
+        print("2. So sánh mô hình: python compare_experiments.py")
+        print("3. Chạy thử: python demo_phobert.py --mode interactive")
+        print("4. Lưu kết quả: git add model_registry/ && git commit -m 'Cập nhật kết quả huấn luyện' && git push")
         print()
         
     except Exception as e:
         print("=" * 80)
-        print("❌ TRAINING FAILED!")
+        print("❌ HUẤN LUYỆN THẤT BẠI!")
         print("=" * 80)
-        print(f"Error: {e}")
+        print(f"Lỗi chi tiết: {e}")
         print()
-        print("Troubleshooting:")
-        print("1. Check if you have enough disk space")
-        print("2. Check if your CSV files are valid")
-        print("3. Check internet connection (PhoBERT needs to download)")
-        print("4. Try with PhoBERT instead: python train_unified.py --model-type phobert")
-        print("5. Or use old BERT: python train_unified.py --model-type bert")
+        print("Hướng dẫn khắc phục:")
+        print("1. Kiểm tra dung lượng ổ đĩa (cần ít nhất 5GB trống)")
+        print("2. Kiểm tra các file CSV có đúng định dạng không")
+        print("3. Kiểm tra kết nối mạng (cần mạng để tải PhoBERT từ Hugging Face)")
+        print("4. 🛡️ QUAN TRỌNG: Nếu gặp lỗi DLL hoặc Quyền truy cập (Access Denied), hãy")
+        print("   liên hệ bộ phận IT để whitelist thư mục dự án, Python và các file DLL (PyTorch).")
+        print("5. Thử chạy script với quyền Administrator.")
         print()
     
     finally:

@@ -95,6 +95,12 @@ git push
 *   **Lỗi "No CSV files found"**: Đảm bảo bạn đã tạo file `member_TenCuaBan.csv` trong thư mục `data/`.
 *   **Lỗi đồng bộ model**: Đảm bảo bạn đã chạy `hf auth login` và có kết nối Internet.
 *   **Lỗi Conflict**: Nếu gặp conflict khi push, hãy chạy `git pull` trước, sau đó mới push lại.
+*   **Lỗi Bảo mật/IT (DLL/Access Denied)**: Nếu chạy `python train_simple.py` bị lỗi liên quan đến file DLL hoặc bị chặn quyền truy cập:
+    *   Hãy liên hệ bộ phận IT để thực hiện **whitelist** cho:
+        1. Thư mục dự án `PhanLoaiCamXuc`.
+        2. File thực thi `python.exe`.
+        3. Các file DLL trong thư viện PyTorch (thường nằm trong `site-packages/torch/lib`).
+    *   Thử chạy PowerShell/CMD với quyền **Administrator**.
 
 ---
 *Chúc bạn đóng góp được nhiều dữ liệu chất lượng! 🚀*
