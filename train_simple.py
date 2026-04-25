@@ -16,7 +16,52 @@ No parameters needed - everything is optimized!
 
 import os
 import sys
+import subprocess
 from datetime import datetime
+
+def auto_fix_environment():
+    """Automatically fix common Windows environment issues (DLLs, Permissions)."""
+    if os.name != 'nt':
+        return
+
+    print("[FIX] Checking & fixing environment...")
+    
+    # 1. Patch DLL directories
+    try:
+        python_path = os.path.dirname(sys.executable)
+        paths_to_add = [
+            python_path,
+            os.path.join(python_path, 'Library', 'bin'),
+            os.path.join(python_path, 'Lib', 'site-packages', 'torch', 'lib')
+        ]
+        for path in paths_to_add:
+            if os.path.exists(path):
+                os.add_dll_directory(path)
+    except Exception:
+        pass
+
+    # 2. Unblock files using PowerShell (silent)
+    try:
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        ps_cmd = f"Get-ChildItem -Path '{current_dir}' -Recurse | Unblock-File"
+        subprocess.run(["powershell", "-Command", ps_cmd], 
+                       capture_output=True, timeout=5)
+    except Exception:
+        pass
+
+    # 3. Test torch import
+    try:
+        import torch
+    except ImportError as e:
+        if "DLL load failed" in str(e):
+            print("\n❌ LỖI DLL: Windows không thể nạp thư viện PyTorch.")
+            print("👉 CÁCH FIX: Bạn hãy tải và cài đặt Microsoft Visual C++ Redistributable tại:")
+            print("   https://aka.ms/vs/17/release/vc_redist.x64.exe")
+            print("   Sau đó khởi động lại máy và chạy lại lệnh này.")
+            sys.exit(1)
+
+# Run fix immediately
+auto_fix_environment()
 
 # Add current directory to path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))

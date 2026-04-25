@@ -82,6 +82,9 @@ python model_sharing.py config --repo [USERNAME/REPO_NAME]
 # Huấn luyện với các tham số tùy chỉnh
 python train_with_args.py --model-type hybrid --epochs 10 --lr 2e-5
 
+# Tự động kiểm tra và sửa lỗi môi trường Windows (DLL, Quyền truy cập)
+python windows_doctor.py
+
 # Chạy API Server (Production)
 python api_server.py
 ```
