@@ -134,11 +134,11 @@ class ModelRegistry:
             print(f"  Macro F1: {new_f1:.4f}")
             print(f"\nDifference: {new_f1 - current_best_f1:+.4f}")
             
-            if new_f1 > current_best_f1:
+            if new_f1 >= current_best_f1:
                 is_better = True
-                print(f"\n✅ NEW MODEL IS BETTER! Will replace current model.")
+                print(f"\n[OK] NEW MODEL IS BETTER OR EQUAL! Will replace current model.")
             else:
-                print(f"\n❌ NEW MODEL IS NOT BETTER. Will not be saved.")
+                print(f"\n[SKIP] NEW MODEL IS NOT BETTER. Will not be saved.")
                 print(f"{'='*70}\n")
                 return None
         

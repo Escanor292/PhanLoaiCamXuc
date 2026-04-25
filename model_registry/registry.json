@@ -1,34 +1,7 @@
 {
-  "models": [
-    {
-      "model_id": "model_20260425_155705",
-      "path": "model_registry\\models\\model_20260425_155705",
-      "metrics": {
-        "macro_f1": 0.0,
-        "micro_f1": 0.0,
-        "test_loss": 0.39764130115509033,
-        "hamming_loss": 0.14453125
-      },
-      "metadata": {
-        "person": "PHU TAI",
-        "experiment_name": "Hybrid Training by PHU TAI - 2026-04-25 15:44",
-        "model_type": "hybrid",
-        "learning_rate": 2e-05,
-        "batch_size": 16,
-        "num_epochs": 10,
-        "dropout_rate": 0.3,
-        "lstm_hidden_size": 256,
-        "max_length": 256,
-        "data_file": "data/merged_temp.csv",
-        "model_name": "vinai/phobert-base"
-      },
-      "registered_at": "2026-04-25T15:57:05.923375",
-      "status": "production",
-      "deployed_at": "2026-04-25T15:57:06.951695"
-    }
-  ],
-  "production_model": "model_20260425_155705",
-  "best_model": "model_20260425_155705",
-  "created_at": "2026-04-20T18:26:51.862884",
-  "keep_only_best": true
+  "models": [],
+  "production_model": null,
+  "best_model": null,
+  "keep_only_best": true,
+  "created_at": "2026-04-20T18:26:51.862884"
 }
