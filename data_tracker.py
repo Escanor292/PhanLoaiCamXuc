@@ -9,6 +9,7 @@ This module tracks:
 This enables incremental training - only train on NEW data!
 """
 
+import fix_encoding  # Fix Windows emoji encoding
 import json
 import hashlib
 import pandas as pd

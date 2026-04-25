@@ -6,6 +6,7 @@ a trained BERT-based model. It supports both single and batch predictions, and
 includes an interactive command-line interface for user interaction.
 """
 
+import fix_encoding  # Fix Windows emoji encoding
 import torch
 import numpy as np
 from transformers import BertTokenizer

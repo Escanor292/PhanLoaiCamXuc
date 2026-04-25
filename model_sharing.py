@@ -12,6 +12,7 @@ Các phương án:
 5. Local network sharing
 """
 
+import fix_encoding  # Fix Windows emoji encoding
 import os
 import json
 import requests

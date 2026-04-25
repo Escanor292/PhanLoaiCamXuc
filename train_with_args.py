@@ -6,6 +6,7 @@ Usage:
     python train_with_args.py --data data/my_data.csv --output saved_model/my_model/ --epochs 10
 """
 
+import fix_encoding  # Fix Windows emoji encoding
 import argparse
 import torch
 import torch.nn as nn

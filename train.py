@@ -7,6 +7,7 @@ This module orchestrates the model training process, including:
 - Main training pipeline with data loading, model initialization, and checkpointing
 """
 
+import fix_encoding  # Fix Windows emoji encoding
 import os
 import torch
 import torch.nn as nn

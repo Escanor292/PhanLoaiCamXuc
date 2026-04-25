@@ -8,6 +8,7 @@ Usage:
     python merge_data.py --files data/file1.csv data/file2.csv --output data/master.csv
 """
 
+import fix_encoding  # Fix Windows emoji encoding
 import pandas as pd
 import os
 import argparse

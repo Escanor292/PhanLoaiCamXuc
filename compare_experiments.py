@@ -8,6 +8,7 @@ Usage:
     python compare_experiments.py experiments/person_a/exp001/ experiments/person_b/exp001/
 """
 
+import fix_encoding  # Fix Windows emoji encoding
 import argparse
 import json
 import os

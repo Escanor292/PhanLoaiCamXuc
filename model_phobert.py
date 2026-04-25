@@ -15,6 +15,7 @@ This architecture combines:
 - Attention: Focuses on important parts of the text
 """
 
+import fix_encoding  # Fix Windows emoji encoding
 import torch
 import torch.nn as nn
 from transformers import AutoModel

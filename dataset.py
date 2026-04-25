@@ -6,6 +6,7 @@ emotion classification data. The EmotionDataset class handles tokenization
 on-the-fly during data loading for memory efficiency.
 """
 
+import fix_encoding  # Fix Windows emoji encoding
 import torch
 from torch.utils.data import Dataset
 

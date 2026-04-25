@@ -2,6 +2,7 @@
 Register the trained model to registry
 """
 
+import fix_encoding  # Fix Windows emoji encoding
 import os
 import sys
 import json

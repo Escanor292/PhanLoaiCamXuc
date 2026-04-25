@@ -17,6 +17,7 @@ Usage:
     python model_registry.py production
 """
 
+import fix_encoding  # Fix Windows emoji encoding
 import json
 import os
 from datetime import datetime

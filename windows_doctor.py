@@ -1,3 +1,4 @@
+import fix_encoding  # Fix Windows emoji encoding
 import os
 import sys
 import subprocess

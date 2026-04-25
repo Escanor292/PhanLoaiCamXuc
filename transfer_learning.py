@@ -10,6 +10,7 @@ Benefits:
 - Needs less data (builds on existing knowledge)
 """
 
+import fix_encoding  # Fix Windows emoji encoding
 import os
 import torch
 from transformers import AutoTokenizer

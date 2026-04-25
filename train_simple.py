@@ -14,6 +14,7 @@ What it does automatically:
 No parameters needed - everything is optimized!
 """
 
+import fix_encoding  # Fix Windows emoji encoding
 import os
 import sys
 import subprocess

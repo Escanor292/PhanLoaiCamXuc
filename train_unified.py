@@ -22,6 +22,7 @@ Features:
 - Model registry integration
 """
 
+import fix_encoding  # Fix Windows emoji encoding
 import argparse
 import sys
 import os

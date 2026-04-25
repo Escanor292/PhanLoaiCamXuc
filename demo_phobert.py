@@ -6,6 +6,7 @@ Usage:
     python demo_phobert.py --model_path experiments/phobert_phobert_20260422_150000
 """
 
+import fix_encoding  # Fix Windows emoji encoding
 import argparse
 import torch
 from transformers import AutoTokenizer

@@ -10,6 +10,7 @@ API Endpoints:
     GET /health - Health check
 """
 
+import fix_encoding  # Fix Windows emoji encoding
 from flask import Flask, request, jsonify, render_template_string
 from flask_cors import CORS
 import torch
