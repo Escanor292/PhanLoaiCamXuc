@@ -73,7 +73,7 @@ class DataTracker:
                 - stats_dict: Statistics about new vs old data
         """
         print("\n" + "="*80)
-        print("🔍 CHECKING FOR NEW DATA")
+        print("[CHECK] CHECKING FOR NEW DATA")
         print("="*80)
         
         all_new_data = []
@@ -127,14 +127,14 @@ class DataTracker:
             if new_count > 0:
                 stats['files_with_new_data'] += 1
                 all_new_data.extend(new_samples)
-                print(f"✅ {filename}:")
-                print(f"   • Total: {total_in_file} samples")
-                print(f"   • New: {new_count} samples")
-                print(f"   • Already trained: {old_count} samples")
+                print(f"[NEW] {filename}:")
+                print(f"   * Total: {total_in_file} samples")
+                print(f"   * New: {new_count} samples")
+                print(f"   * Already trained: {old_count} samples")
             else:
-                print(f"⏭️  {filename}:")
-                print(f"   • Total: {total_in_file} samples")
-                print(f"   • All samples already trained - SKIP")
+                print(f"[SKIP] {filename}:")
+                print(f"   * Total: {total_in_file} samples")
+                print(f"   * All samples already trained - SKIP")
         
         # Create DataFrame from new data
         if all_new_data:
@@ -143,19 +143,19 @@ class DataTracker:
             new_data_df = pd.DataFrame()
         
         # Print summary
-        print(f"\n📊 Summary:")
-        print(f"   • Total files: {stats['total_files']}")
-        print(f"   • Files with new data: {stats['files_with_new_data']}")
-        print(f"   • Total samples: {stats['total_samples']}")
-        print(f"   • New samples: {stats['new_samples']} ⭐")
-        print(f"   • Already trained: {stats['already_trained']}")
+        print(f"\n[SUMMARY]")
+        print(f"   * Total files: {stats['total_files']}")
+        print(f"   * Files with new data: {stats['files_with_new_data']}")
+        print(f"   * Total samples: {stats['total_samples']}")
+        print(f"   * New samples: {stats['new_samples']} [NEW]")
+        print(f"   * Already trained: {stats['already_trained']}")
         
         if stats['new_samples'] == 0:
-            print(f"\n⚠️  NO NEW DATA FOUND!")
+            print(f"\n[WARN] NO NEW DATA FOUND!")
             print(f"   All data has been trained already.")
             print(f"   Please add new data before training.")
         else:
-            print(f"\n✅ Found {stats['new_samples']} new samples to train!")
+            print(f"\n[OK] Found {stats['new_samples']} new samples to train!")
         
         print("="*80)
         
@@ -170,7 +170,7 @@ class DataTracker:
             trained_df: DataFrame that was actually trained
         """
         print("\n" + "="*80)
-        print("💾 UPDATING DATA TRACKER")
+        print("[SAVE] UPDATING DATA TRACKER")
         print("="*80)
         
         # Get hashes of trained samples
@@ -216,9 +216,9 @@ class DataTracker:
                 self.tracker['files'][filename]['samples'] = len(self.tracker['files'][filename]['hashes'])
                 self.tracker['files'][filename]['last_updated'] = datetime.now().isoformat()
                 
-                print(f"✅ {filename}:")
-                print(f"   • Added {len(new_hashes)} new samples to tracker")
-                print(f"   • Total tracked: {self.tracker['files'][filename]['samples']} samples")
+                print(f"[OK] {filename}:")
+                print(f"   * Added {len(new_hashes)} new samples to tracker")
+                print(f"   * Total tracked: {self.tracker['files'][filename]['samples']} samples")
         
         # Update global stats
         self.tracker['total_trained_samples'] = sum(
@@ -228,13 +228,13 @@ class DataTracker:
         
         self._save_tracker()
         
-        print(f"\n📊 Total tracked samples: {self.tracker['total_trained_samples']}")
+        print(f"\n[STATS] Total tracked samples: {self.tracker['total_trained_samples']}")
         print("="*80)
     
     def get_stats(self):
         """Get training statistics."""
         print("\n" + "="*80)
-        print("📊 DATA TRACKER STATISTICS")
+        print("DATA TRACKER STATISTICS")
         print("="*80)
         
         print(f"\nTotal trained samples: {self.tracker['total_trained_samples']}")
@@ -253,7 +253,7 @@ class DataTracker:
     
     def reset(self):
         """Reset tracker (clear all history)."""
-        print("\n⚠️  Resetting data tracker...")
+        print("\n[WARN] Resetting data tracker...")
         self.tracker = {
             'files': {},
             'total_trained_samples': 0,
@@ -261,7 +261,7 @@ class DataTracker:
             'created_at': datetime.now().isoformat()
         }
         self._save_tracker()
-        print("✅ Data tracker reset complete")
+        print("[OK] Data tracker reset complete")
 
 
 # CLI Interface
