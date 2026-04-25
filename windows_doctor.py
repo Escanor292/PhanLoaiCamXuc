@@ -21,10 +21,23 @@ def check_torch():
     except ImportError as e:
         print(f"[FAIL] PyTorch not found or DLL Error: {e}")
         if "DLL load failed" in str(e):
-            print("\n💡 SUGGESTION: Install Microsoft Visual C++ Redistributable:")
+            print("\n[TIP] SUGGESTION: Install Microsoft Visual C++ Redistributable:")
             print("   https://aka.ms/vs/17/release/vc_redist.x64.exe")
     except Exception as e:
-        print(f"❌ Error importing torch: {e}")
+        print(f"[FAIL] Error importing torch: {e}")
+
+def check_matplotlib():
+    print("\n[CHECK] Checking Matplotlib (Graphing)...")
+    try:
+        import matplotlib
+        matplotlib.use('Agg')
+        import matplotlib.pyplot as plt
+        print(f"[OK] Matplotlib version: {matplotlib.__version__}")
+        print("[OK] Backend set to 'Agg' (Non-interactive)")
+    except ImportError as e:
+        print(f"[FAIL] Matplotlib not found: {e}")
+    except Exception as e:
+        print(f"[FAIL] Error with Matplotlib: {e}")
 
 def fix_permissions():
     if os.name != 'nt':
@@ -62,6 +75,7 @@ def run_doctor():
     check_drive_access()
     fix_permissions()
     check_torch()
+    check_matplotlib()
     
     print("\n" + "="*50)
     print("      Doctor scan complete.")

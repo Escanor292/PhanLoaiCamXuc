@@ -13,6 +13,8 @@ import torch.nn as nn
 from torch.utils.data import DataLoader
 from transformers import AutoTokenizer
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')  # Fix for Windows/Headless blocking
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 import os

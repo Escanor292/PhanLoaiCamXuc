@@ -9,6 +9,8 @@ import os
 import re
 import pandas as pd
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')  # Fix for Windows/Headless blocking
 import matplotlib.pyplot as plt
 from config import Config
 
