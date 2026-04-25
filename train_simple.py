@@ -29,20 +29,20 @@ from model_sharing import ModelSharing
 def print_banner():
     """Print welcome banner."""
     print("=" * 80)
-    print("🚀 SIMPLE TRAINING - HYBRID PHOBERT (MOST POWERFUL)")
+    print("🚀 HUẤN LUYỆN ĐƠN GIẢN - HYBRID PHOBERT (MẠNH NHẤT)")
     print("=" * 80)
     print()
-    print("✅ Model: Hybrid PhoBERT + BiLSTM + Attention")
-    print("✅ Optimized for: Vietnamese text")
-    print("✅ Incremental Training: Only train NEW data ⭐")
-    print("✅ Auto Data Merge: ENABLED (merges all CSV files) ⭐")
-    print("✅ Transfer Learning: ENABLED (learns from best model) ⭐")
-    print("✅ Keep Only Best: ENABLED (saves disk space) ⭐")
-    print("✅ Auto Deploy: ENABLED (if model is best)")
-    print("✅ Settings: 5 epochs, LR=2e-5, LSTM=256")
+    print("✅ Mô hình: Hybrid PhoBERT + BiLSTM + Attention")
+    print("✅ Tối ưu cho: Tiếng Việt")
+    print("✅ Huấn luyện tăng cường: Chỉ học dữ liệu MỚI ⭐")
+    print("✅ Tự động gộp dữ liệu: ĐÃ BẬT (có thể tùy chọn) ⭐")
+    print("✅ Transfer Learning: ĐÃ BẬT (học từ mô hình tốt nhất) ⭐")
+    print("✅ Lưu mô hình tốt nhất: ĐÃ BẬT (tiết kiệm bộ nhớ) ⭐")
+    print("✅ Tự động triển khai: ĐÃ BẬT (nếu đạt kết quả tốt nhất)")
+    print("✅ Cài đặt: 5 epochs, LR=2e-5, LSTM=256")
     print()
-    print("Just sit back and relax! 🎯")
-    print("This will take longer but gives BEST results!")
+    print("Bạn chỉ cần ngồi đợi kết quả! 🎯")
+    print("Quá trình này có thể tốn thời gian nhưng sẽ cho kết quả TỐT NHẤT!")
     print("=" * 80)
 
 
@@ -52,19 +52,20 @@ def check_data_files():
     
     csv_files = glob.glob(os.path.join(Config.DATA_DIR, "*.csv"))
     csv_files = [f for f in csv_files if "TEMPLATE" not in f.upper() and "merged_temp" not in f.lower()]
+    csv_files = sorted(csv_files)
     
     if not csv_files:
-        print("❌ ERROR: No CSV files found in data/ directory!")
+        print("❌ LỖI: Không tìm thấy file CSV nào trong thư mục data/!")
         print()
-        print("Please add your data first:")
-        print("1. Create data/member_YourName.csv")
-        print("2. Follow the format in HUONG_DAN_DONG_GOP_DATA.md")
-        print("3. Then run this script again")
+        print("Vui lòng thêm dữ liệu của bạn trước:")
+        print("1. Tạo file data/member_TenCuaBan.csv")
+        print("2. Làm theo định dạng trong HUONG_DAN_DONG_GOP_DATA.md")
+        print("3. Sau đó chạy lại script này")
         return False, []
     
-    print(f"📊 Found {len(csv_files)} data file(s):")
-    for csv_file in sorted(csv_files):
-        print(f"   • {os.path.basename(csv_file)}")
+    print(f"📊 Tìm thấy {len(csv_files)} file dữ liệu:")
+    for i, csv_file in enumerate(csv_files):
+        print(f"   {i+1}. {os.path.basename(csv_file)}")
     print()
     
     return True, csv_files
@@ -139,9 +140,38 @@ def main_simple():
     print_banner()
     
     # Check if data files exist
-    has_data, csv_files = check_data_files()
+    has_data, all_csv_files = check_data_files()
     if not has_data:
         return
+    
+    # Bước lựa chọn file CSV tương tác
+    csv_files = all_csv_files
+    if len(all_csv_files) > 1:
+        print("❓ Bạn muốn dùng những file nào để huấn luyện?")
+        print("   A. Dùng TẤT CẢ các file (Mặc định - nhấn Enter)")
+        print("   B. Chọn các file cụ thể (nhập số thứ tự, ví dụ: 1,3)")
+        
+        try:
+            choice = input("\n👉 Lựa chọn của bạn: ").strip().upper()
+            
+            if choice and choice != 'A':
+                # Xử lý nhập số (ví dụ: "1,2") hoặc nhập tên file
+                indices = []
+                for part in choice.replace(',', ' ').split():
+                    if part.isdigit():
+                        indices.append(int(part) - 1)
+                
+                selected_files = [all_csv_files[i] for i in indices if 0 <= i < len(all_csv_files)]
+                
+                if selected_files:
+                    csv_files = selected_files
+                    print(f"\n✅ Đã chọn {len(csv_files)} file để huấn luyện.")
+                else:
+                    print("\n⚠️  Không có file hợp lệ được chọn. Sẽ dùng TẤT CẢ các file.")
+        except (EOFError, KeyboardInterrupt):
+            print("\n⚠️  Đã hủy lựa chọn. Sẽ dùng TẤT CẢ các file.")
+        except Exception as e:
+            print(f"\n⚠️  Lỗi khi chọn file ({e}). Sẽ dùng TẤT CẢ các file.")
     
     # Merge all data files and get only NEW data
     try:
@@ -149,31 +179,31 @@ def main_simple():
         
         if merged_file is None or new_samples_count == 0:
             print("\n" + "="*80)
-            print("⏭️  TRAINING SKIPPED - No new data")
+            print("⏭️  BỎ QUA HUẤN LUYỆN - Không có dữ liệu mới")
             print("="*80)
             return
     except Exception as e:
-        print(f"❌ ERROR: Failed to process data: {e}")
+        print(f"❌ LỖI: Thất bại khi xử lý dữ liệu: {e}")
         return
     
     # Show current best model
     show_current_best()
     
     # Confirm settings
-    print("🔧 Training Settings:")
-    print(f"   • Model Type: Hybrid PhoBERT (Most Powerful)")
-    print(f"   • Architecture: PhoBERT + BiLSTM + Attention")
-    print(f"   • Data Files: {len(csv_files)} files merged")
-    print(f"   • Total Samples: Check merge summary above")
-    print(f"   • Epochs: 5 (optimal for Hybrid)")
+    print("🔧 Cài đặt huấn luyện:")
+    print(f"   • Loại mô hình: Hybrid PhoBERT (Mạnh nhất)")
+    print(f"   • Kiến trúc: PhoBERT + BiLSTM + Attention")
+    print(f"   • Số lượng file: {len(csv_files)} file đã chọn")
+    print(f"   • Số mẫu mới: {new_samples_count} mẫu ⭐")
+    print(f"   • Epochs: 5 (tối ưu cho Hybrid)")
     print(f"   • Learning Rate: {Config.LEARNING_RATE}")
     print(f"   • Batch Size: {Config.BATCH_SIZE}")
     print(f"   • LSTM Hidden Size: 256")
     print()
     
     # Start training
-    print("🚀 Starting training with Hybrid PhoBERT...")
-    print("⏱️  This may take longer but gives BEST results!")
+    print("🚀 Bắt đầu huấn luyện với Hybrid PhoBERT...")
+    print("⏱️  Quá trình này có thể tốn thời gian nhưng sẽ cho kết quả TỐT NHẤT!")
     print("=" * 80)
     
     try:
