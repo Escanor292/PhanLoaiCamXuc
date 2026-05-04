@@ -1,19 +1,19 @@
-Experiment: First Training
+Experiment: Hybrid Training by PHU TAI - 2026-04-25 17:46
 ======================================================================
 
 Configuration:
-  Data: data/sample_comments.csv
-  Model: bert-base-uncased
-  Epochs: 2
+  Data: data/merged_temp.csv
+  Model: vinai/phobert-base
+  Epochs: 5
   Batch Size: 16
-  Learning Rate: 2e-05
+  Learning Rate: 1e-05
   Dropout: 0.3
 
 Test Results:
-  Test Loss: 0.4661
-  Micro F1: 0.0000
-  Macro F1: 0.0000
-  Hamming Loss: 0.1445
+  Test Loss: 1.2535
+  Micro F1: 0.2105
+  Macro F1: 0.0775
+  Hamming Loss: 0.2930
 
 Per-Label F1 Scores:
   joy            : 0.0000
@@ -22,11 +22,11 @@ Per-Label F1 Scores:
   surprise       : 0.0000
   sadness        : 0.0000
   disgust        : 0.0000
-  anger          : 0.0000
-  anticipation   : 0.0000
+  anger          : 0.2222
+  anticipation   : 0.3750
   love           : 0.0000
-  worried        : 0.0000
-  disappointed   : 0.0000
+  worried        : 0.1667
+  disappointed   : 0.4762
   proud          : 0.0000
   embarrassed    : 0.0000
   jealous        : 0.0000

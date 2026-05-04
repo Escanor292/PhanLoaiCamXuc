@@ -8,6 +8,13 @@ Hệ thống phân tích cảm xúc tiếng Việt sử dụng mô hình **Hybri
 
 Dành cho các thành viên đã có dữ liệu trong folder `data/`:
 
+### 🚀 Cách chạy nhanh nhất (Khuyên dùng)
+Chỉ cần nhấp đúp vào file trong thư mục:
+- **`Pro_Edition/EmotionApp_Pro.bat`**: Tự động cài đặt môi trường và mở giao diện ứng dụng.
+
+---
+
+### 💻 Cách chạy qua dòng lệnh
 ```bash
 # 1. Cập nhật code và model mới nhất từ cả team
 git pull

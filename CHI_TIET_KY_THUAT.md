@@ -4,7 +4,16 @@ Tài liệu này giải thích các thành phần kỹ thuật cốt lõi của 
 
 ---
 
-## 🧠 1. Kiến Trúc Model (Hybrid PhoBERT)
+## 🤖 1. Phân Loại Phương Pháp Học (Learning Methodology)
+
+Dự án này sử dụng phương pháp **Deep Learning (Học sâu)** kết hợp với **Supervised Learning (Học có giám sát)**:
+
+- **Deep Learning (Học sâu)**: Mô hình của chúng ta (PhoBERT-Hybrid) sử dụng kiến trúc Transformer với hàng chục triệu tham số và nhiều lớp mạng nơ-ron (neural network) phức tạp. Các mạng này có khả năng tự động trích xuất các đặc trưng ngữ nghĩa từ văn bản (NLP) sâu sắc hơn rất nhiều so với các thuật toán Machine Learning truyền thống.
+- **Học có giám sát (Supervised Learning)**: Quá trình huấn luyện mô hình (training) được thực hiện dựa trên các bộ dữ liệu **đã được gán nhãn sẵn** (ví dụ: các comment có đi kèm nhãn cảm xúc cụ thể như Tích cực, Tiêu cực,...). Mô hình học bằng cách đọc đầu vào, đưa ra dự đoán, so sánh với nhãn gốc (đáp án chuẩn) để tính toán sai số, và liên tục điều chỉnh các trọng số (weights) nhằm tăng độ chính xác qua các vòng lặp (epochs).
+
+---
+
+## 🧠 2. Kiến Trúc Model (Hybrid PhoBERT)
 
 Hệ thống sử dụng mô hình **PhoBERT** kết hợp với các lớp học sâu bổ trợ để tối ưu cho tiếng Việt.
 
@@ -24,7 +33,7 @@ Hệ thống sử dụng mô hình **PhoBERT** kết hợp với các lớp họ
 
 ---
 
-## 📚 2. Học Chuyển Đổi (Transfer Learning)
+## 📚 3. Học Chuyển Đổi (Transfer Learning)
 
 Thay vì học từ đầu, model mới sẽ kế thừa "kiến thức" từ model tốt nhất trước đó.
 
@@ -36,7 +45,7 @@ Thay vì học từ đầu, model mới sẽ kế thừa "kiến thức" từ mo
 
 ---
 
-## 💾 3. Quản Lý Model (Model Registry)
+## 💾 4. Quản Lý Model (Model Registry)
 
 Hệ thống có cơ chế quản lý thông minh để tránh lãng phí bộ nhớ.
 
@@ -47,7 +56,7 @@ Hệ thống có cơ chế quản lý thông minh để tránh lãng phí bộ n
 
 ---
 
-## 🔄 4. Chia Sẻ Model Qua Cloud (Cloud Sharing)
+## 🔄 5. Chia Sẻ Model Qua Cloud (Cloud Sharing)
 
 Vì model quá nặng để đẩy lên GitHub, chúng ta sử dụng **Hugging Face Model Hub**.
 
@@ -59,7 +68,7 @@ Vì model quá nặng để đẩy lên GitHub, chúng ta sử dụng **Hugging 
 
 ---
 
-## 📦 5. Xử Lý Dữ Liệu (Data Processing)
+## 📦 6. Xử Lý Dữ Liệu (Data Processing)
 
 *   **Auto-Merge**: Tự động gộp tất cả các file `member_*.csv` trong thư mục `data/` thành một bộ dữ liệu lớn.
 *   **Deduplication**: Tự động loại bỏ các câu trùng lặp để tránh model bị "học vẹt".

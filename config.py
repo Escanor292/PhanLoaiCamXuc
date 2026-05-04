@@ -49,6 +49,8 @@ class Config:
     # Data Configuration
     DATA_DIR = "data/"
     MODEL_SAVE_DIR = "saved_model/"
+    MODEL_REGISTRY_DIR = "model_registry/"
+
     TRAIN_SPLIT = 0.7
     VAL_SPLIT = 0.15
     TEST_SPLIT = 0.15

@@ -617,19 +617,34 @@ def load_model(save_dir, device='cpu'):
     # TODO: Import BERTEmotionClassifier from model.py when it's implemented
     # For now, we'll add a placeholder that will work once model.py exists
     try:
-        # Import model class (will be available after model.py is implemented)
+        # Import model classes
         from model import BERTEmotionClassifier
-        
-        # Initialize model architecture
-        model = BERTEmotionClassifier(
-            num_labels=Config.NUM_LABELS,
-            dropout_rate=Config.DROPOUT_RATE
-        )
+        try:
+            from model_phobert import PhoBERTEmotionClassifier, HybridEmotionClassifier
+        except ImportError:
+            PhoBERTEmotionClassifier = None
+            HybridEmotionClassifier = None
         
         # Load state_dict
         state_dict = torch.load(model_path, map_location=device)
+        
+        # Determine model architecture from state_dict shape
+        if 'classifier.weight' in state_dict:
+            weight_shape = state_dict['classifier.weight'].shape
+            # Hybrid mode: 768 (CLS) + 256*2 (BiLSTM) = 1280
+            if weight_shape[1] == 1280 and HybridEmotionClassifier:
+                model = HybridEmotionClassifier(num_labels=Config.NUM_LABELS, dropout_rate=Config.DROPOUT_RATE)
+            # BiLSTM+Attention mode: 256*2 = 512
+            elif weight_shape[1] == 512 and PhoBERTEmotionClassifier:
+                model = PhoBERTEmotionClassifier(num_labels=Config.NUM_LABELS, dropout_rate=Config.DROPOUT_RATE)
+            else:
+                # Base model: 768
+                model = BERTEmotionClassifier(num_labels=Config.NUM_LABELS, dropout_rate=Config.DROPOUT_RATE)
+        else:
+            model = BERTEmotionClassifier(num_labels=Config.NUM_LABELS, dropout_rate=Config.DROPOUT_RATE)
+        
         model.load_state_dict(state_dict)
-        print(f"Model loaded from: {model_path}")
+        print(f"Model loaded from: {model_path} (Type: {model.__class__.__name__})")
         
     except ImportError:
         raise ImportError(

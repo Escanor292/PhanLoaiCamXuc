@@ -7,6 +7,9 @@ Bản tra cứu nhanh các câu lệnh trong dự án.
 ## 🔝 1. Lệnh Quan Trọng Nhất (Top Priority)
 Sử dụng hàng ngày cho các thành viên:
 ```bash
+# 0. Chạy ứng dụng nhanh (Dành cho Member)
+Nhấp đúp file Pro_Edition/EmotionApp_Pro.bat
+
 # 1. Cập nhật code và thông số mới nhất
 git pull
 
