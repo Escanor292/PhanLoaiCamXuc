@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum Emotion Analysis Demo</title>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        .emotion-card {
+            transition: transform 0.2s;
+            border-radius: 15px;
+        }
+        .emotion-card:hover {
+            transform: translateY(-5px);
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+        }
+        .comment-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .sentiment-positive { color: #28a745; }
+        .sentiment-negative { color: #dc3545; }
+        .sentiment-neutral { color: #6c757d; }
+        
+        .emotion-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 2px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        .emotion-high { background: #28a745; color: white; }
+        .emotion-medium { background: #ffc107; color: black; }
+        .emotion-low { background: #6c757d; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center mb-4">
+                    🎭 Forum Emotion Analysis Demo
+                </h1>
+                <p class="text-center text-muted">
+                    Tích hợp AI phân tích cảm xúc vào web forum
+                </p>
+            </div>
+        </div>
+
+        <!-- Input Section -->
+        <div class="row">
+            <div class="col-12">
+                <div class="comment-box">
+                    <h4>💬 Viết bình luận của bạn:</h4>
+                    <div class="mb-3">
+                        <textarea 
+                            id="commentText" 
+                            class="form-control" 
+                            rows="4" 
+                            placeholder="Nhập bình luận của bạn ở đây... (ví dụ: 'Sản phẩm này thật tuyệt vời!')"
+                        ></textarea>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <label for="threshold" class="form-label">Ngưỡng tin cậy:</label>
+                            <input type="range" class="form-range" id="threshold" min="0.1" max="0.9" step="0.1" value="0.4">
+                            <small class="text-muted">(<span id="thresholdValue">0.4</span>)</small>
+                        </div>
+                        <button id="analyzeBtn" class="btn btn-primary btn-lg">
+                            🔍 Phân tích cảm xúc
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="resultsSection" class="row" style="display: none;">
+            <!-- Sentiment Analysis -->
+            <div class="col-md-6">
+                <div class="card emotion-card">
+                    <div class="card-header">
+                        <h5>📊 Phân tích Sentiment (Tích cực/Tiêu cực)</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="sentimentChart"></canvas>
+                        </div>
+                        <div id="sentimentSummary" class="text-center mt-3">
+                            <!-- Sentiment summary will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Emotion Analysis -->
+            <div class="col-md-6">
+                <div class="card emotion-card">
+                    <div class="card-header">
+                        <h5>🎭 Phân tích Cảm xúc Chi tiết</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="emotionChart"></canvas>
+                        </div>
+                        <div id="emotionSummary" class="mt-3">
+                            <!-- Emotion summary will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detected Emotions -->
+        <div id="detectedSection" class="row mt-4" style="display: none;">
+            <div class="col-12">
+                <div class="card emotion-card">
+                    <div class="card-header">
+                        <h5>✨ Cảm xúc được phát hiện</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="detectedEmotions">
+                            <!-- Detected emotions badges will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Status -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="alert alert-info">
+                    <strong>🔧 API Status:</strong> <span id="apiStatus">Checking...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // API Configuration
+        const API_BASE_URL = 'http://localhost:5000';
+        
+        // Chart instances
+        let sentimentChart = null;
+        let emotionChart = null;
+
+        // DOM Elements
+        const commentText = document.getElementById('commentText');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const thresholdSlider = document.getElementById('threshold');
+        const thresholdValue = document.getElementById('thresholdValue');
+        const resultsSection = document.getElementById('resultsSection');
+        const detectedSection = document.getElementById('detectedSection');
+        const apiStatus = document.getElementById('apiStatus');
+
+        // Update threshold display
+        thresholdSlider.addEventListener('input', function() {
+            thresholdValue.textContent = this.value;
+        });
+
+        // Analyze button click
+        analyzeBtn.addEventListener('click', analyzeEmotion);
+
+        // Enter key in textarea
+        commentText.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                analyzeEmotion();
+            }
+        });
+
+        // Check API health on load
+        window.addEventListener('load', checkAPIHealth);
+
+        async function checkAPIHealth() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/health`);
+                const data = await response.json();
+                
+                if (data.status === 'healthy' && data.model_loaded) {
+                    apiStatus.innerHTML = '✅ Connected - Model loaded';
+                    apiStatus.className = 'text-success';
+                } else {
+                    apiStatus.innerHTML = '⚠️ Connected but model not loaded';
+                    apiStatus.className = 'text-warning';
+                }
+            } catch (error) {
+                apiStatus.innerHTML = '❌ Cannot connect to API server';
+                apiStatus.className = 'text-danger';
+            }
+        }
+
+        async function analyzeEmotion() {
+            const text = commentText.value.trim();
+            const threshold = parseFloat(thresholdSlider.value);
+
+            if (!text) {
+                alert('Vui lòng nhập bình luận!');
+                return;
+            }
+
+            // Show loading
+            analyzeBtn.innerHTML = '⏳ Đang phân tích...';
+            analyzeBtn.disabled = true;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/predict`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        text: text,
+                        threshold: threshold
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    displayResults(data);
+                } else {
+                    alert('Lỗi: ' + data.error);
+                }
+            } catch (error) {
+                alert('Không thể kết nối đến API server!');
+                console.error('Error:', error);
+            } finally {
+                // Reset button
+                analyzeBtn.innerHTML = '🔍 Phân tích cảm xúc';
+                analyzeBtn.disabled = false;
+            }
+        }
+
+        function displayResults(data) {
+            // Show results sections
+            resultsSection.style.display = 'block';
+            detectedSection.style.display = 'block';
+
+            // Create sentiment chart
+            createSentimentChart(data.sentiment, data.overall_sentiment);
+
+            // Create emotion chart
+            createEmotionChart(data.emotions);
+
+            // Display detected emotions
+            displayDetectedEmotions(data.detected_emotions);
+
+            // Scroll to results
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function createSentimentChart(sentiment, overall) {
+            const ctx = document.getElementById('sentimentChart').getContext('2d');
+            
+            // Destroy existing chart
+            if (sentimentChart) {
+                sentimentChart.destroy();
+            }
+
+            sentimentChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Tích cực', 'Tiêu cực', 'Trung tính'],
+                    datasets: [{
+                        data: [
+                            (sentiment.positive * 100).toFixed(1),
+                            (sentiment.negative * 100).toFixed(1),
+                            (sentiment.neutral * 100).toFixed(1)
+                        ],
+                        backgroundColor: [
+                            '#28a745',  // Green for positive
+                            '#dc3545',  // Red for negative
+                            '#6c757d'   // Gray for neutral
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': ' + context.parsed + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Update sentiment summary
+            const summaryElement = document.getElementById('sentimentSummary');
+            const sentimentClass = `sentiment-${overall}`;
+            const sentimentIcon = overall === 'positive' ? '😊' : overall === 'negative' ? '😞' : '😐';
+            const sentimentText = overall === 'positive' ? 'Tích cực' : overall === 'negative' ? 'Tiêu cực' : 'Trung tính';
+            
+            summaryElement.innerHTML = `
+                <h4 class="${sentimentClass}">
+                    ${sentimentIcon} ${sentimentText}
+                </h4>
+                <p class="text-muted">
+                    Tích cực: ${(sentiment.positive * 100).toFixed(1)}% | 
+                    Tiêu cực: ${(sentiment.negative * 100).toFixed(1)}% | 
+                    Trung tính: ${(sentiment.neutral * 100).toFixed(1)}%
+                </p>
+            `;
+        }
+
+        function createEmotionChart(emotions) {
+            const ctx = document.getElementById('emotionChart').getContext('2d');
+            
+            // Destroy existing chart
+            if (emotionChart) {
+                emotionChart.destroy();
+            }
+
+            // Prepare data - only show top 8 emotions
+            const emotionData = Object.entries(emotions)
+                .map(([key, value]) => ({
+                    label: value.vietnamese,
+                    score: (value.score * 100).toFixed(1),
+                    detected: value.detected
+                }))
+                .sort((a, b) => b.score - a.score)
+                .slice(0, 8);
+
+            const labels = emotionData.map(item => item.label);
+            const scores = emotionData.map(item => item.score);
+            const colors = emotionData.map(item => 
+                item.detected ? '#28a745' : '#e9ecef'
+            );
+
+            emotionChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Điểm tin cậy (%)',
+                        data: scores,
+                        backgroundColor: colors,
+                        borderColor: colors.map(color => color === '#28a745' ? '#1e7e34' : '#dee2e6'),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return 'Tin cậy: ' + context.parsed.y + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function displayDetectedEmotions(detectedEmotions) {
+            const container = document.getElementById('detectedEmotions');
+            
+            if (detectedEmotions.length === 0) {
+                container.innerHTML = '<p class="text-muted">Không phát hiện cảm xúc nào với ngưỡng tin cậy hiện tại.</p>';
+                return;
+            }
+
+            let html = '<div class="mb-3">';
+            
+            detectedEmotions
+                .sort((a, b) => b.score - a.score)
+                .forEach(emotion => {
+                    const percentage = (emotion.score * 100).toFixed(1);
+                    let badgeClass = 'emotion-low';
+                    
+                    if (emotion.score >= 0.7) {
+                        badgeClass = 'emotion-high';
+                    } else if (emotion.score >= 0.5) {
+                        badgeClass = 'emotion-medium';
+                    }
+                    
+                    html += `
+                        <span class="emotion-badge ${badgeClass}">
+                            ${emotion.vietnamese} (${percentage}%)
+                        </span>
+                    `;
+                });
+            
+            html += '</div>';
+            html += `<p class="text-muted small">Tổng cộng: ${detectedEmotions.length} cảm xúc được phát hiện</p>`;
+            
+            container.innerHTML = html;
+        }
+
+        // Sample comments for testing
+        const sampleComments = [
+            "Sản phẩm này thật tuyệt vời! Tôi rất hài lòng với chất lượng.",
+            "Dịch vụ khách hàng tệ quá, tôi rất thất vọng.",
+            "Giao hàng nhanh, đóng gói cẩn thận. Sẽ mua lại!",
+            "Giá cả hợp lý, chất lượng ổn.",
+            "Tôi lo lắng về việc bảo hành sản phẩm này."
+        ];
+
+        // Add sample comment buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            const commentBox = document.querySelector('.comment-box');
+            const samplesHtml = `
+                <div class="mt-3">
+                    <small class="text-muted">Hoặc thử với các mẫu sau:</small><br>
+                    ${sampleComments.map((comment, index) => 
+                        `<button class="btn btn-outline-secondary btn-sm me-2 mb-2" onclick="commentText.value='${comment}'">${index + 1}</button>`
+                    ).join('')}
+                </div>
+            `;
+            commentBox.insertAdjacentHTML('beforeend', samplesHtml);
+        });
+    </script>
+</body>
+</html>

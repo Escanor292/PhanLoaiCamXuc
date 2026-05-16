@@ -50,17 +50,10 @@ def load_model():
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         logger.info(f"Using device: {device}")
         
-        # Load tokenizer
-        tokenizer = BertTokenizer.from_pretrained(model_path)
-        logger.info("✅ Tokenizer loaded successfully")
-        
-        # Load model
-        model = BERTEmotionClassifier(num_labels=len(Config.EMOTION_LABELS))
-        model_file = os.path.join(model_path, 'pytorch_model.bin')
-        model.load_state_dict(torch.load(model_file, map_location=device))
-        model.to(device)
-        model.eval()
-        logger.info("✅ Model loaded successfully")
+        # Load model and tokenizer using utils to support PhoBERT
+        from utils import load_model as utils_load_model
+        model, tokenizer = utils_load_model(model_path, device=device)
+        logger.info("✅ Model and tokenizer loaded successfully")
         
         return True
         
@@ -161,7 +154,7 @@ def predict_emotions(text, threshold=0.4):
 def index():
     """Serve the web demo interface"""
     try:
-        with open('web_demo.html', 'r', encoding='utf-8') as f:
+        with open('Pro_Edition/web_demo.html', 'r', encoding='utf-8') as f:
             content = f.read()
         return render_template_string(content)
     except Exception as e:
