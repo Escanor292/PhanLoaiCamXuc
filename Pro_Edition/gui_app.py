@@ -69,6 +69,7 @@ class PremiumEmotionApp(ctk.CTk):
         self.hf_user = None
         self.gui_config_file = "gui_config.json"
         self.editor_path = self.load_gui_config().get("editor_path", "")
+        self.registry = ModelRegistry()  # Thêm registry để quản lý model
         
         # Setup logging
         setup_gui_logging(self.log_queue)
@@ -240,17 +241,29 @@ class PremiumEmotionApp(ctk.CTk):
         self.action_frame = ctk.CTkFrame(self.training_view, fg_color="transparent")
         self.action_frame.grid(row=2, column=0, columnspan=2, pady=(5, 20))
 
-
+        # Container cho các nút
+        self.buttons_container = ctk.CTkFrame(self.action_frame, fg_color="transparent")
+        self.buttons_container.pack()
         
-        # Nút to khổng lồ
+        # Nút huấn luyện to khổng lồ
         self.btn_start_train = ctk.CTkButton(
-            self.action_frame, text="🚀 KHỞI ĐỘNG HUẤN LUYỆN", 
+            self.buttons_container, text="🚀 KHỞI ĐỘNG HUẤN LUYỆN", 
             command=self.start_training_thread,
             fg_color=SUCCESS_COLOR, hover_color="#059669", text_color="#ffffff",
             font=ctk.CTkFont(family=FONT_FAMILY, size=24, weight="bold"),
             height=70, width=400, corner_radius=35
         )
-        self.btn_start_train.pack()
+        self.btn_start_train.pack(pady=(0, 10))
+        
+        # Nút đẩy model lên cloud (nhỏ hơn, nằm dưới)
+        self.btn_upload_model = ctk.CTkButton(
+            self.buttons_container, text="☁️ Đẩy Model Tốt Nhất Lên Cloud", 
+            command=self.upload_best_model_to_cloud,
+            fg_color=ACCENT_COLOR, hover_color=ACCENT_HOVER, text_color="#ffffff",
+            font=ctk.CTkFont(family=FONT_FAMILY, size=14, weight="bold"),
+            height=45, width=400, corner_radius=10
+        )
+        self.btn_upload_model.pack()
         
         self.progress_bar = ctk.CTkProgressBar(self.action_frame, width=400, height=10, progress_color=ACCENT_COLOR)
         self.progress_bar.pack(pady=20)
@@ -812,6 +825,80 @@ class PremiumEmotionApp(ctk.CTk):
         self.fig.tight_layout()
         self.canvas.draw()
 
+
+    def upload_best_model_to_cloud(self):
+        """Đẩy model tốt nhất lên Hugging Face."""
+        if not self.check_hf_status():
+            messagebox.showwarning("Chưa kết nối", "Bạn cần đăng nhập Hugging Face trước!\n\nVào tab 'Tài Khoản HF' để đăng nhập.")
+            self.show_login()
+            return
+        
+        # Kiểm tra có model tốt nhất không
+        best_model = self.registry.get_best_model()
+        if not best_model:
+            messagebox.showwarning("Không có model", "Chưa có model nào được huấn luyện!\n\nHãy huấn luyện model trước.")
+            return
+        
+        model_id = best_model['model_id']
+        f1_score = best_model['metrics']['macro_f1'] * 100
+        
+        if not messagebox.askyesno(
+            "Xác nhận đẩy lên Cloud", 
+            f"Bạn muốn đẩy model tốt nhất lên Hugging Face?\n\n"
+            f"🆔 Model ID: {model_id}\n"
+            f"🎯 F1 Score: {f1_score:.2f}%\n\n"
+            f"Model sẽ được upload lên repository của bạn."
+        ):
+            return
+        
+        # Disable nút và hiển thị trạng thái
+        self.btn_upload_model.configure(state="disabled", text="☁️ Đang upload...")
+        self.progress_bar.configure(mode="indeterminate")
+        self.progress_bar.start()
+        
+        def upload_thread():
+            try:
+                from model_sharing import ModelSharing
+                
+                print("\n" + "☁️ "*15 + "\nĐANG ĐẨY MODEL LÊN HUGGING FACE...\n" + "☁️ "*15)
+                print(f"📦 Model ID: {model_id}")
+                print(f"🎯 F1 Score: {f1_score:.2f}%")
+                
+                sharing = ModelSharing()
+                success = sharing.sync_best_model()
+                
+                if success:
+                    print("✅ Upload thành công!")
+                    self.after(0, lambda: messagebox.showinfo(
+                        "Thành công", 
+                        f"✅ Model đã được đẩy lên Hugging Face!\n\n"
+                        f"Model ID: {model_id}\n"
+                        f"F1 Score: {f1_score:.2f}%\n\n"
+                        f"Các thành viên khác có thể tải về và sử dụng."
+                    ))
+                else:
+                    print("❌ Upload thất bại!")
+                    self.after(0, lambda: messagebox.showerror(
+                        "Lỗi", 
+                        "❌ Không thể upload model lên Hugging Face!\n\n"
+                        "Kiểm tra:\n"
+                        "• Kết nối Internet\n"
+                        "• Token có quyền WRITE\n"
+                        "• Repository tồn tại"
+                    ))
+                    
+            except Exception as e:
+                print(f"❌ Lỗi upload: {e}")
+                import traceback
+                traceback.print_exc()
+                self.after(0, lambda: messagebox.showerror("Lỗi", f"Lỗi upload: {e}"))
+            finally:
+                # Reset nút và progress bar
+                self.after(0, lambda: self.btn_upload_model.configure(state="normal", text="☁️ Đẩy Model Tốt Nhất Lên Cloud"))
+                self.after(0, lambda: self.progress_bar.stop())
+                self.after(0, lambda: self.progress_bar.set(0))
+        
+        threading.Thread(target=upload_thread, daemon=True).start()
 
     def finish_training(self, success):
         self.is_training = False
