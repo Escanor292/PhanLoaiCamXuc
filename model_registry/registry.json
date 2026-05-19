@@ -1,33 +1,33 @@
 {
   "models": [
     {
-      "model_id": "model_20260425_175309",
-      "path": "model_registry\\models\\model_20260425_175309",
+      "model_id": "model_20260519_074835",
+      "path": "model_registry\\models\\model_20260519_074835",
       "metrics": {
-        "macro_f1": 0.07750496031746032,
-        "micro_f1": 0.21052631578947367,
-        "test_loss": 1.2534606456756592,
-        "hamming_loss": 0.29296875
+        "macro_f1": 0.38167151441319946,
+        "micro_f1": 0.44280442804428044,
+        "test_loss": 0.9710883597532908,
+        "hamming_loss": 0.32173295454545453
       },
       "metadata": {
         "person": "PHU TAI",
-        "experiment_name": "Hybrid Training by PHU TAI - 2026-04-25 17:46",
+        "experiment_name": "PRO Training by Escanor292",
         "model_type": "hybrid",
         "learning_rate": 1e-05,
         "batch_size": 16,
         "num_epochs": 5,
         "dropout_rate": 0.3,
         "lstm_hidden_size": 256,
-        "max_length": 256,
+        "max_length": 100,
         "data_file": "data/merged_temp.csv",
         "model_name": "vinai/phobert-base"
       },
-      "registered_at": "2026-04-25T17:53:10.594020",
+      "registered_at": "2026-05-19T07:48:35.480045",
       "status": "registered"
     }
   ],
   "production_model": null,
-  "best_model": "model_20260425_175309",
+  "best_model": "model_20260519_074835",
   "keep_only_best": true,
   "created_at": "2026-04-25"
 }
