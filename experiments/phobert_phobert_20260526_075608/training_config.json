@@ -1,0 +1,18 @@
+{
+    "model_type": "phobert",
+    "experiment_name": "PhoBERT Training",
+    "model_name": "vinai/phobert-base",
+    "num_labels": 16,
+    "dropout_rate": 0.3,
+    "lstm_hidden_size": 256,
+    "learning_rate": 2e-05,
+    "batch_size": 4,
+    "num_epochs": 1,
+    "max_length": 32,
+    "best_epoch": 1,
+    "best_val_loss": 0.5266538225114346,
+    "test_loss": 0.5168005302548409,
+    "hamming_loss": 0.17291666666666666,
+    "micro_f1": 0.04597701149425287,
+    "macro_f1": 0.016666666666666666
+}

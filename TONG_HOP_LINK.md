@@ -1,0 +1,8 @@
+- Sách/Tài liệu: [Sentiment Analysis and Opinion Mining (Bing Liu)](https://www.cs.uic.edu/~liub/FBS/SentimentAnalysis-and-OpinionMining.pdf)
+- Bài báo KDD 2004: [Mining and Summarizing Customer Reviews (Hu & Liu)](https://www.cs.uic.edu/~liub/publications/kdd04-revSummary.pdf)
+- Bài báo LREC 2010: [Twitter as a Corpus for Sentiment Analysis and Opinion Mining (Pak & Paroubek)](http://www.lrec-conf.org/proceedings/lrec2010/pdf/385_Paper.pdf)
+- Bài báo (arXiv 2010): [Twitter mood predicts the stock market (Bollen et al.)](https://arxiv.org/abs/1010.3003)
+- Bài báo ACL 2017: [Understanding and Predicting Empathic Behavior in Counseling Therapy (Pérez-Rosas et al.)](https://aclanthology.org/P17-1131/)
+- Bài viết từ McKinsey & Company: [Growth, Marketing & Sales Insights](https://www.mckinsey.com/capabilities/growth-marketing-and-sales)
+- Bài viết từ Sprout Social: [Data Insights](https://sproutsocial.com/insights/data/)
+- Repository mã nguồn dự án: [GitHub - Escanor292/PhanLoaiCamXuc](https://github.com/Escanor292/PhanLoaiCamXuc)

@@ -571,7 +571,7 @@ def load_model(save_dir, device='cpu'):
         - Tokenizer is loaded using Hugging Face's from_pretrained() method
     """
     import torch
-    from transformers import BertTokenizer
+    from transformers import AutoTokenizer
     # Note: Import model class when model.py is implemented
     # For now, we'll add a placeholder comment
     
@@ -605,7 +605,7 @@ def load_model(save_dir, device='cpu'):
     
     # Load tokenizer
     try:
-        tokenizer = BertTokenizer.from_pretrained(save_dir)
+        tokenizer = AutoTokenizer.from_pretrained(save_dir)
         print(f"Tokenizer loaded from: {save_dir}")
     except Exception as e:
         raise FileNotFoundError(

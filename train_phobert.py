@@ -177,23 +177,40 @@ def main():
     
     # Load datasets
     print(f"\n📊 Loading data from {args.data_file}...")
+    from utils import load_data
+    from sklearn.model_selection import train_test_split
+    
+    texts, labels = load_data(args.data_file)
+    
+    # Split data: 70% train, 15% val, 15% test (to match standard config splits)
+    train_texts, temp_texts, train_labels, temp_labels = train_test_split(
+        texts, labels,
+        test_size=0.3,
+        random_state=Config.RANDOM_SEED
+    )
+    val_texts, test_texts, val_labels, test_labels = train_test_split(
+        temp_texts, temp_labels,
+        test_size=0.5,
+        random_state=Config.RANDOM_SEED
+    )
+    
     train_dataset = EmotionDataset(
-        args.data_file,
+        train_texts,
+        train_labels,
         tokenizer,
-        max_length=args.max_length,
-        split='train'
+        max_length=args.max_length
     )
     val_dataset = EmotionDataset(
-        args.data_file,
+        val_texts,
+        val_labels,
         tokenizer,
-        max_length=args.max_length,
-        split='val'
+        max_length=args.max_length
     )
     test_dataset = EmotionDataset(
-        args.data_file,
+        test_texts,
+        test_labels,
         tokenizer,
-        max_length=args.max_length,
-        split='test'
+        max_length=args.max_length
     )
     
     print(f"✅ Train samples: {len(train_dataset)}")

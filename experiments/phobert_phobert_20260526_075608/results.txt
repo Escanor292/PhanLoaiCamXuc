@@ -1,0 +1,23 @@
+PhoBERT Emotion Classification Results
+============================================================
+
+Model Type: phobert
+Experiment: PhoBERT Training
+Person: team
+Timestamp: 20260526_075608
+
+Configuration:
+  Epochs: 1
+  Batch Size: 4
+  Learning Rate: 2e-05
+  LSTM Hidden Size: 256
+  Dropout Rate: 0.3
+  Max Length: 32
+
+Results:
+  Best Epoch: 1
+  Best Val Loss: 0.5267
+  Test Loss: 0.5168
+  Hamming Loss: 0.1729
+  Micro F1: 0.0460
+  Macro F1: 0.0167

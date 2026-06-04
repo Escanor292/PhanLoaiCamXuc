@@ -1,13 +1,13 @@
 {
   "models": [
     {
-      "model_id": "model_20260519_074835",
-      "path": "model_registry\\models\\model_20260519_074835",
+      "model_id": "model_20260523_121847",
+      "path": "model_registry/models/model_20260523_121847",
       "metrics": {
-        "macro_f1": 0.38167151441319946,
-        "micro_f1": 0.44280442804428044,
-        "test_loss": 0.9710883597532908,
-        "hamming_loss": 0.32173295454545453
+        "macro_f1": 0.672892116878384,
+        "micro_f1": 0.6857424765663542,
+        "test_loss": 0.5082649572899467,
+        "hamming_loss": 0.13226744186046513
       },
       "metadata": {
         "person": "PHU TAI",
@@ -22,12 +22,12 @@
         "data_file": "data/merged_temp.csv",
         "model_name": "vinai/phobert-base"
       },
-      "registered_at": "2026-05-19T07:48:35.480045",
+      "registered_at": "2026-05-23T12:18:48.012317",
       "status": "registered"
     }
   ],
   "production_model": null,
-  "best_model": "model_20260519_074835",
+  "best_model": "model_20260523_121847",
   "keep_only_best": true,
   "created_at": "2026-04-25"
 }

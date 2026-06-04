@@ -579,8 +579,17 @@ class PremiumEmotionApp(ctk.CTk):
             merged_file, new_samples, stats = merge_all_data(csv_files)
             if not merged_file or new_samples == 0:
                 print("⏭️ Dữ liệu này AI đã học rồi, không cần học lại!")
-                self.finish_training(False)
+                print("💡 TIP: Thêm dữ liệu mới hoặc xóa file data_tracker.json để train lại")
+                self.finish_training(False, skip_reason="Không có dữ liệu mới")
                 return
+
+            print(f"✅ Đã merge {new_samples} mẫu dữ liệu mới")
+            print(f"📂 File training: {merged_file}")
+
+            # Get current best model F1 before training
+            registry_before = ModelRegistry()
+            best_before = registry_before.get_best_model()
+            f1_before = best_before['metrics']['macro_f1'] if best_before else 0.0
 
             use_transfer = should_use_transfer_learning()
             epochs, lr = 5, Config.LEARNING_RATE
@@ -598,11 +607,29 @@ class PremiumEmotionApp(ctk.CTk):
             sys.argv = ['train.py', '--model-type', 'hybrid', '--data', merged_file, '--epochs', str(epochs), '--lr', str(lr), '--experiment-name', f'PRO Training by {person}', '--register-model']
             if base_info: sys.argv.extend(['--transfer-from', base_info['model_id']])
             
+            print(f"\n🚀 Bắt đầu training với:")
+            print(f"   • Epochs: {epochs}")
+            print(f"   • Learning Rate: {lr}")
+            print(f"   • Transfer Learning: {'Yes' if base_info else 'No'}")
+            
             train_main()
             sys.argv = old_argv
 
-            tracker = DataTracker()
-            tracker.mark_as_trained(csv_files, pd.read_csv(merged_file))
+            # Check if new model was actually registered (F1 improved)
+            registry_after = ModelRegistry()
+            best_after = registry_after.get_best_model()
+            f1_after = best_after['metrics']['macro_f1'] if best_after else 0.0
+
+            if f1_after > f1_before:
+                # Model improved - mark data as trained
+                print(f"\n✅ Model cải thiện: F1 {f1_before*100:.2f}% → {f1_after*100:.2f}%")
+                tracker = DataTracker()
+                tracker.mark_as_trained(csv_files, pd.read_csv(merged_file))
+            else:
+                # Model not improved - DON'T mark data as trained
+                print(f"\n⚠️ Model KHÔNG cải thiện: F1 vẫn là {f1_before*100:.2f}%")
+                print(f"   Dữ liệu KHÔNG được đánh dấu là đã train")
+                print(f"   Bạn có thể thử lại với dữ liệu này sau")
 
             if self.hf_user:
                 print("\n☁️ ĐANG ĐỒNG BỘ LÊN ĐÁM MÂY...")
@@ -614,7 +641,7 @@ class PremiumEmotionApp(ctk.CTk):
         except Exception as e:
             print(f"❌ LỖI NGHIÊM TRỌNG: {e}")
             import traceback; traceback.print_exc()
-            self.finish_training(False)
+            self.finish_training(False, error=str(e))
 
     def refresh_training_data_list(self):
         # Clear existing
@@ -900,15 +927,34 @@ class PremiumEmotionApp(ctk.CTk):
         
         threading.Thread(target=upload_thread, daemon=True).start()
 
-    def finish_training(self, success):
+    def finish_training(self, success, skip_reason=None, error=None):
         self.is_training = False
         def update():
             self.btn_start_train.configure(state="normal", text="🚀 KHỞI ĐỘNG HUẤN LUYỆN", fg_color=SUCCESS_COLOR)
             self.progress_bar.stop()
             self.progress_bar.set(0)
+            
+            # Force reload registry from disk before updating UI
+            self.registry = ModelRegistry()  # Reload registry
             self.update_best_model_info()
-            if success: messagebox.showinfo("Hoàn tất", "🎉 AI đã học xong kiến thức mới!")
-            else: messagebox.showerror("Thất bại", "⚠️ Quá trình học bị gián đoạn. Xem log để biết chi tiết.")
+            
+            if success: 
+                # Show detailed info about new model
+                try:
+                    best = self.registry.get_best_model()
+                    if best:
+                        f1_score = best['metrics']['macro_f1'] * 100
+                        messagebox.showinfo("Hoàn tất", f"🎉 AI đã học xong kiến thức mới!\n\n📊 F1 Score: {f1_score:.2f}%\n🆔 Model ID: {best['model_id']}")
+                    else:
+                        messagebox.showinfo("Hoàn tất", "🎉 AI đã học xong kiến thức mới!")
+                except:
+                    messagebox.showinfo("Hoàn tất", "🎉 AI đã học xong kiến thức mới!")
+            elif skip_reason:
+                messagebox.showwarning("Bỏ qua", f"⏭️ {skip_reason}\n\n💡 Thêm dữ liệu mới hoặc xóa file data_tracker.json để train lại")
+            elif error:
+                messagebox.showerror("Thất bại", f"⚠️ Quá trình học bị gián đoạn.\n\nLỗi: {error}\n\nXem log để biết chi tiết.")
+            else: 
+                messagebox.showerror("Thất bại", "⚠️ Quá trình học bị gián đoạn. Xem log để biết chi tiết.")
         self.after(0, update)
 
 if __name__ == "__main__":

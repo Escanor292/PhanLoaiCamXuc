@@ -151,10 +151,11 @@ class ModelRegistry:
         else:
             raise FileNotFoundError(f"Model path not found: {model_path}")
         
-        # Create model entry
+        # Create model entry (normalize path to use forward slashes for cross-platform compatibility)
+        normalized_path = str(model_registry_path).replace('\\', '/')
         model_entry = {
             'model_id': model_id,
-            'path': str(model_registry_path),
+            'path': normalized_path,
             'metrics': metrics,
             'metadata': metadata,
             'registered_at': datetime.now().isoformat(),

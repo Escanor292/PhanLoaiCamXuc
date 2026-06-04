@@ -1,0 +1,34 @@
+Experiment: PRO Training by Escanor292
+======================================================================
+
+Configuration:
+  Data: data/merged_temp.csv
+  Model: vinai/phobert-base
+  Epochs: 5
+  Batch Size: 16
+  Learning Rate: 1e-05
+  Dropout: 0.3
+
+Test Results:
+  Test Loss: 0.5083
+  Micro F1: 0.6857
+  Macro F1: 0.6729
+  Hamming Loss: 0.1323
+
+Per-Label F1 Scores:
+  joy            : 0.8941
+  trust          : 0.4600
+  fear           : 0.5542
+  surprise       : 0.6241
+  sadness        : 0.6732
+  disgust        : 0.6875
+  anger          : 0.7654
+  anticipation   : 0.6207
+  love           : 0.5497
+  worried        : 0.8163
+  disappointed   : 0.7579
+  proud          : 0.4390
+  embarrassed    : 0.8966
+  jealous        : 0.6977
+  calm           : 0.6126
+  excited        : 0.7172
